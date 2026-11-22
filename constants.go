@@ -5,7 +5,7 @@ package socialtap
 import "time"
 
 // Version is the SDK version: 1.<contract facts>.<generator revision> (sdk/README.md).
-const Version = "1.584.33"
+const Version = "1.585.34"
 
 // DefaultBaseURL is the production API origin.
 const DefaultBaseURL = "https://socialtap.dev"

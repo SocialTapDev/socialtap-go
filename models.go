@@ -70,9 +70,8 @@ type ActivityPlatformSpecific struct {
 	Github *GitHubActivitySpecific `json:"github,omitempty"`
 }
 
-// Activity is the activity resource: An account's public activity: pushes, pull requests, issues, comments,
-// reviews, releases, stars and forks, with the repository, branch or tag, issue or pull request number and
-// title, and when.
+// Activity is the activity resource: An account's public activity (pushes, pull requests, issues, comments,
+// reviews, releases, stars and forks) with the repository, what it touched and when.
 type Activity struct {
 	// Platform ID (github, …).
 	Platform string `json:"platform"`
@@ -1740,7 +1739,7 @@ type EmbedPlatformSpecific struct {
 }
 
 // Embed is the embed resource: Platforms' own embed code for public posts, videos, playlists and profiles: the
-// HTML to paste, its iframe URL and size, and the title, author and thumbnail it shows.
+// HTML to paste, the iframe URL and size, and the title and thumbnail.
 type Embed struct {
 	// Platform ID (instagram, youtube, tiktok, …).
 	Platform string `json:"platform"`
@@ -5125,7 +5124,7 @@ type EngagementPlatformSpecific struct {
 }
 
 // Engagement is the engagement resource: Engagement rate, average views, likes and comments, posting cadence and
-// top post for an account, computed from its recent posts the same way on every platform.
+// top post of an account, computed from recent posts the same way on every platform.
 type Engagement struct {
 	// Platform ID (tiktok, instagram, …).
 	Platform string `json:"platform"`
@@ -5446,8 +5445,8 @@ type IssuePlatformSpecific struct {
 	Github *GitHubIssueSpecific `json:"github,omitempty"`
 }
 
-// Issue is the issue resource: Issues and pull requests with their state, labels, author, assignees, milestone,
-// comment and reaction counts, and for pull requests the branches, merge time and lines changed.
+// Issue is the issue resource: Issues and pull requests with state, labels, author, assignees and comment
+// counts, and for pull requests the branches, merge time and lines changed.
 type Issue struct {
 	// Platform ID (github, …).
 	Platform string `json:"platform"`
@@ -5601,8 +5600,8 @@ type JobPostingPlatformSpecific struct {
 	Hackernews *HackernewsJobPostingSpecific `json:"hackernews,omitempty"`
 }
 
-// JobPosting is the job resource: Job postings with the title, employer, location and workplace type, employment
-// type, seniority, salary range, description, posting date, whether it is closed, applicants and apply link.
+// JobPosting is the job resource: Job postings with the title, employer, location, workplace and employment
+// type, seniority, salary range, posting date, applicants and apply link.
 type JobPosting struct {
 	// Platform ID (linkedin, …).
 	Platform string `json:"platform"`
@@ -6722,8 +6721,8 @@ type ReleasePlatformSpecific struct {
 	Github *GitHubReleaseSpecific `json:"github,omitempty"`
 }
 
-// Release is the release resource: Software releases with their tag, title, release notes, author, pre-release
-// flag, date, downloadable files with sizes and download counts, and source archives.
+// Release is the release resource: Software releases with their tag, title, notes, author, pre-release flag,
+// date, downloadable files with sizes and download counts, and source archives.
 type Release struct {
 	// Platform ID (github, …).
 	Platform string `json:"platform"`
