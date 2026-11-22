@@ -5,15 +5,12 @@
 SocialTap is the social media scraper API for developers and AI agents. Send a public link, a handle or a search and get live data back in one schema. Failed requests are free.
 
 The Go SDK for the SocialTap API: a method for every endpoint, typed models and errors, retries and pagination.
-Generated from the SocialTap catalog (version 1.583.33). Docs: https://socialtap.dev/docs. Source: https://github.com/SocialTapDev/socialtap-go.
+Generated from the SocialTap catalog (version 1.584.33). Docs: https://socialtap.dev/docs. Source: https://github.com/SocialTapDev/socialtap-go.
 
 ## Install
 
-Not published to the Go module proxy yet: install it from source, a checkout of the SocialTap repository (this directory is
-`sdk/go`).
-
 ```sh
-go mod edit -require=socialtap.dev/sdk/go@v0.0.0 -replace=socialtap.dev/sdk/go=./sdk/go   # the path to the checkout
+go get socialtap.dev/sdk/go
 ```
 
 Zero dependencies (net/http); Go 1.23+. The module path is `socialtap.dev/sdk/go` (a vanity path on our domain,

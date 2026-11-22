@@ -8124,14 +8124,20 @@ type Subscription struct {
 }
 
 type PaymentMethodSummary struct {
-	// Card brand (visa, mastercard, amex, …).
-	Brand string `json:"brand"`
-	// The card number's last four digits.
-	Last4 string `json:"last4"`
-	// Expiry month (1–12).
-	ExpMonth int64 `json:"exp_month"`
-	// Expiry year.
-	ExpYear int64 `json:"exp_year"`
+	// What kind of payment method: card (Apple Pay and Google Pay included), link (Stripe's Link), cashapp (Cash App
+	// Pay) or amazon_pay (Amazon Pay). New values may be added. Known values: card, link, cashapp, amazon_pay.
+	Type string `json:"type"`
+	// Card brand (visa, mastercard, amex, …); null when type isn't card.
+	Brand *string `json:"brand"`
+	// The card number's last four digits; null when type isn't card.
+	Last4 *string `json:"last4"`
+	// Expiry month (1–12); null when type isn't card.
+	ExpMonth *int64 `json:"exp_month"`
+	// Expiry year; null when type isn't card.
+	ExpYear *int64 `json:"exp_year"`
+	// The wallet account it charges, as its provider shows it: the Link account's email, or the Cash App $Cashtag;
+	// null for a card, for Amazon Pay, or when the provider doesn't say.
+	Account *string `json:"account"`
 }
 
 type AutoTopupCharge struct {
@@ -8190,20 +8196,20 @@ type AutoTopup struct {
 	MonthResetsAt string `json:"month_resets_at"`
 	// Why auto top-up turned itself off (null while on, or when a person turned it off): card_declined (the bank
 	// declined the charge), authentication_required (the bank asked the cardholder to confirm it: buy the pack in
-	// Billing, then turn auto top-up back on), no_card (no saved card), billing_address_required (Stripe Tax needs
-	// the card's billing address: add it in the payment settings), payment_failed (another payment error), disputed
-	// (a payment on this account was disputed: auto top-up turns on again only with a different card), bank_inquiry
-	// (a bank asked about a payment on this account, which is not yet a dispute: turn it back on when you are
-	// ready), plan_ended (it bought a monthly plan's top-up, and the plan ended). It never retries: fix the cause,
-	// then turn it on again. Known values: card_declined, authentication_required, no_card,
+	// Billing, then turn auto top-up back on), no_card (no saved payment method), billing_address_required (Stripe
+	// Tax needs your billing address: add it in the payment settings), payment_failed (another payment error),
+	// disputed (a payment on this account was disputed: auto top-up turns on again only with a different payment
+	// method), bank_inquiry (a bank asked about a payment on this account, which is not yet a dispute: turn it back
+	// on when you are ready), plan_ended (it bought a monthly plan's top-up, and the plan ended). It never retries:
+	// fix the cause, then turn it on again. Known values: card_declined, authentication_required, no_card,
 	// billing_address_required, payment_failed, disputed, bank_inquiry, plan_ended.
 	OffReason *string `json:"off_reason"`
 	// What the bank or Stripe said, for people; null when off_reason is.
 	OffMessage *string `json:"off_message"`
 	// When it turned itself off, RFC 3339 UTC; null when off_reason is. Format: date-time.
 	OffAt *string `json:"off_at"`
-	// The saved card a top-up charges (the default card in the payment settings, else the newest); null when there
-	// is none, or when the payment processor could not be reached.
+	// The saved payment method a top-up charges (the default in the payment settings, else the newest one saved);
+	// null when there is none, or when the payment processor could not be reached.
 	PaymentMethod *PaymentMethodSummary `json:"payment_method"`
 	// The latest top-up, whatever its outcome; null before the first.
 	LastCharge *AutoTopupCharge `json:"last_charge"`
