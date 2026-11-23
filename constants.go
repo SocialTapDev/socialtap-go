@@ -49,11 +49,9 @@ const (
 	// CodeUnauthorized (HTTP 401): The x-api-key header is missing, or its key is unknown or revoked. On the
 	// dashboard's routes: the session cookie is missing or expired.
 	CodeUnauthorized ErrorCode = "unauthorized"
-	// CodeForbidden (HTTP 403): The API key is valid but may not make this request, and details.reason says why: the
-	// account is suspended, the key lacks the route's scope, has expired, or was used from an IP outside its
-	// allowlist, or a rotated key's previous secret was used for a call that needs the admin scope. A running job
-	// stops with it too when its account is suspended or the key that created it is revoked or expires. It is about
-	// the key, never the item: a private item is private_or_unavailable, also 403, so branch on the code.
+	// CodeForbidden (HTTP 403): The API key is valid but may not make this request; details.reason says why. It
+	// concerns the key, never the item: a private item is private_or_unavailable, also 403. A running job stops with
+	// it when its key or account can no longer run it.
 	CodeForbidden ErrorCode = "forbidden"
 	// CodeInsufficientCredits (HTTP 402): The account does not have enough credits for this request, or the request
 	// costs more than the max_credits it was sent with (details.reason max_credits). Either way it is free.
@@ -61,11 +59,9 @@ const (
 	// CodeSpendLimitReached (HTTP 402): The API key reached its spend limit for this period. The account may still
 	// have credits.
 	CodeSpendLimitReached ErrorCode = "spend_limit_reached"
-	// CodeRateLimited (HTTP 429): The account passed its runaway-protection ceiling: a high per-account limit that
-	// stops a broken client loop (plans have no rate limit). Requests without an API key (signup, the MCP server's
-	// tool listing and find_endpoint) are limited per IP address instead. It also stops an account whose failed
-	// requests in the last hour cost far more than its successful ones paid for: failures are free within a limit
-	// (the message says so), and successes raise it.
+	// CodeRateLimited (HTTP 429): The account passed its runaway-protection ceiling (plans have no rate limit), or
+	// its failed requests in the past hour cost far more than its successful ones paid for. Requests without an API
+	// key are limited per IP.
 	CodeRateLimited ErrorCode = "rate_limited"
 	// CodeRequestTooLarge (HTTP 413): The request body is larger than the API accepts.
 	CodeRequestTooLarge ErrorCode = "request_too_large"
@@ -73,9 +69,8 @@ const (
 	CodeMethodNotAllowed ErrorCode = "method_not_allowed"
 	// CodeEndpointRetired (HTTP 410): The endpoint passed its sunset date and no longer answers.
 	CodeEndpointRetired ErrorCode = "endpoint_retired"
-	// CodeIdempotencyKeyReused (HTTP 422): This Idempotency-Key was already used for a different request (another
-	// route or body). Or it was used for this same request, which ran and returned a secret we no longer keep
-	// (details.reason answer_expired): running it again would create another.
+	// CodeIdempotencyKeyReused (HTTP 422): This Idempotency-Key was already used for a different request, or for
+	// this one when its answer held a secret we no longer keep (details.reason answer_expired).
 	CodeIdempotencyKeyReused ErrorCode = "idempotency_key_reused"
 	// CodeIdempotencyKeyInProgress (HTTP 409): A request with this Idempotency-Key is still running.
 	CodeIdempotencyKeyInProgress ErrorCode = "idempotency_key_in_progress"
@@ -88,13 +83,12 @@ const (
 	// CodeNotFound (HTTP 404): The item does not exist or was deleted. On GET /v1/requests/{id}/response: the
 	// response was not kept (details.reason says why).
 	CodeNotFound ErrorCode = "not_found"
-	// CodePrivateOrUnavailable (HTTP 403): The item exists but is not public: it is private, age- or
-	// region-restricted, or needs a login to view. It shares 403 with forbidden (which is about the key), so branch
-	// on the code.
+	// CodePrivateOrUnavailable (HTTP 403): The item exists but isn't public: it is private, age- or
+	// region-restricted, or needs a login. It shares 403 with forbidden, which is about the key: branch on the code.
 	CodePrivateOrUnavailable ErrorCode = "private_or_unavailable"
-	// CodeNoTranscript (HTTP 404): The video or audio exists but has no transcript: the platform has no captions for
-	// it, and speech-to-text found no speech, or did not run (the media is longer than it transcribes without
-	// transcribe_audio=true, or transcribe_audio=false).
+	// CodeNoTranscript (HTTP 404): The video or audio exists but has no transcript: no captions, and speech-to-text
+	// found no speech or didn't run (the media is too long without transcribe_audio=true, or
+	// transcribe_audio=false).
 	CodeNoTranscript ErrorCode = "no_transcript"
 	// CodeNoLive (HTTP 404): The account exists but has no live broadcast to show: nothing on air or scheduled, and
 	// no past broadcast the platform still shows.
@@ -105,8 +99,7 @@ const (
 	// CodeNoReadme (HTTP 404): The repository exists but has no README: no file the platform shows as its README.
 	CodeNoReadme ErrorCode = "no_readme"
 	// CodeUnavailableForLegalReasons (HTTP 451): We removed this item after a copyright notice or another legal
-	// request, so we don't return it. The request was free. A list leaves such items out instead, with an
-	// items_omitted warning.
+	// request. The request was free. A list leaves such items out instead, with an items_omitted warning.
 	CodeUnavailableForLegalReasons ErrorCode = "unavailable_for_legal_reasons"
 	// CodeUpstreamBlocked (HTTP 503): The platform refused every attempt, our own retries included.
 	CodeUpstreamBlocked ErrorCode = "upstream_blocked"
@@ -136,7 +129,7 @@ var errorCodes = map[ErrorCode]errorInfo{
 	CodeRequestTooLarge:            {413, false, "Send a smaller body, or split a large job into several."},
 	CodeMethodNotAllowed:           {405, false, "Use the method in the allow header (GET for every data endpoint)."},
 	CodeEndpointRetired:            {410, false, "Call the endpoint in details.replacement. The changelog describes the migration."},
-	CodeIdempotencyKeyReused:       {422, false, "Use a new Idempotency-Key for a different request, and reuse a key only to retry the identical request. With reason answer_expired, check what the first request created (GET /v1/api_keys, GET /v1/webhook_endpoints) before sending it again under a new key."},
+	CodeIdempotencyKeyReused:       {422, false, "Use a new key for a different request; reuse a key only to retry the identical one. For answer_expired, check what the first request created (GET /v1/api_keys, GET /v1/webhook_endpoints) before retrying under a new key."},
 	CodeIdempotencyKeyInProgress:   {409, true, "Retry after the seconds in the retry-after header to get that request's result."},
 	CodeJobNotFound:                {404, false, "Check the job ID. Finished jobs are kept for a limited time."},
 	CodeUnknownEndpoint:            {404, false, "Call details.suggestion when it is set (the path you most likely meant); otherwise pick one from details.endpoints. Do not retry the same path."},
@@ -196,10 +189,9 @@ var (
 	// ErrEndpointRetired matches endpoint_retired errors. Remediation: Call the endpoint in details.replacement. The
 	// changelog describes the migration.
 	ErrEndpointRetired = &codeError{CodeEndpointRetired}
-	// ErrIdempotencyKeyReused matches idempotency_key_reused errors. Remediation: Use a new Idempotency-Key for a
-	// different request, and reuse a key only to retry the identical request. With reason answer_expired, check what
-	// the first request created (GET /v1/api_keys, GET /v1/webhook_endpoints) before sending it again under a new
-	// key.
+	// ErrIdempotencyKeyReused matches idempotency_key_reused errors. Remediation: Use a new key for a different
+	// request; reuse a key only to retry the identical one. For answer_expired, check what the first request created
+	// (GET /v1/api_keys, GET /v1/webhook_endpoints) before retrying under a new key.
 	ErrIdempotencyKeyReused = &codeError{CodeIdempotencyKeyReused}
 	// ErrIdempotencyKeyInProgress matches idempotency_key_in_progress errors. Remediation: Retry after the seconds
 	// in the retry-after header to get that request's result.

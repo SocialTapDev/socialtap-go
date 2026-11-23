@@ -32,33 +32,31 @@ type ActivityRepository struct {
 }
 
 type ActivityTarget struct {
-	// The kind of thing acted on: issue, pull_request (a GitLab merge request), release, discussion, wiki_page,
-	// commit (a commit comment), repository (the fork created), profile (the member added); other: a platform's own
-	// kind. New values may be added; treat any other value as other. Known values: issue, pull_request, release,
-	// discussion, wiki_page, commit, repository, profile, other.
+	// The kind of thing acted on. pull_request includes merge requests; commit: the commit commented on; repository:
+	// the fork created; profile: the member added; other: a platform's own kind. New values may be added; treat
+	// unknown values as other. Known values: issue, pull_request, release, discussion, wiki_page, commit,
+	// repository, profile, other.
 	Type string `json:"type"`
 	// The target's platform-native ID (a commit's hash); null when not shown.
 	ID *string `json:"id"`
 	// An issue's, pull request's or discussion's number in its repository (#1089); null for other targets.
 	Number *int64 `json:"number"`
-	// The target's title as the platform shows it (an issue's or pull request's title, a release's name, the fork's
-	// path, the member's username); null when the source does not carry it (GitHub's events omit a pull request's
-	// title).
+	// The target's name: an issue's or pull request's title, a release's name, the fork's path, the member's
+	// username; null when the source omits it (GitHub's events omit pull requests' titles).
 	Title *string `json:"title"`
 	// The target's page; null when unknown. Format: uri.
 	URL *string `json:"url"`
 }
 
 type ActivityMetrics struct {
-	// For a push, or a create of a branch or tag by a push, the commits it added (for a period's group, the commits
-	// in the period); null for other kinds or when the platform does not say.
+	// Commits a push added (a create by a push included), or the commits in a month's group; null for other kinds or
+	// when the platform does not say.
 	CommitCount *int64 `json:"commit_count"`
 }
 
 type GitHubActivitySpecific struct {
-	// For an item that groups the commits an account made to one repository in a month (GitHub's contribution
-	// timeline), the month's first day, RFC 3339 UTC; created_at is then the month's last day, or the day of the
-	// fetch for the month still running. Null for a single action. Format: date-time.
+	// For an item grouping a month's commits to one repository (the contribution timeline), the month's first day,
+	// RFC 3339 UTC; created_at is its last. Null for a single action. Format: date-time.
 	PeriodStartAt *string `json:"period_start_at"`
 	// For a created repository on the contribution timeline, its main language as GitHub shows it (JavaScript); null
 	// for other items and on the event feed.
@@ -78,29 +76,23 @@ type Activity struct {
 	// The activity's ID: the platform's own event ID, else one derived from the repository, the kind and the month
 	// the platform groups it in (torvalds/linux:push:2026-05), stable across fetches.
 	ID string `json:"id"`
-	// What the account did: push (commits to a branch or tag), create and delete (a repository, branch or tag:
-	// ref_type), fork, star, watch (subscribed to a repository's notifications), issue and pull_request (opened,
-	// closed, merged…: action), review (of a pull request), comment (on an issue, pull request or commit), release,
-	// member (added to or left a repository or group), wiki (edited its pages), discussion; other: the platform's
-	// own kind in platform_type. New values may be added; treat any other value as other. Known values: push,
-	// create, delete, fork, star, watch, issue, pull_request, review, comment, release, member, wiki, discussion,
-	// other.
+	// What the account did; create and delete name a repository, branch or tag (ref_type), and issue, pull_request
+	// and review carry action. watch: subscribed to notifications; member: added to or left a repository or group;
+	// wiki: edited pages; other: see platform_type. New values may be added; treat unknown values as other. Known
+	// values: push, create, delete, fork, star, watch, issue, pull_request, review, comment, release, member, wiki,
+	// discussion, other.
 	Type string `json:"type"`
 	// The platform's own name for the kind (PushEvent on GitHub, "pushed to" on GitLab, commit_repo on Codeberg);
 	// null when the source shows none.
 	PlatformType *string `json:"platform_type"`
-	// What happened to the target, for kinds with more than one action: opened, closed, reopened, merged, edited,
-	// created, deleted, published (a release), approved, changes_requested, commented, dismissed (a review),
-	// ready_for_review, added and removed (a member), joined and left, assigned, unassigned, labeled, unlabeled,
-	// review_requested, synchronized (new commits on a pull request). Null for a kind that is its own action (push,
-	// star, fork) or when not shown. New values may be added; treat any other value as null. Known values: opened,
-	// closed, reopened, merged, edited, created, deleted, published, approved, changes_requested, commented,
-	// dismissed, ready_for_review, added, removed, joined, left, assigned, unassigned, labeled, unlabeled,
-	// review_requested, synchronized.
+	// What happened to the target, for kinds with several actions (synchronized: new commits pushed to a pull
+	// request); null for a kind that is its own action (push, star, fork). New values may be added; treat unknown
+	// values as null. Known values: opened, closed, reopened, merged, edited, created, deleted, published, approved,
+	// changes_requested, commented, dismissed, ready_for_review, added, removed, joined, left, assigned, unassigned,
+	// labeled, unlabeled, review_requested, synchronized.
 	Action *string `json:"action"`
-	// When it happened, RFC 3339 UTC, never later than the fetch. A date-only value is listed in approximate_fields;
-	// an item grouping a period's commits (GitHub's contribution timeline) is dated by the period's last day, or the
-	// day of the fetch while the period runs. Format: date-time.
+	// When it happened, RFC 3339 UTC, never after the fetch. Date-only values are in approximate_fields; a month's
+	// commit group takes the month's last day, or the fetch day if earlier. Format: date-time.
 	CreatedAt string `json:"created_at"`
 	// The account that acted; fields null when not shown.
 	Actor ProfileRef `json:"actor"`
@@ -110,18 +102,17 @@ type Activity struct {
 	// The branch or tag pushed to, created or deleted, by its short name (main, v1.2.0; never refs/heads/…); null
 	// for other kinds and a created repository.
 	Ref *string `json:"ref"`
-	// What ref names, or what was created or deleted: branch, tag, or repository (a create or delete of the
-	// repository itself, with ref null); null for other kinds. New values may be added; treat any other value as
-	// null. Known values: branch, tag, repository.
+	// What ref names, or what was created or deleted (repository: the repository itself, with ref null); null for
+	// other kinds. New values may be added; treat unknown values as null. Known values: branch, tag, repository.
 	RefType *string `json:"ref_type"`
-	// For a push, or a create of a branch or tag by a push, the commit the branch or tag points to after it (a full
-	// hexadecimal commit hash); null for other kinds or when not shown.
+	// The full hexadecimal hash of the commit the branch or tag points to after a push (or a create by a push); null
+	// for other kinds.
 	HeadSha *string `json:"head_sha"`
-	// What the action was on, beyond the repository: the issue, pull request, release, discussion, wiki page or
-	// commit, the fork created, the member added; null for a push, a star and a create or delete of a ref.
+	// What the action was on besides the repository (target.type says which kind); null for a push, a star and a
+	// create or delete of a ref.
 	Target *ActivityTarget `json:"target"`
-	// What the account wrote in this action: a comment's or a review's body, as plain text or Markdown as the
-	// platform holds it; null for kinds with no text of their own or an empty review.
+	// What the account wrote: a comment's or review's body, plain text or Markdown as the platform holds it; null
+	// for kinds with no text and an empty review.
 	Text *string `json:"text"`
 	// The page that shows what was done: the comment, the issue or pull request, the release, the pushed commits,
 	// the fork, else the repository; null when there is none. Format: uri.
@@ -133,8 +124,7 @@ type Activity struct {
 	// JSON paths of values the platform gives only by day or month (created_at on GitHub's contribution timeline).
 	// [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none; null already means unknown for every other field.
-	// [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none. [] when every list is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -628,8 +618,8 @@ type Ad struct {
 	// JSON paths of values that are rounded, date-only or parsed from display text. A list path (external_links)
 	// means the list may be incomplete. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -673,7 +663,7 @@ type AlbumTrack struct {
 	// Audio file URL: a short preview, where the platform serves only one. Signed links expire within hours; null
 	// when not exposed. Format: uri.
 	PlayURL *string `json:"play_url"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics AlbumTrackMetrics `json:"metrics"`
 }
 
@@ -709,7 +699,7 @@ type SoundcloudAlbumSpecific struct {
 	PurchaseURL *string `json:"purchase_url"`
 	// The label of the buy link; null when SoundCloud's default is used.
 	PurchaseTitle *string `json:"purchase_title"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics SoundcloudAlbumMetrics `json:"metrics"`
 }
 
@@ -795,9 +785,8 @@ type Album struct {
 	ID string `json:"id"`
 	// Canonical album page URL. Format: uri.
 	URL string `json:"url"`
-	// What kind of release it is, as the platform says: album, single, ep or compilation; null when the platform
-	// does not say. New values may be added; treat unknown values as album. Known values: album, single, ep,
-	// compilation.
+	// What kind of release it is, as the platform says; null when it does not say. New values may be added; treat
+	// unknown values as album. Known values: album, single, ep, compilation.
 	Type *string `json:"type"`
 	// The release's title as the platform shows it (with an edition or a suffix like "- Single" where it writes
 	// one).
@@ -805,18 +794,16 @@ type Album struct {
 	// About the release, as plain text (the service's editorial notes, or what its uploader wrote); null when it has
 	// none or the platform shows none.
 	Description *string `json:"description"`
-	// Who the platform credits for the release, as one display string (it can name more people than have an account
-	// linked: artists holds the linked ones); null when the source does not name them.
+	// Who the platform credits for the release, as one display string, which can name more people than artists
+	// links; null when the source names no one.
 	ArtistName *string `json:"artist_name"`
-	// The platform accounts of the artists credited on the release, main artist first, in the platform's order; []
-	// when none is linked, as on a Various Artists compilation (listed in unknown_fields when the source cannot see
-	// them).
+	// Accounts of the artists credited on the release, in the platform's order, main artist first; [] when none is
+	// linked, as on a Various Artists compilation (or unknown: see unknown_fields).
 	Artists []ProfileRef `json:"artists"`
 	// Cover art URL at the largest size the platform serves; null when it has none. Format: uri.
 	CoverURL *string `json:"cover_url"`
-	// When it was released, RFC 3339 UTC. A release date with no time (nearly all) is midnight UTC of that date,
-	// listed in approximate_fields, and so is a year or month alone (its first day). Null when the platform states
-	// none. Format: date-time.
+	// When it was released, RFC 3339 UTC. A date without a time (nearly all) is midnight UTC, a year or month alone
+	// its first day, both listed in approximate_fields. Format: date-time.
 	ReleasedAt *string `json:"released_at"`
 	// The record label as the platform names it; null when none is shown.
 	Label *string `json:"label"`
@@ -824,8 +811,8 @@ type Album struct {
 	Upc *string `json:"upc"`
 	// The release's copyright lines as the platform shows them; [] when none.
 	Copyrights []AlbumCopyright `json:"copyrights"`
-	// Genres the platform files it under, as shown (not normalized), the main one first; [] when none (listed in
-	// unknown_fields when the source cannot see them).
+	// Genres the platform files it under, as shown (not normalized), the main one first; [] when none (or unknown:
+	// see unknown_fields).
 	Genres []string `json:"genres"`
 	// Marked as holding explicit content (by the platform, or on any of its tracks); null when the platform does not
 	// say.
@@ -833,19 +820,18 @@ type Album struct {
 	// Total length of the release in milliseconds; null when neither the platform nor a complete tracks list gives
 	// it.
 	DurationMS *int64 `json:"duration_ms"`
-	// The release's tracks in album order (by disc, then track number). A list of albums, whose source shows none,
-	// answers [] and lists tracks in unknown_fields; a list the source could only read part of is listed in
-	// approximate_fields.
+	// The release's tracks by disc, then track number. [] in a list of albums, which shows none (listed in
+	// unknown_fields); listed in approximate_fields when only partly read.
 	Tracks []AlbumTrack `json:"tracks"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics AlbumMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific AlbumPlatformSpecific `json:"platform_specific"`
-	// JSON paths of values that are date-only, rounded by the platform or parsed from display text (released_at from
-	// a date, duration_ms from "1 hour 1 minute"). A list path means the list may be incomplete. [] when all exact.
+	// JSON paths of values that are date-only, rounded by the platform or parsed from display text. A list path
+	// means the list may be incomplete. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them), tracks[].artists
-	// for that list on every track; null already means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them); tracks[].artists stands
+	// for every track's. [] when every list is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -868,13 +854,11 @@ type TikTokCommentSpecific struct {
 }
 
 type RumbleCommentSpecific struct {
-	// Thumbs-down votes on the comment. Exact below 1,000; from 1,000 Rumble shows a label such as "1.31K", taken to
-	// be cut to three significant digits as Rumble's other counts are (not checked against an exact count), and
-	// listed in approximate_fields.
+	// Thumbs-down votes on the comment. Exact below 1,000; above, read from a label such as "1.31K" (three
+	// significant digits, presumably truncated) and listed in approximate_fields.
 	DislikeCount *int64 `json:"dislike_count"`
-	// The badges Rumble shows beside the commenter's name, by their label as Rumble writes it (seen: Verified,
-	// Admin, Moderator, Supporter, Supporter+, Supporter++, Sub, Locals Supporter; new labels may appear). [] when
-	// none.
+	// Labels of the badges beside the commenter's name, as Rumble writes them (Verified, Admin, Moderator,
+	// Supporter, Supporter+, Supporter++, Sub, Locals Supporter; others may appear). [] when none.
 	AuthorBadges []string `json:"author_badges"`
 }
 
@@ -918,8 +902,8 @@ type RedditCommentSpecific struct {
 	// The subreddit of the post the comment is on; for a post on a user's profile, the profile's own subreddit
 	// (u_<username>).
 	Subreddit *RedditSubredditRef `json:"subreddit"`
-	// Net score as Reddit shows it: upvotes minus downvotes, fuzzed by Reddit; negative for a comment most votes are
-	// against. Null when Reddit hides it (a subreddit that hides recent comments' scores, a deleted comment).
+	// Upvotes minus downvotes as Reddit shows it, fuzzed, and negative when most votes are against. Null when Reddit
+	// hides it (a subreddit hiding recent scores, a deleted comment).
 	Score *int64 `json:"score"`
 	// How deep in the post's thread the comment is: 0 for a comment on the post, 1 for a reply to one, and so on.
 	Depth *int64 `json:"depth"`
@@ -931,15 +915,14 @@ type RedditCommentSpecific struct {
 	// Reddit shows the comment collapsed (a low score, a moderator's or crowd-control setting, or a subreddit's
 	// rule).
 	IsCollapsed *bool `json:"is_collapsed"`
-	// The comment's body was deleted by its author or removed by a moderator or Reddit; text is then empty. Reddit
-	// keeps such a comment in the thread when it has replies.
+	// True when the body was deleted by its author or removed by a moderator or Reddit; text is then empty. Reddit
+	// keeps such a comment while it has replies.
 	IsDeleted *bool `json:"is_deleted"`
-	// Replies under this comment (with their own replies) that the page leaves out, as Reddit counts them in its "N
-	// more replies" link: request the comment's url to page through them. 0 when every reply Reddit has is included.
+	// Replies under this comment, nested ones included, that the page leaves out (Reddit's "N more replies");
+	// request the comment's url to read them. 0 when none are left out.
 	MoreRepliesCount *int64 `json:"more_replies_count"`
-	// The author of the comment this one replies to, where the list names them (a user's comments: Reddit's "replied
-	// to u/…"); null where Reddit does not name them (a comment on the post, a deleted parent account) and where
-	// parent_id places the comment in its thread.
+	// Author of the comment this one replies to, where a user's comments name them ("replied to u/…") instead of a
+	// parent_id. Null otherwise, and for a deleted parent account.
 	ReplyToAuthor *ProfileRef `json:"reply_to_author"`
 	// The post the comment is on, as Reddit shows it beside the comment (search results); null where the endpoint
 	// does not show it.
@@ -947,9 +930,8 @@ type RedditCommentSpecific struct {
 }
 
 type InstagramCommentSpecific struct {
-	// The GIF the comment is (Instagram's GIPHY picker; text is then usually empty), on Meta's CDN; the URL is
-	// signed and expires within days. null when the comment has no GIF or the source does not show it (the post
-	// page's first comments). Format: uri.
+	// The comment's GIF (GIPHY; text is then usually empty), a signed Meta CDN URL that expires within days. Null
+	// when none or not shown (the post page's first comments). Format: uri.
 	GifURL *string `json:"gif_url"`
 }
 
@@ -1023,8 +1005,8 @@ type BlueskyCommentSpecific struct {
 	QuoteCount *int64 `json:"quote_count"`
 	// Times the reply was bookmarked; never negative.
 	SaveCount *int64 `json:"save_count"`
-	// Bluesky folds the reply under the thread's "Show more replies" button: the post's author hid it, or Bluesky's
-	// own ranking set it aside. Null when the thread was read from the route that does not say.
+	// True when Bluesky folds the reply under "Show more replies": the post's author hid it, or Bluesky's ranking
+	// set it aside. Null when the source does not say.
 	IsHidden *bool `json:"is_hidden"`
 	// The post's author hid this reply from their thread.
 	IsHiddenByPostAuthor *bool `json:"is_hidden_by_post_author"`
@@ -1057,20 +1039,19 @@ type BlueskyCommentSpecific struct {
 	// The at:// ID of the post this reply quotes; null when it quotes none. Stays set when the quoted post can't be
 	// shown.
 	QuotedPostID *string `json:"quoted_post_id"`
-	// The post this reply quotes, as Bluesky embeds it; null when it quotes none, or when the quoted post was
-	// deleted, is blocked, was detached by its author, or is by an account shown only to signed-in people.
+	// The post this reply quotes, as Bluesky embeds it. Null when none, or the quoted post is deleted, blocked,
+	// detached by its author or shown only to signed-in people.
 	QuotedPost *BlueskyEmbeddedPost `json:"quoted_post"`
 	// The at:// URI of a custom feed, list or starter pack the reply embeds; null when it embeds none.
 	EmbeddedRecordURI *string `json:"embedded_record_uri"`
-	// The link Bridgy Fed records for a reply it brought to Bluesky from the fediverse or the web, usually where it
-	// was first published; null when it was written on Bluesky. Format: uri.
+	// The link Bridgy Fed records for a reply it brought from the fediverse or the web, usually where it was first
+	// published; null when written on Bluesky. Format: uri.
 	BridgedFromURL *string `json:"bridged_from_url"`
 }
 
 type SnapchatCommentSpecific struct {
-	// The commenter's user ID, the same as platform_specific.snapchat.user_id of their snapchat.profile. It stays
-	// when they replace their public profile, which changes author.id; null when Snapchat names no account for the
-	// comment.
+	// The commenter's user ID, as in their profile's platform_specific.snapchat.user_id. Unlike author.id, it stays
+	// when they replace their public profile; null when Snapchat names no account.
 	AuthorUserID *string `json:"author_user_id"`
 }
 
@@ -1096,10 +1077,9 @@ type GitHubReactions struct {
 type GitHubCommentSpecific struct {
 	// GitHub's GraphQL node ID of the comment (IC_kwDO…).
 	NodeID *string `json:"node_id"`
-	// The commenter's relation to the repository: owner, member (of its organization), collaborator, contributor
-	// (has a merged commit), first_time_contributor, first_timer (first contribution on GitHub), mannequin (an
-	// imported placeholder) or none. New values may be added. Known values: owner, member, collaborator,
-	// contributor, first_time_contributor, first_timer, mannequin, none.
+	// The commenter's relation to the repository. member: of its organization; contributor: has a merged commit;
+	// first_timer: first contribution on GitHub; mannequin: an imported placeholder. New values may be added. Known
+	// values: owner, member, collaborator, contributor, first_time_contributor, first_timer, mannequin, none.
 	AuthorAssociation *string `json:"author_association"`
 	// Reactions to the comment, every emoji counted; never negative.
 	ReactionCount *int64 `json:"reaction_count"`
@@ -1157,14 +1137,14 @@ type HackernewsCommentStory struct {
 }
 
 type HackernewsCommentSpecific struct {
-	// How deep in the story's thread the comment is: 0 for a comment on the story, 1 for a reply to one, and so on.
-	// Null where the endpoint does not read the thread.
+	// How deep in the story's thread the comment is: 0 on the story, 1 for a reply to one, and so on. Null where the
+	// thread is not read.
 	Depth *int64 `json:"depth"`
 	// The comment's author deleted it. Hacker News keeps it in the thread as [deleted] while it has replies: text is
 	// then empty and author is [deleted].
 	IsDeleted *bool `json:"is_deleted"`
-	// Hacker News killed the comment (flagged by users or caught by its filters), so its text is hidden from
-	// logged-out readers: text is then empty. It stays in the thread while it has replies.
+	// True when Hacker News killed the comment (flagged or caught by its filters); text is then empty, hidden from
+	// logged-out readers. It stays in the thread while it has replies.
 	IsDead *bool `json:"is_dead"`
 	// The story the comment is on (post_id), as far as the endpoint read it; null in a list of a thread's comments,
 	// which all share one story.
@@ -1204,7 +1184,7 @@ type ProfileMetrics struct {
 }
 
 type XEmbeddedPost struct {
-	// Its ID, as x.post takes it.
+	// Its ID, as the X (Twitter) Post API takes it.
 	ID *string `json:"id"`
 	// Its URL. Format: uri.
 	URL *string `json:"url"`
@@ -1285,9 +1265,8 @@ type XCommentSpecific struct {
 	// True when the author has the blue check of an X Premium subscription; null when unknown. author.is_verified is
 	// true for any check.
 	IsAuthorBlueVerified *bool `json:"is_author_blue_verified"`
-	// The kind of verified organization X says the author is (business: the gold check, government: the grey one);
-	// null when it is neither. New values may be added; treat unknown values as other. Known values: business,
-	// government.
+	// The author's verified organization kind (business: gold check; government: grey check); null when neither. New
+	// values may be added; treat unknown values as other. Known values: business, government.
 	AuthorVerifiedType *string `json:"author_verified_type"`
 	// The author's counts at fetch time (followers, following, posts), which X answers with the reply; null when the
 	// source does not show them.
@@ -1347,7 +1326,7 @@ type CommentPlatformSpecific struct {
 type Comment struct {
 	// Platform ID (tiktok, youtube, …).
 	Platform string `json:"platform"`
-	// Platform-native comment ID (string; Reddit with its t1_ prefix).
+	// Platform-native comment ID (string), exactly as the platform writes it, its prefix included.
 	ID string `json:"id"`
 	// ID of the post commented on (equals post.id).
 	PostID string `json:"post_id"`
@@ -1357,12 +1336,11 @@ type Comment struct {
 	URL *string `json:"url"`
 	// Comment body as plain text.
 	Text string `json:"text"`
-	// The commenting account. An account the platform no longer names (a deleted account) has a null id and username
-	// and the platform's label as display_name (Reddit: [deleted]).
+	// The commenting account. For a deleted account, id and username are null and display_name is the platform's
+	// label.
 	Author ProfileRef `json:"author"`
-	// When the comment was posted, RFC 3339 UTC. Where the platform shows only a relative time ("3 weeks ago"), the
-	// latest time that label allows (the fetch time minus the stated amount), listed in approximate_fields. Format:
-	// date-time.
+	// When the comment was posted, RFC 3339 UTC. From a relative time ("3 weeks ago"), the latest time it allows
+	// (the fetch time minus that amount), listed in approximate_fields. Format: date-time.
 	PublishedAt *string `json:"published_at"`
 	// When the comment was last edited, RFC 3339 UTC; null when never edited or when the platform marks edits
 	// without a time (see is_edited). Format: date-time.
@@ -1375,15 +1353,15 @@ type Comment struct {
 	IsLikedByAuthor *bool `json:"is_liked_by_author"`
 	// Written by the post's author (the creator's own comment, marked as such by the platform).
 	IsByPostAuthor *bool `json:"is_by_post_author"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics CommentMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific CommentPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text. A list path (external_links) means
 	// the list may be incomplete. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -1409,7 +1387,7 @@ type FacebookCommunitySpecific struct {
 	// Administrators of the group.
 	AdminCount *int64 `json:"admin_count"`
 	// The IDs of the administrators among moderators (the rest are its moderators), as far as Facebook shows them;
-	// [] when none are shown (listed in unknown_fields when the source cannot see them).
+	// [] when none are shown (or unknown: see unknown_fields).
 	AdminIds []string `json:"admin_ids"`
 	// Moderators of the group (not counting its administrators).
 	ModeratorCount *int64 `json:"moderator_count"`
@@ -1448,8 +1426,7 @@ type XCommunitySpecific struct {
 	Creator *ProfileRef `json:"creator"`
 	// People who run it, its admin included, as X counts them.
 	ModeratorCount *int64 `json:"moderator_count"`
-	// Words its moderators chose for people to find it by; [] when none (listed in unknown_fields when the source
-	// cannot see them).
+	// Words its moderators chose for people to find it by; [] when none (or unknown: see unknown_fields).
 	SearchTags []string `json:"search_tags"`
 	// The few members X shows on the community's page: a sample chosen by X, not its member list.
 	SampleMembers []ProfileRef `json:"sample_members"`
@@ -1486,32 +1463,30 @@ type Community struct {
 	AvatarURL *string `json:"avatar_url"`
 	// Header or cover image URL; null when it has none. Format: uri.
 	BannerURL *string `json:"banner_url"`
-	// public: anyone can see its posts and any member can post; restricted: anyone can see its posts, only approved
-	// members can post; private: only members can see its posts (a private community answers private_or_unavailable
-	// unless its page shows these fields logged out). New values may be added; treat unknown values as restricted.
-	// Known values: public, restricted, private.
+	// public: anyone sees its posts, any member posts; restricted: anyone sees its posts, approved members post;
+	// private: only members see its posts (answered private_or_unavailable unless its page shows logged out). New
+	// values may be added; treat unknown values as restricted. Known values: public, restricted, private.
 	Privacy *string `json:"privacy"`
 	// Marked adult (NSFW) by the platform; null where the platform has no such mark.
 	IsNSFW *bool `json:"is_nsfw"`
 	// Topics or categories the platform files it under, as shown (not normalized); [] when none.
 	Categories []string `json:"categories"`
-	// Its published rules, in the platform's order; [] when it has none (listed in unknown_fields when the source
-	// cannot see them).
+	// Its published rules, in the platform's order; [] when it has none (or unknown: see unknown_fields).
 	Rules []CommunityRule `json:"rules"`
-	// Accounts that run it (admins and moderators) the platform shows; [] when none are shown (listed in
-	// unknown_fields when the source cannot see them).
+	// Accounts that run it (admins and moderators) the platform shows; [] when none are shown (or unknown: see
+	// unknown_fields).
 	Moderators []ProfileRef `json:"moderators"`
 	// When it was created, RFC 3339 UTC. Format: date-time.
 	CreatedAt *string `json:"created_at"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics CommunityMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific CommunityPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text ("762.0K members":
 	// metrics.member_count). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -1563,8 +1538,7 @@ type ContributionCalendar struct {
 	URL string `json:"url"`
 	// The account whose contributions these are; at least its username.
 	Account ProfileRef `json:"account"`
-	// The calendar year the period is, when it is one (January 1 to December 31, cut at today for the current year);
-	// null when the period is the trailing twelve months.
+	// The calendar year the period covers, cut at today for the current year; null for the trailing twelve months.
 	Year *int64 `json:"year"`
 	// First day of the period, YYYY-MM-DD (days[0].date). Format: date.
 	StartDate string `json:"start_date"`
@@ -1581,7 +1555,7 @@ type ContributionCalendar struct {
 	// JSON paths of values rounded or capped by the platform. [] when all exact (every platform's counts are exact
 	// today).
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none; days always lists the period, so always [].
+	// JSON paths of lists whose [] means unknown, not none; days always lists the period, so always [].
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -1669,15 +1643,15 @@ type Download struct {
 	// Largest cover or poster image URL of the post (the first attachment's; each file's own is
 	// files[].thumbnail_url); CDN links can expire within hours. Format: uri.
 	ThumbnailURL *string `json:"thumbnail_url"`
-	// The post's files by item_index, the sound last; each item's best first (a url, the item's own kind before its
-	// separate audio, no watermark, with sound, not a manifest, then resolution). At least one has a url.
+	// Files by item_index, the sound last; each item's best first (has a url, its own kind before separate audio, no
+	// watermark, with sound, not a manifest, then resolution). At least one has a url.
 	Files []DownloadFile `json:"files"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific DownloadPlatformSpecific `json:"platform_specific"`
 	// JSON paths of estimated or rounded values (a size from bitrate × duration, a duration in whole seconds). []
 	// when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none. [] when every list is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -1723,15 +1697,15 @@ type Effect struct {
 	Media []Media `json:"media"`
 	// When the effect was published, RFC 3339 UTC. Format: date-time.
 	PublishedAt *string `json:"published_at"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics EffectMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific EffectPlatformSpecific `json:"platform_specific"`
-	// JSON paths of values rounded by the platform or parsed from display text (e.g. metrics.post_count from "304.5M
-	// videos"). A list path (media) means the list may be incomplete. [] when all exact.
+	// JSON paths of values rounded by the platform or parsed from display text ("304.5M videos":
+	// metrics.post_count). A list path (media) means the list may be incomplete. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -1746,15 +1720,13 @@ type Embed struct {
 	// What is embedded, named by its resource: post (any post: photo, carousel, video, reel), profile (an account),
 	// or playlist. New values may be added; treat unknown values as other. Known values: post, profile, playlist.
 	Type string `json:"type"`
-	// The ID the platform's embed is addressed by (as in embed_url): a post's ID (equals post.id), a playlist's ID,
-	// and for a profile the account's username on platforms whose profile embeds are addressed by it (Instagram,
-	// TikTok); the account's numeric ID, when known, is author.id.
+	// The ID in embed_url: a post's (equals post.id) or a playlist's; for a profile, the username where embeds
+	// address profiles by it (Instagram, TikTok), with the numeric ID in author.id.
 	ID string `json:"id"`
 	// Canonical public URL of what is embedded (post.url, profile.url): the link the embed opens. Format: uri.
 	URL string `json:"url"`
-	// The platform's embed code, ready to paste into an HTML page: its markup and, unless asked to leave it out, the
-	// script tag that turns it into the embedded post or profile. It loads the platform's script and content in the
-	// visitor's browser.
+	// The platform's embed code: its markup and, unless asked to leave it out, the script tag that renders it,
+	// loading the platform's content in the visitor's browser.
 	HTML string `json:"html"`
 	// The platform's embed page alone, for an iframe's src (what html's script loads); null when the platform has
 	// none. Format: uri.
@@ -1782,15 +1754,14 @@ type Embed struct {
 }
 
 type YouTubeProfileSpecific struct {
-	// The channel's keywords as its owner wrote them, a quoted phrase as one keyword; [] when it has none (listed in
-	// unknown_fields when the source cannot see them).
+	// The channel's keywords as its owner wrote them, a quoted phrase as one keyword; [] when it has none (or
+	// unknown: see unknown_fields).
 	Keywords []string `json:"keywords"`
 	// True for an Official Artist Channel (the note badge after its name), false for any other channel; null when
 	// the page shows no badge row (YouTube's built-in channels).
 	IsOfficialArtistChannel *bool `json:"is_official_artist_channel"`
-	// True when the channel hides its subscriber count (metrics.follower_count is then null; neither its About panel
-	// nor its header shows one), false when YouTube shows it; null when that cannot be told (no About panel or
-	// header seen).
+	// True when the channel hides its subscriber count (metrics.follower_count is then null), false when YouTube
+	// shows it; null when neither its About panel nor its header was seen.
 	IsSubscriberCountHidden *bool `json:"is_subscriber_count_hidden"`
 	// True when the channel lists a business email (shown to signed-in users only; the address is not returned);
 	// null otherwise, since YouTube shows nothing for a channel without one.
@@ -1809,36 +1780,31 @@ type InstagramProfileSpecific struct {
 	// True when the profile shows story highlights, false when it shows none; null when unknown (private accounts,
 	// or a source that does not show them).
 	IsHighlightsShown *bool `json:"is_highlights_shown"`
-	// The kind of account Instagram says it is: personal, or one of its professional kinds, business or creator (an
-	// account picks one; it says nothing of whether a person or an organization runs it). Null when the source does
-	// not show it. New values may be added; treat unknown values as unknown. Known values: personal, business,
+	// The account kind Instagram states (business and creator are professional kinds the owner picks, saying nothing
+	// of who runs it). New values may be added; treat unknown values as unknown. Known values: personal, business,
 	// creator.
 	AccountType *string `json:"account_type"`
-	// The pronouns the owner chose to show on the profile, as shown; [] when none (listed in unknown_fields when the
-	// source cannot see them).
+	// The pronouns the owner chose to show on the profile, as shown; [] when none (or unknown: see unknown_fields).
 	Pronouns []string `json:"pronouns"`
 }
 
 type RumbleProfileSpecific struct {
-	// channel for a Rumble channel (rumble.com/c/<name>), user for a Rumble user (rumble.com/user/<name>: the
-	// account that uploads, which can own channels). Null when unknown. New values may be added; treat unknown
-	// values as unknown. Known values: channel, user.
+	// channel: a Rumble channel (rumble.com/c/<name>); user: the uploading account (rumble.com/user/<name>), which
+	// can own channels. New values may be added; treat unknown values as unknown. Known values: channel, user.
 	AccountType *string `json:"account_type"`
-	// Rumble's numeric ID of the channel or the user, in decimal (the channel's is the number in its
-	// rumble.com/c/c-<id> link). Channels and users are numbered separately, so the same number can name a channel
-	// and a user: id is the unambiguous reference. Null when unknown.
+	// Rumble's decimal number for the channel or user (a channel's is in its rumble.com/c/c-<id> link). Channels and
+	// users are numbered separately, so one number can name both: id is unambiguous.
 	NumericID *string `json:"numeric_id"`
-	// The id of the Rumble user that owns the channel (_u…, the id this endpoint answers for that user); for a user,
-	// its own id. Channels of one owner share it. Null when the page does not show it.
+	// The id of the Rumble user that owns the channel (_u…, usable as input for that user), shared by the owner's
+	// channels; for a user, its own id.
 	UserID *string `json:"user_id"`
 }
 
 type ThreadsProfileSpecific struct {
-	// Topic labels Threads shows on the profile, as shown; [] when it shows none (listed in unknown_fields when the
-	// source cannot see them).
+	// Topic labels Threads shows on the profile, as shown; [] when it shows none (or unknown: see unknown_fields).
 	InterestTags []string `json:"interest_tags"`
-	// The external_links URLs Threads marks as verified, in the same form; [] when none is marked (listed in
-	// unknown_fields when the source cannot see the links).
+	// The external_links URLs Threads marks as verified, in the same form; [] when none is marked (or unknown: see
+	// unknown_fields).
 	VerifiedLinkUrls []string `json:"verified_link_urls"`
 }
 
@@ -1874,8 +1840,8 @@ type RedditTrophy struct {
 }
 
 type RedditProfileSpecific struct {
-	// Total karma, as the profile shows it: post karma plus comment karma. Reddit's own score of the upvotes the
-	// account's posts and comments received, fuzzed and not a count of votes.
+	// Total karma as the profile shows it, post plus comment karma: Reddit's fuzzed score of the upvotes the
+	// account's posts and comments received, not a count of votes.
 	Karma *int64 `json:"karma"`
 	// Karma from the account's posts.
 	PostKarma *int64 `json:"post_karma"`
@@ -1891,10 +1857,9 @@ type RedditProfileSpecific struct {
 	// prompt.
 	IsNSFW *bool `json:"is_nsfw"`
 	// Subreddits the account moderates, as its profile lists them; Reddit lists the first few only (the list is then
-	// in approximate_fields). [] when it moderates none (listed in unknown_fields when the source cannot see them).
+	// in approximate_fields). [] when it moderates none (or unknown: see unknown_fields).
 	ModeratedSubreddits []RedditSubredditRef `json:"moderated_subreddits"`
-	// The account's Trophy Case, in Reddit's order; [] when it has none (listed in unknown_fields when the source
-	// cannot see them).
+	// The account's Trophy Case, in Reddit's order; [] when it has none (or unknown: see unknown_fields).
 	Trophies []RedditTrophy `json:"trophies"`
 }
 
@@ -1918,13 +1883,13 @@ type GoogleElectionAdvertiser struct {
 }
 
 type GoogleProfileSpecific struct {
-	// The ads the center shows for the advertiser, as Google's range (equal bounds when exact), in the region the
-	// request names where it takes one; metrics.post_count is its lower bound. Null when not shown.
+	// How many ads the center shows for the advertiser, as Google's range (equal bounds when exact), in the
+	// request's region where it takes one; metrics.post_count is its lower bound.
 	Ads *Range `json:"ads"`
 	// The advertiser's legal name, as Google verified it; null when the center shows none.
 	LegalName *string `json:"legal_name"`
-	// The last time one of the advertiser's ads was shown, RFC 3339 UTC (among the ads counted in ads); null when it
-	// has none or the center does not show it. Format: date-time.
+	// When one of the advertiser's ads (those counted in ads) was last shown, RFC 3339 UTC; null when it has none or
+	// the center does not show it. Format: date-time.
 	LastShownAt *string `json:"last_shown_at"`
 	// True when Google verified the advertiser to run election ads (it has a page in the center's political ads
 	// view).
@@ -1974,11 +1939,11 @@ type FacebookProfileSpecific struct {
 	AlternateName *string `json:"alternate_name"`
 	// True for a memorialized account ("Remembering …").
 	IsMemorialized *bool `json:"is_memorialized"`
-	// How many people Facebook counts as talking about the account. It is shown only on the profile's own page,
-	// which most requests are answered without: null when this answer did not read it.
+	// People Facebook counts as talking about the account. Only the profile's own page shows it, and most answers
+	// don't read that page: null then.
 	TalkingAboutCount *int64 `json:"talking_about_count"`
-	// How many people have checked in at a place's Page. It is shown only on the profile's own page, which most
-	// requests are answered without: null when this answer did not read it, or for an account that is not a place.
+	// People who checked in at a place's Page; null for other accounts. Only the profile's own page shows it, and
+	// most answers don't read that page: null then too.
 	WereHereCount *int64 `json:"were_here_count"`
 	// The public contact email the profile shows.
 	Email *string `json:"email"`
@@ -2028,9 +1993,9 @@ type FacebookProfileSpecific struct {
 	// True when the Page has been deleted, as the Ad Library's advertiser search states it: its ads stay in the
 	// library. Null for a profile read from elsewhere.
 	IsDeleted *bool `json:"is_deleted"`
-	// Meta's own label for the advertiser in its Ad Library, as written there (PERSON_PROFILE, REGULAR_PAGE,
-	// IG_ADS_IDENTITY for an advertiser that exists only on Instagram). It labels brands PERSON_PROFILE too: it says
-	// how Meta files the advertiser, not what it is. New values may appear. Null for a profile read from elsewhere.
+	// Meta's Ad Library label for the advertiser (PERSON_PROFILE, REGULAR_PAGE, IG_ADS_IDENTITY for an
+	// Instagram-only advertiser): how Meta files it, not what it is (brands get PERSON_PROFILE too). Null when read
+	// elsewhere.
 	AdLibraryEntityType *string `json:"ad_library_entity_type"`
 }
 
@@ -2198,8 +2163,8 @@ type LinkbioSocialLink struct {
 }
 
 type LinkbioProfileSpecific struct {
-	// The @name the page shows under its picture, without the @: usually the account's Instagram username, which can
-	// differ from the page's own name (username). Null when the page shows none.
+	// The @name under the page's picture, without the @: usually the account's Instagram username, which can differ
+	// from username (the page's own). Null when none is shown.
 	LinkedUsername *string `json:"linked_username"`
 	// Email addresses the page lists as contact icons, links, contact cards or in its bio; [] if none.
 	Emails []string `json:"emails"`
@@ -2207,8 +2172,8 @@ type LinkbioProfileSpecific struct {
 	Phones []string `json:"phones"`
 	// The page's row of social and contact icons, in order; [] if none.
 	SocialLinks []LinkbioSocialLink `json:"social_links"`
-	// How many links the page's link list holds, icons not included: what was read when that is all of it, else
-	// Lnk.Bio's own count, which can include embedded players. Null when neither is known.
+	// Links in the page's link list, icons not included: the count read when the list was read whole, else Lnk.Bio's
+	// own count, which can include embedded players.
 	LinkCount *int64 `json:"link_count"`
 	// The account's own domain for this page, when it has one (https://7ad.sa for lnk.bio/7adsa). Null when it has
 	// none. Format: uri.
@@ -2270,20 +2235,19 @@ type LinkmeProfileSpecific struct {
 	Locations []string `json:"locations"`
 	// The page's row of social icons, in order; [] if none.
 	SocialLinks []LinkmeSocialLink `json:"social_links"`
-	// The page's list of link buttons and cards, in page order, with a carousel's cards in place of the carousel and
-	// without section headings, which each entry names instead; [] if none.
+	// The page's link buttons and cards in page order, a carousel's cards in its place, section headings left out
+	// (each entry names its section); [] if none.
 	FeaturedLinks []LinkmeFeaturedLink `json:"featured_links"`
 	// How many entries Linkme counts in the page's link list, section headings and carousels each counting as one.
 	LinkCount *int64 `json:"link_count"`
 	// How many visits Linkme counts for the page, as Linkme rounds it from a thousand up: then listed in
 	// approximate_fields.
 	ProfileVisitCount *int64 `json:"profile_visit_count"`
-	// The part of metrics.follower_count that comes from the networks the account connected to Linkme. Null when it
-	// has none (no network connected), when the account hid its total, or on a private page.
+	// The part of metrics.follower_count from the networks the account connected to Linkme; null when none is
+	// connected, the account hid its total, or the page is private.
 	NetworkFollowerCount *int64 `json:"network_follower_count"`
-	// The part of metrics.follower_count Linkme counts itself, which the page's followers sheet lists as Links on
-	// the account's own Linkme row; not the links on the page (link_count is). Null when the account hid its total,
-	// or on a private page.
+	// The part of metrics.follower_count Linkme counts itself (the followers sheet's Links), not the page's links
+	// (link_count). Null when the total is hidden or the page private.
 	LinkmeConnectionCount *int64 `json:"linkme_connection_count"`
 	// True when the page opens behind an age gate: a notice to continue past, or a birth date to type.
 	IsAdult *bool `json:"is_adult"`
@@ -2303,9 +2267,8 @@ type XAffiliation struct {
 }
 
 type XProfileSpecific struct {
-	// The kind of verified organization X says the account is (business: the gold check, government: the grey one);
-	// null when it is neither, or when the source does not show it. New values may be added; treat unknown values as
-	// other. Known values: business, government.
+	// The account's verified organization kind (business: gold check; government: grey check); null when neither or
+	// not shown. New values may be added; treat unknown values as other. Known values: business, government.
 	VerifiedType *string `json:"verified_type"`
 	// True when the account has the blue check of an X Premium subscription, false when it does not; null when
 	// unknown. is_verified is true for any check.
@@ -2324,12 +2287,11 @@ type XProfileSpecific struct {
 	LikeCount *int64 `json:"like_count"`
 	// Posts on the profile's Highlights tab; null when the source does not show it.
 	HighlightedPostCount *int64 `json:"highlighted_post_count"`
-	// IDs of the posts pinned to the top of the profile, as x.post takes them; [] when none (listed in
-	// unknown_fields when the source cannot see them).
+	// IDs of the posts pinned to the top of the profile, as the X (Twitter) Post API takes them; [] when none (or
+	// unknown: see unknown_fields).
 	PinnedPostIds []string `json:"pinned_post_ids"`
-	// The professional account kind the owner chose (business or creator); null for a personal account or when the
-	// source does not show it. New values may be added; treat unknown values as other. Known values: business,
-	// creator.
+	// The professional account kind the owner chose; null for a personal account or when not shown. New values may
+	// be added; treat unknown values as other. Known values: business, creator.
 	ProfessionalType *string `json:"professional_type"`
 	// The organization X shows the account as affiliated with (its badge beside the name); null when none or when
 	// the source does not show it.
@@ -2337,7 +2299,7 @@ type XProfileSpecific struct {
 	// True when X marks the account's media as possibly sensitive by default, false otherwise; null when unknown.
 	IsPossiblySensitive *bool `json:"is_possibly_sensitive"`
 	// ISO 3166-1 alpha-2 codes of the countries where X withholds the account for legal reasons, upper case; [] when
-	// none (listed in unknown_fields when the source cannot see them).
+	// none (or unknown: see unknown_fields).
 	WithheldInCountries []string `json:"withheld_in_countries"`
 }
 
@@ -2396,8 +2358,8 @@ type LinkedInPosition struct {
 	Location *string `json:"location"`
 	// The member's description of it; null when none.
 	Description *string `json:"description"`
-	// The skills the member ties to the position, in their order; [] when they tie none. LinkedIn's logged-out page
-	// doesn't show them (unknown_fields names them then); a data partner's copy does (meta.source vendor).
+	// Skills the member ties to the position, in their order; [] when none. Only a data partner's copy shows them
+	// (meta.source vendor); otherwise unknown_fields lists them.
 	Skills []string `json:"skills"`
 }
 
@@ -2417,7 +2379,7 @@ type LinkedInVolunteering struct {
 	Role *string `json:"role"`
 	// The organization, with its Page's link when it has one; null when not shown.
 	Organization *ProfileRef `json:"organization"`
-	// The cause, as LinkedIn names it (Economic Empowerment, Health, Education); null when not shown.
+	// The cause, as LinkedIn names it (Animal Welfare, Health, Education); null when not shown.
 	Cause *string `json:"cause"`
 	// When it started, a year (2015) or a month (2015-03); null when not shown.
 	StartedOn *string `json:"started_on"`
@@ -2567,14 +2529,12 @@ type LinkedInMemberRef struct {
 }
 
 type LinkedInProfileSpecific struct {
-	// What the account is on LinkedIn: a company's Page (linkedin.com/company/…), a school's (/school/…), a showcase
-	// page, a company's page for one brand or product (/showcase/…), a member, a person (/in/…), or a newsletter
-	// members subscribe to (/newsletters/…). New values may be added; treat unknown values as other. Known values:
-	// company, school, showcase, member, newsletter.
+	// The account's kind on LinkedIn; member: a person (/in/…); showcase: a company's page for one brand or product
+	// (/showcase/…). New values may be added; treat unknown values as other. Known values: company, school,
+	// showcase, member, newsletter.
 	Kind *string `json:"kind"`
-	// How often a newsletter is published, as LinkedIn shows it under its name (daily, weekly, biweekly or monthly);
-	// null for any other account, and when LinkedIn shows none. New values may be added; treat unknown values as
-	// other. Known values: daily, weekly, biweekly, monthly.
+	// How often a newsletter is published, as LinkedIn shows under its name; null for other accounts or when not
+	// shown. New values may be added; treat unknown values as other. Known values: daily, weekly, biweekly, monthly.
 	PublicationFrequency *string `json:"publication_frequency"`
 	// The Page's tagline, the line under its name; null when it has none, and for a member.
 	Tagline *string `json:"tagline"`
@@ -2609,17 +2569,16 @@ type LinkedInProfileSpecific struct {
 	ConnectionCount *int64 `json:"connection_count"`
 	// True when LinkedIn marks the member as an influencer (its Top Voice badge beside the name); null for a Page.
 	IsInfluencer *bool `json:"is_influencer"`
-	// The member's positions, as their public profile lists them (current first, then past). Where LinkedIn hides
-	// the list from logged-out visitors, the current organization it still names, with title null; [] when it names
-	// none.
+	// The member's positions as their public profile lists them, current first. Where LinkedIn hides the list logged
+	// out, the current organization it still names, with title null; [] when none.
 	Experience []LinkedInPosition `json:"experience"`
 	// The member's education, as their public profile lists it. Where LinkedIn hides the list from logged-out
 	// visitors, the school it still names, with degree null; [] when it names none.
 	Education []LinkedInEducation `json:"education"`
 	// True when LinkedIn marks the member as a creator (creator mode); null for a Page.
 	IsCreator *bool `json:"is_creator"`
-	// True when the member shows LinkedIn's Open to Work frame, false when they don't; null when unknown (LinkedIn's
-	// logged-out page doesn't show it, a data partner's copy does: meta.source vendor) and for a Page.
+	// True when the member shows LinkedIn's Open to Work frame, false when not; null for a Page and when unknown
+	// (only a data partner's copy shows it: meta.source vendor).
 	IsOpenToWork *bool `json:"is_open_to_work"`
 	// True when the member shows LinkedIn's Hiring frame, false when they don't; null when unknown (as
 	// is_open_to_work) and for a Page.
@@ -2655,11 +2614,10 @@ type LinkedInProfileSpecific struct {
 	RecommendationCount *int64 `json:"recommendation_count"`
 	// Members LinkedIn shows as similar to this one (its People also viewed); [] when it shows none, and for a Page.
 	SimilarProfiles []LinkedInMemberRef `json:"similar_profiles"`
-	// On a list of the accounts that reacted to a post (the LinkedIn Post Reactions API): how this one reacted, by
-	// LinkedIn's own name: like, praise (Celebrate), empathy (Love), appreciation (Support), interest (Insightful)
-	// or entertainment (Funny). Null on every other answer, and when the reaction's type isn't known. New values may
-	// be added; treat any other value as null. Known values: like, praise, empathy, appreciation, interest,
-	// entertainment.
+	// How this account reacted, on a list of a post's reactions (the LinkedIn Post Reactions API): praise
+	// (Celebrate), empathy (Love), appreciation (Support), interest (Insightful), entertainment (Funny). Null
+	// elsewhere and when not said. New values may be added; treat unknown values as null. Known values: like,
+	// praise, empathy, appreciation, interest, entertainment.
 	ReactionType *string `json:"reaction_type"`
 }
 
@@ -2683,9 +2641,9 @@ type KomiItemLink struct {
 type KomiPageItem struct {
 	// Komi's ID of the item; null for items Komi reads from another service (a shop's or Bandsintown's).
 	ID *string `json:"id"`
-	// Komi's name for the kind of module, lowercase: link, product, digital_product, youtube_video, youtube_short,
+	// The module's kind, as Komi names it. Known: link, product, digital_product, youtube_video, youtube_short,
 	// tiktok_video, instagram_reel, music, podcast, events, bandsintown, seated, text, media_gallery, shop_my_shelf,
-	// mail_link, data_capture_signup, form_data, … New values may be added: treat an unknown one as a generic item.
+	// mail_link, data_capture_signup, form_data. New values may be added; treat unknown values as a generic item.
 	Type string `json:"type"`
 	// The name of the group the item sits in on the page; null when it is in none.
 	Group *string `json:"group"`
@@ -2693,15 +2651,14 @@ type KomiPageItem struct {
 	Section *string `json:"section"`
 	// The item's label: a link's text, a product's name, a video's or a release's title.
 	Title *string `json:"title"`
-	// Where the item leads: the link's target (a mailto: link for a mail_link), the product's page, the video, the
-	// release's or the digital product's page on Komi, an event's tickets. Null for a form or a text. Format: uri.
+	// Where the item leads: a link's target (mailto: for a mail_link), the product's page, the video, a release's or
+	// digital product's Komi page, an event's tickets. Null for a form or text. Format: uri.
 	URL *string `json:"url"`
 	// The item's image; null when it has none. Format: uri.
 	ThumbnailURL *string `json:"thumbnail_url"`
 	// The text of a text module, a gallery image's caption, or a product's description.
 	Description *string `json:"description"`
-	// A product's price as the page shows it, in major units of currency; 0 is a free digital download; null when
-	// the item has no price or the page shows none.
+	// A product's price as shown, in major units of currency; 0 is a free digital download; null when none is shown.
 	Price *float64 `json:"price"`
 	// ISO 4217 currency of price; null when the item has no price or Komi does not say.
 	Currency *string `json:"currency"`
@@ -2727,12 +2684,11 @@ type KomiProfileSpecific struct {
 	LastName *string `json:"last_name"`
 	// The artwork the page shows as its name, when it has one; null otherwise. Format: uri.
 	DisplayNameImageURL *string `json:"display_name_image_url"`
-	// The page's row of social and music profiles and contact links, in the page's order; [] when it has none
-	// (listed in unknown_fields when the source cannot see them).
+	// The page's row of social and music profiles and contact links, in the page's order; [] when it has none (or
+	// unknown: see unknown_fields).
 	SocialLinks []KomiSocialLink `json:"social_links"`
-	// What the page shows, flattened in the page's order: links, products, videos, music, podcasts, events, text and
-	// galleries. Modules the owner has hidden are not returned; [] when the page shows nothing (listed in
-	// unknown_fields when the source cannot see them).
+	// What the page shows, flattened in its order (links, products, videos, music, podcasts, events, text,
+	// galleries), hidden modules left out; [] when it shows nothing (or unknown: see unknown_fields).
 	Items []KomiPageItem `json:"items"`
 }
 
@@ -2758,14 +2714,13 @@ type BlueskyProfileSpecific struct {
 	// True when Bluesky trusts this account to verify others; is_verified is then true too. Null when the public
 	// page answered instead of the AppView.
 	IsTrustedVerifier *bool `json:"is_trusted_verifier"`
-	// Who verified this account, each with when; [] when nobody did (listed in unknown_fields when the source cannot
-	// see them).
+	// Who verified this account, each with when; [] when nobody did (or unknown: see unknown_fields).
 	VerifiedBy []BlueskyVerification `json:"verified_by"`
-	// The at:// ID of the post the account pinned, which bluesky.post takes as url; null when it pinned none, or
-	// when the public page answered instead of the AppView.
+	// The at:// ID of the post the account pinned, which the Bluesky Post API takes as url; null when it pinned none
+	// or the source does not show it.
 	PinnedPostID *string `json:"pinned_post_id"`
-	// Moderation and self labels on the account (bot, porn, spam, …), as Bluesky names them; [] when none (listed in
-	// unknown_fields when the source cannot see them).
+	// Moderation and self labels on the account (bot, porn, spam, …), as Bluesky names them; [] when none (or
+	// unknown: see unknown_fields).
 	Labels []string `json:"labels"`
 	// How many lists the account made; null when the public page answered instead of the AppView.
 	ListCount *int64 `json:"list_count"`
@@ -2818,7 +2773,7 @@ type SoundcloudProfileSpecific struct {
 	// When the account last changed its profile, RFC 3339 UTC. Format: date-time.
 	LastModifiedAt *string `json:"last_modified_at"`
 	// The links the account lists on its profile, in its order, with SoundCloud's name for each and the email
-	// addresses among them; [] when none (listed in unknown_fields when the source cannot see them).
+	// addresses among them; [] when none (or unknown: see unknown_fields).
 	SocialLinks []SoundcloudSocialLink `json:"social_links"`
 }
 
@@ -2893,7 +2848,7 @@ type SnapchatSpotlightSummary struct {
 	Width *int64 `json:"width"`
 	// Height in pixels.
 	Height *int64 `json:"height"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics SnapchatSpotlightMetrics `json:"metrics"`
 }
 
@@ -2907,8 +2862,8 @@ type SnapchatProfileSpecific struct {
 	CategoryID *string `json:"category_id"`
 	// The subcategory the account chose, as the platform identifies it (public-profile-subcategory-v3-creator).
 	SubcategoryID *string `json:"subcategory_id"`
-	// True when the Story the profile page plays holds a Snap under 24 hours old, false when it plays none or only
-	// older ones; null when unknown (no public profile, or Snaps that state no time).
+	// True when the profile's Story holds a Snap under 24 hours old, false when it has none or only older ones; null
+	// without a public profile or Snap times.
 	IsStoryLive *bool `json:"is_story_live"`
 	// The page says the account has public Spotlights.
 	IsSpotlightsPublic *bool `json:"is_spotlights_public"`
@@ -2947,15 +2902,15 @@ type KwaiProfileSpecific struct {
 	// Playlists the account has. Null when Kwai states none, which is also how it writes an account without any, and
 	// on an answer from Kwai's API.
 	PlaylistCount *int64 `json:"playlist_count"`
-	// True when Kwai writes the account as banned, and it gives no reason. Kwai then blanks the account's name,
-	// picture, bio and badge, so is_verified is null, and lists no posts whatever metrics.post_count says.
+	// True when Kwai marks the account banned (it gives no reason). Kwai then blanks its name, picture, bio and
+	// badge (is_verified null) and lists no posts, whatever metrics.post_count says.
 	IsBanned *bool `json:"is_banned"`
 }
 
 type TwitchCategory struct {
 	// Twitch's ID of the category.
 	ID *string `json:"id"`
-	// Its name (Just Chatting).
+	// Its name (Fortnite).
 	Name *string `json:"name"`
 	// Its name in links (twitch.tv/directory/category/just-chatting).
 	Slug *string `json:"slug"`
@@ -3032,13 +2987,12 @@ type TelegramProfileSpecific struct {
 	// What Telegram's page shows the account to be: channel, group, user or bot. New values may be added. Known
 	// values: channel, group, user, bot.
 	AccountType *string `json:"account_type"`
-	// Telegram's numeric ID of the channel, which stays when its username changes. Null when the channel's preview
-	// shows none (its first message was deleted, or it serves no preview), and for a group, a user or a bot.
+	// Telegram's numeric ID of the channel, which survives username changes. Null when its preview shows none (first
+	// message deleted, or no preview), and for a group, user or bot.
 	ChannelID *string `json:"channel_id"`
-	// Whether t.me served this channel's public preview (t.me/s/<name>, where telegram.channel_posts reads its
-	// posts) from where this request left: it is off on some channels, and Telegram withholds some only in certain
-	// countries. False for a group, a user or a bot. Null when the request for the preview failed (a partial_data
-	// warning).
+	// Whether t.me served the channel's public preview (t.me/s/<name>, what the Telegram Channel Posts API reads) to
+	// this request's location: some channels turn it off, and Telegram withholds some by country. False for a group,
+	// user or bot; null when the request failed (partial_data).
 	IsPreviewAvailable *bool `json:"is_preview_available"`
 	// Members online now, on a group that shows it; null otherwise.
 	OnlineCount *int64 `json:"online_count"`
@@ -3066,7 +3020,7 @@ type SpotifyTopCity struct {
 }
 
 type SpotifyArtistTrack struct {
-	// The track's base62 ID, what spotify.track takes.
+	// The track's base62 ID, what the Spotify Track API takes.
 	ID string `json:"id"`
 	// The track's page. Format: uri.
 	URL string `json:"url"`
@@ -3082,7 +3036,7 @@ type SpotifyArtistTrack struct {
 	IsExplicit *bool `json:"is_explicit"`
 	// The disc of its release it is on; null where the list states none.
 	DiscNumber *int64 `json:"disc_number"`
-	// The ID of the release it is on, what spotify.album takes.
+	// The ID of the release it is on, what the Spotify Album API takes.
 	AlbumID *string `json:"album_id"`
 	// The release's cover at its largest size. Format: uri.
 	CoverURL *string `json:"cover_url"`
@@ -3092,7 +3046,7 @@ type SpotifyArtistTrack struct {
 }
 
 type SpotifyRelease struct {
-	// The release's base62 ID, what spotify.album takes.
+	// The release's base62 ID, what the Spotify Album API takes.
 	ID string `json:"id"`
 	// The release's page. Format: uri.
 	URL string `json:"url"`
@@ -3123,9 +3077,9 @@ type SpotifyReleases struct {
 	TotalCount *int64 `json:"total_count"`
 	// The releases the artist's page shows; [] when it shows none.
 	Items []SpotifyRelease `json:"items"`
-	// Every release ID Spotify's metadata record lists for the section, those in items included, each what
-	// spotify.album takes. One release can have several, its editions for different countries, so this can list more
-	// than total_count. [] when it lists none, or when the record could not be read (then named in partial_data).
+	// Every release ID Spotify lists for the section, items' included, each one the Spotify Album API takes;
+	// editions for other countries have their own, so this can exceed total_count. [] when none or unreadable (see
+	// partial_data).
 	Ids []string `json:"ids"`
 }
 
@@ -3147,7 +3101,7 @@ type SpotifyConcert struct {
 }
 
 type SpotifyPlaylistRef struct {
-	// The playlist's base62 ID, what spotify.playlist takes.
+	// The playlist's base62 ID, what the Spotify Playlist API takes.
 	ID string `json:"id"`
 	// The playlist's page. Format: uri.
 	URL string `json:"url"`
@@ -3195,8 +3149,8 @@ type SpotifyProfileSpecific struct {
 	GalleryUrls []string `json:"gallery_urls"`
 	// The cities with the most monthly listeners, most first, as many as Spotify shows; [] when it shows none.
 	TopCities []SpotifyTopCity `json:"top_cities"`
-	// The tracks the artist's page lists as popular, in its order; [] when it lists none. spotify.track answers each
-	// in full.
+	// The tracks the artist's page lists as popular, in its order; [] when it lists none. The Spotify Track API
+	// answers each in full.
 	TopTracks []SpotifyArtistTrack `json:"top_tracks"`
 	// The artist's music videos, as many as the page holds; [] when it holds none. Spotify states no length or plays
 	// for them here.
@@ -3234,8 +3188,8 @@ type SpotifyProfileSpecific struct {
 	FeaturedIn []SpotifyPlaylistRef `json:"featured_in"`
 	// How many playlists Spotify counts as featuring the artist, which featured_in can hold fewer of.
 	FeaturedInCount *int64 `json:"featured_in_count"`
-	// Playlists where listeners discovered the artist, as many as the page shows, which can be fewer than
-	// discovered_on_count says: Spotify answers some of them with an error, and they are left out. [] when none.
+	// Playlists where listeners discovered the artist, as the page shows them; Spotify fails on some, which are left
+	// out, so there can be fewer than discovered_on_count. [] when none.
 	DiscoveredOn []SpotifyPlaylistRef `json:"discovered_on"`
 	// How many playlists Spotify counts as where listeners discovered the artist, at most a hundred on the artists
 	// sampled.
@@ -3280,13 +3234,11 @@ type ApplemusicProfileSpecific struct {
 type PinterestProfileSpecific struct {
 	// Boards, as Pinterest counts them for the account. Its public list of boards can hold fewer.
 	PlaylistCount *int64 `json:"playlist_count"`
-	// The account's monthly views, as Pinterest counts them: how often its pins were seen over the last month. Above
-	// ten million Pinterest writes only that it is more, and this is 10000000, listed in approximate_fields; null
-	// when the account hides it.
+	// Pinterest's monthly views: how often the account's pins were seen in the last month. Above ten million it says
+	// only that, and this is 10000000 (in approximate_fields); null when hidden.
 	MonthlyViewCount *int64 `json:"monthly_view_count"`
-	// Everything the account follows, as Pinterest counts it: accounts, boards and interests.
-	// metrics.following_count counts the accounts alone. Its page's "N following" is this minus
-	// interest_following_count (accounts and boards), so it can be more than metrics.following_count.
+	// Everything the account follows: accounts, boards and interests (metrics.following_count counts accounts
+	// alone). Its page's "N following" is this minus interest_following_count.
 	AllFollowingCount *int64 `json:"all_following_count"`
 	// The interests (topics) the account follows, as Pinterest counts them: part of all_following_count, and the
 	// part its page's following count leaves out.
@@ -3327,8 +3279,8 @@ type AmazonSellerRatings struct {
 }
 
 type AmazonSellerFeedback struct {
-	// Share of the last 12 months' ratings that are positive (4 or 5 stars), as Amazon rounds it to a whole percent;
-	// null when the page shows none (no ratings in the last 12 months).
+	// Share of the last 12 months' ratings that are positive (4 or 5 stars), a whole percent as Amazon rounds it;
+	// null when there are none in that period.
 	PositivePercent *int64 `json:"positive_percent"`
 	// Ratings from the last 30 days (the page's 1 month); null when the page shows none.
 	Last30Days *AmazonSellerRatings `json:"last_30_days"`
@@ -3378,7 +3330,7 @@ type AmazonCuration struct {
 }
 
 type AmazonTrendingPick struct {
-	// The product's ASIN (what amazon.product takes).
+	// The product's ASIN (what the Amazon Product API takes).
 	Asin string `json:"asin"`
 	// The product's page in the storefront's marketplace. Format: uri.
 	URL string `json:"url"`
@@ -3396,21 +3348,19 @@ type AmazonStorefront struct {
 	// True when Amazon shows its Top Creator badge (a leading Amazon creator by customer engagement and sales),
 	// false when it shows none; null when unknown.
 	IsTopCreator *bool `json:"is_top_creator"`
-	// Its curations, named collections of its posts, in the storefront's order; [] when it has none (listed in
-	// unknown_fields when the source cannot see them).
+	// Its curations, named collections of its posts, in the storefront's order; [] when it has none (or unknown: see
+	// unknown_fields).
 	Curations []AmazonCuration `json:"curations"`
 	// The products Amazon shows as trending from this storefront, in its order; [] when it shows none.
 	TrendingPicks []AmazonTrendingPick `json:"trending_picks"`
 }
 
 type AmazonProfileSpecific struct {
-	// A seller's feedback from its buyers: the share of positive ratings, and per period its star rating and its
-	// ratings per star. Null on an account that is not a seller, or a seller whose page shows no feedback (Amazon's
+	// A seller's feedback from buyers; null for an account that is not a seller or whose page shows none (Amazon's
 	// own subsidiaries).
 	SellerFeedback *AmazonSellerFeedback `json:"seller_feedback"`
-	// A seller's business identity, as its page discloses it (by law in the US and the EU): legal name, registration
-	// and VAT numbers, phone, email and addresses. Null on an account that is not a seller, or a seller whose page
-	// discloses none.
+	// A seller's business identity as its page discloses it (required in the US and the EU); null for an account
+	// that is not a seller or whose page discloses none.
 	SellerBusiness *AmazonSellerBusiness `json:"seller_business"`
 	// An influencer's storefront: its Top Creator badge, its curations and its trending picks. Null on an account
 	// that is not an influencer (a seller).
@@ -3464,7 +3414,7 @@ type GithubProfileSpecific struct {
 	// bot. Format: date-time.
 	ArchivedAt *string `json:"archived_at"`
 	// How many commits to the repository GitHub credits the account with, on a repository's list of contributors
-	// (github.repository_contributors); null on every other answer.
+	// (the GitHub Contributors API); null on every other answer.
 	ContributionCount *int64 `json:"contribution_count"`
 	// The repository GitHub's trending developers board shows as the developer's popular repo; null when the board
 	// shows none for the developer, and on every endpoint but the trending board.
@@ -3475,8 +3425,8 @@ type HackernewsProfileSpecific struct {
 	// The user's karma, exact, as Hacker News shows it: its score of the votes the user's stories and comments
 	// received. Not a count of likes.
 	Karma *int64 `json:"karma"`
-	// How many items the user has submitted, exact: stories, comments, jobs and polls together, including ones
-	// Hacker News has since killed, as its API lists them. null when it could not be read (see partial_data).
+	// Items the user has submitted, exact: stories, comments, jobs and polls, killed ones included. Null when it
+	// could not be read (see partial_data).
 	SubmissionCount *int64 `json:"submission_count"`
 }
 
@@ -3544,7 +3494,7 @@ type ProfilePlatformSpecific struct {
 type Profile struct {
 	// Platform ID (tiktok, youtube, …).
 	Platform string `json:"platform"`
-	// Platform-native account ID (string; YouTube UC…, Reddit t2_…).
+	// Platform-native account ID (string), exactly as the platform writes it, its prefix included.
 	ID string `json:"id"`
 	// Handle without the @; null when the account has none.
 	Username *string `json:"username"`
@@ -3552,9 +3502,8 @@ type Profile struct {
 	DisplayName *string `json:"display_name"`
 	// Canonical profile URL. Format: uri.
 	URL string `json:"url"`
-	// Coarse account kind, as the platform labels it; unknown when it does not (TikTok labels organizations only).
-	// New values may be added; treat unknown values as unknown. Known values: person, organization, community,
-	// unknown.
+	// Coarse account kind, as the platform labels it; unknown when it does not. New values may be added; treat
+	// unknown values as unknown. Known values: person, organization, community, unknown.
 	Type string `json:"type"`
 	// Profile bio, channel description or page about text; null when empty or not exposed.
 	Bio *string `json:"bio"`
@@ -3578,15 +3527,15 @@ type Profile struct {
 	// Account creation or join date, RFC 3339 UTC (some platforms give only the day: see approximate_fields).
 	// Format: date-time.
 	CreatedAt *string `json:"created_at"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics ProfileMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific ProfilePlatformSpecific `json:"platform_specific"`
-	// JSON paths of values rounded by the platform or parsed from display text (e.g. metrics.follower_count). A list
-	// path (external_links) means the list may be incomplete. [] when all exact.
+	// JSON paths of values rounded by the platform or parsed from display text (metrics.follower_count). A list path
+	// (external_links) means the list may be incomplete. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -3656,7 +3605,7 @@ type TikTokPostSpecific struct {
 	Music *TikTokPostMusic `json:"music"`
 	// The author's exact follower count; null when the source does not state it.
 	AuthorFollowerCount *int64 `json:"author_follower_count"`
-	// The post on Creative Center's top videos board (tiktok.top_posts); null off a board.
+	// The post on Creative Center's top videos board (the TikTok Top Videos API); null off a board.
 	Board *TikTokPostBoard `json:"board"`
 }
 
@@ -3834,8 +3783,8 @@ type FacebookPostListing struct {
 	Location *string `json:"location"`
 	// Marked sold.
 	IsSold *bool `json:"is_sold"`
-	// The item's Marketplace page (facebook.com/marketplace/item/<id>), which facebook.listing reads; null for an
-	// item listed only in the group. Format: uri.
+	// The item's Marketplace page (facebook.com/marketplace/item/<id>), which the Facebook Marketplace Listing API
+	// reads; null for an item listed only in the group. Format: uri.
 	URL *string `json:"url"`
 }
 
@@ -3906,9 +3855,8 @@ type RedditPostSpecific struct {
 	// The subreddit the post was submitted to; for a post on a user's profile, the profile's own subreddit
 	// (u_<username>).
 	Subreddit *RedditSubredditRef `json:"subreddit"`
-	// Net score as Reddit shows it: upvotes minus downvotes, fuzzed by Reddit. Reddit floors a post's shown score at
-	// 0, so this is null when it shows 0 for a post most votes are against (upvote_ratio below 0.5): its true score
-	// is negative and unknown.
+	// Upvotes minus downvotes as Reddit shows it, fuzzed. Reddit floors shown scores at 0, so this is null when it
+	// shows 0 with upvote_ratio below 0.5.
 	Score *int64 `json:"score"`
 	// Share of votes that are upvotes, from 0 to 1.
 	UpvoteRatio *float64 `json:"upvote_ratio"`
@@ -4020,7 +3968,7 @@ type TruthsocialPostSpecific struct {
 type KickCategory struct {
 	// Kick's category ID.
 	ID *string `json:"id"`
-	// Its name (Just Chatting).
+	// Its name (Fortnite).
 	Name *string `json:"name"`
 	// Its name in links (kick.com/category/just-chatting).
 	Slug *string `json:"slug"`
@@ -4049,8 +3997,8 @@ type KickPostSpecific struct {
 	LivestreamID *string `json:"livestream_id"`
 	// What the channel was streaming when the clip was made.
 	Category *KickCategory `json:"category"`
-	// The saved broadcast the clip comes from; null when Kick keeps none (the broadcast's video was deleted or never
-	// saved) or the answer came from a source that can't link to it.
+	// The saved broadcast the clip comes from; null when Kick keeps none (deleted or never saved) or the source
+	// can't link to it.
 	Vod *KickVOD `json:"vod"`
 	// The account that made the clip, which may be a bot taking chat commands; author is the channel it was clipped
 	// from. Its id is null: see clipped_by_user_id.
@@ -4078,15 +4026,14 @@ type XPostCommunity struct {
 }
 
 type XPostSpecific struct {
-	// The author's counts at fetch time (followers, following, posts), which X answers with the post; null when the
-	// source does not show them. x.profile has the rest of the account.
+	// The author's counts at fetch time (followers, following, posts), which X answers with the post; null when not
+	// shown. The X (Twitter) Profile API has the rest.
 	AuthorMetrics *ProfileMetrics `json:"author_metrics"`
 	// True when the author has the blue check of an X Premium subscription; null when unknown. author.is_verified is
 	// true for any check.
 	IsAuthorBlueVerified *bool `json:"is_author_blue_verified"`
-	// The kind of verified organization X says the author is (business: the gold check, government: the grey one);
-	// null when it is neither. New values may be added; treat unknown values as other. Known values: business,
-	// government.
+	// The author's verified organization kind (business: gold check; government: grey check); null when neither. New
+	// values may be added; treat unknown values as other. Known values: business, government.
 	AuthorVerifiedType *string `json:"author_verified_type"`
 	// ID of the post that started the conversation (this post's own ID when it started one); null when the source
 	// does not show it.
@@ -4309,10 +4256,9 @@ type LinkedInArticleCard struct {
 }
 
 type LinkedInReaction struct {
-	// The reaction, by LinkedIn's own name: like, praise (Celebrate), empathy (Love), appreciation (Support),
-	// interest (Insightful) or entertainment (Funny); null when LinkedIn shows only that the member reacted. New
-	// values may be added; treat any other value as null. Known values: like, praise, empathy, appreciation,
-	// interest, entertainment.
+	// The reaction by LinkedIn's name: praise (Celebrate), empathy (Love), appreciation (Support), interest
+	// (Insightful), entertainment (Funny); null when not said. New values may be added; treat unknown values as
+	// null. Known values: like, praise, empathy, appreciation, interest, entertainment.
 	Type *string `json:"type"`
 	// When the member reacted, RFC 3339 UTC. Format: date-time.
 	ReactedAt *string `json:"reacted_at"`
@@ -4322,8 +4268,8 @@ type LinkedInReaction struct {
 }
 
 type LinkedInPostSpecific struct {
-	// The URN of the post's content (urn:li:share:<id> or urn:li:ugcPost:<id>): another number for the same post,
-	// which links and LinkedIn's own APIs can name it by. On an article, the article's feed post.
+	// The URN of the post's content (urn:li:share:<id> or urn:li:ugcPost:<id>), another number links and LinkedIn's
+	// APIs name the same post by; on an article, its feed post's.
 	ContentUrn *string `json:"content_urn"`
 	// The headline LinkedIn shows under the author's name on the post; null for a Page, whose line is its follower
 	// count.
@@ -4334,8 +4280,8 @@ type LinkedInPostSpecific struct {
 	IsAuthorInfluencer *bool `json:"is_author_influencer"`
 	// LinkedIn marks the post as edited; null on an article.
 	IsEdited *bool `json:"is_edited"`
-	// The activity the link named when it was a repost without commentary: the page shows the original post, which
-	// is what this answer describes (id, author, text, published_at are the original's). Null otherwise.
+	// The activity ID the link named when it was a repost without commentary; the answer then describes the original
+	// post (id, author, text, published_at). Null otherwise.
 	RepostActivityID *string `json:"repost_activity_id"`
 	// The link card the post shares (an article, an external video, a live event); null when none.
 	Link *LinkedInLink `json:"link"`
@@ -4364,9 +4310,8 @@ type BlueskyPostSpecific struct {
 	// When Bluesky's AppView first saw the post, RFC 3339 UTC; null when the record was read from the account's own
 	// repository instead of the AppView. Format: date-time.
 	IndexedAt *string `json:"indexed_at"`
-	// The time the post's own record states, RFC 3339 UTC: the author's client writes it, so it can be earlier than
-	// the post went public (an imported archive) or later than it; null when it can't be read as a time. Format:
-	// date-time.
+	// The time the post's record states, written by the author's client, RFC 3339 UTC: it can be earlier than the
+	// post went public (an imported archive) or later. Format: date-time.
 	CreatedAt *string `json:"created_at"`
 	// Every language the author tagged the post with, in the author's order; [] when none.
 	Languages []string `json:"languages"`
@@ -4380,8 +4325,8 @@ type BlueskyPostSpecific struct {
 	// The at:// ID of the post this one quotes; null when it quotes none. Stays set when the quoted post can't be
 	// shown.
 	QuotedPostID *string `json:"quoted_post_id"`
-	// The post this one quotes, as Bluesky embeds it; null when it quotes none, or when the quoted post was deleted,
-	// is blocked, was detached by its author, or its author shows it only to signed-in people.
+	// The post this one quotes, as Bluesky embeds it. Null when none, or the quoted post is deleted, blocked,
+	// detached by its author or shown only to signed-in people.
 	QuotedPost *BlueskyEmbeddedPost `json:"quoted_post"`
 	// The at:// URI of a custom feed, list or starter pack the post embeds; null when it embeds none.
 	EmbeddedRecordURI *string `json:"embedded_record_uri"`
@@ -4389,8 +4334,8 @@ type BlueskyPostSpecific struct {
 	ReplyToPostID *string `json:"reply_to_post_id"`
 	// The at:// ID of the post that started the thread; null when this post is not a reply.
 	ReplyRootPostID *string `json:"reply_root_post_id"`
-	// The link Bridgy Fed records for a post it brought to Bluesky from the fediverse or the web, usually where the
-	// post was first published; null when it was written on Bluesky. Format: uri.
+	// The link Bridgy Fed records for a post it brought from the fediverse or the web, usually where it was first
+	// published; null when written on Bluesky. Format: uri.
 	BridgedFromURL *string `json:"bridged_from_url"`
 	// The account whose repost put this post in the list; null when it is the account's own post, and on an endpoint
 	// that reads one post.
@@ -4466,9 +4411,8 @@ type SoundcloudPostSpecific struct {
 	IsStreamable *bool `json:"is_streamable"`
 	// The uploader allows comments on the track.
 	IsCommentable *bool `json:"is_commentable"`
-	// What SoundCloud lets a logged-out listener in the United States do: ALLOW and MONETIZE play the whole track,
-	// SNIP a preview of it (see transcodings), BLOCK nothing. SoundCloud answers each country its own way: this is
-	// the US answer. New values may be added.
+	// What SoundCloud lets a logged-out US listener do (other countries can differ): ALLOW and MONETIZE play the
+	// whole track, SNIP a preview, BLOCK nothing. New values may be added.
 	Policy *string `json:"policy"`
 	// How the track earns in the United States (AD_SUPPORTED, SUB_HIGH_TIER, BLACKBOX, NOT_APPLICABLE); SoundCloud
 	// answers each country its own way. New values may be added.
@@ -4483,8 +4427,8 @@ type SoundcloudPostSpecific struct {
 	WaveformURL *string `json:"waveform_url"`
 	// The banner image the uploader set for the track's page; null when none. Format: uri.
 	VisualURL *string `json:"visual_url"`
-	// The encodings SoundCloud serves of the track to a logged-out listener in the United States, in its order; each
-	// country gets its own list. [] when none, as under policy BLOCK.
+	// The encodings SoundCloud serves a logged-out US listener, in its order (other countries can differ); [] when
+	// none, as under policy BLOCK.
 	Transcodings []SoundcloudTranscoding `json:"transcodings"`
 	// The uploader's exact follower count.
 	AuthorFollowerCount *int64 `json:"author_follower_count"`
@@ -4495,8 +4439,8 @@ type SnapchatSound struct {
 	ID *string `json:"id"`
 	// The sound's title (Original Sound for a poster's own).
 	Title *string `json:"title"`
-	// Who or what the sound credits: the artist of a track, the username of the account that made an original sound,
-	// or the track an original sound contains. Null when it names no account.
+	// Who or what the sound credits: a track's artist, the username behind an original sound, or the track an
+	// original sound contains. Null when it names no account.
 	Subtitle *string `json:"subtitle"`
 	// The sound's cover image. Format: uri.
 	ThumbnailURL *string `json:"thumbnail_url"`
@@ -4663,22 +4607,21 @@ type TwitchPostSpecific struct {
 	Category *TwitchCategory `json:"category"`
 	// True for a past broadcast that is still being recorded because the stream is on air; null on a clip.
 	IsRecording *bool `json:"is_recording"`
-	// True when Twitch keeps the video from logged-out viewers, usually for the channel's subscribers: its fields
-	// are still answered and media[].url is null. Null on a clip, and where the answer doesn't carry what says so
-	// (the video's page, when Twitch's API is down).
+	// True when Twitch keeps the video from logged-out viewers, usually for subscribers: its fields still come back,
+	// with media[].url null. Null on a clip and when the source can't tell.
 	IsRestricted *bool `json:"is_restricted"`
-	// Twitch's content classification labels, its own IDs in its order (MatureGame, Gambling,
-	// DebatedSocialIssuesAndPolitics): is_nsfw is true on any of them but politics. [] when it has none, and listed
-	// in unknown_fields where the answer doesn't have them.
+	// Twitch's content classification label IDs, in its order (MatureGame, Gambling,
+	// DebatedSocialIssuesAndPolitics); any but politics makes is_nsfw true. [] when none (or unknown: see
+	// unknown_fields).
 	ContentLabels []string `json:"content_labels"`
 	// When Twitch will delete the video: past broadcasts expire, RFC 3339 UTC. Null when none is set (highlights and
 	// uploads stay) and on a clip. Format: date-time.
 	DeletesAt *string `json:"deletes_at"`
-	// An image holding frames of the video one above the other, which Twitch's site animates as its preview; null on
-	// a clip and while the video is still recording. On an old video the file itself can be gone. Format: uri.
+	// A tall image of the video's frames, which Twitch's site animates as a preview; null on a clip and while
+	// recording. On an old video the file can be gone. Format: uri.
 	AnimatedPreviewURL *string `json:"animated_preview_url"`
-	// The parts of a video by category, in order, as Twitch marks them; [] when it marks none and on a clip, and
-	// listed in unknown_fields where the answer doesn't have them.
+	// The video's parts by category, in order, as Twitch marks them; [] when it marks none and on a clip (or
+	// unknown: see unknown_fields).
 	Chapters []TwitchChapter `json:"chapters"`
 	// Twitch's number for a clip. Its links take the slug, which is id; null on a video.
 	ClipID *string `json:"clip_id"`
@@ -4695,11 +4638,11 @@ type TwitchPostSpecific struct {
 	SourceVideo *TwitchSourceVideo `json:"source_video"`
 	// The channel's followers at fetch time, when the answer has them.
 	AuthorFollowerCount *int64 `json:"author_follower_count"`
-	// The clip's files, one per quality, best first; media[0] is the first. [] on a video, and listed in
-	// unknown_fields where a source doesn't see them.
+	// The clip's files, one per quality, best first; media[0] is the first. [] on a video (or unknown: see
+	// unknown_fields).
 	Renditions []TwitchRendition `json:"renditions"`
-	// The files of the clip's vertical version, where it has one, best first; [] when it has none and on a video,
-	// and listed in unknown_fields where a source doesn't see them.
+	// Files of the clip's vertical version, best first; [] when it has none and on a video (or unknown: see
+	// unknown_fields).
 	VerticalRenditions []TwitchRendition `json:"vertical_renditions"`
 }
 
@@ -4710,13 +4653,13 @@ type SpotifyCredit struct {
 	Role *string `json:"role"`
 	// The heading Spotify lists it under (Composition & Lyrics, Production & Engineering, …).
 	Group *string `json:"group"`
-	// Their artist ID (spotify.artist takes it); null when they have no artist page.
+	// Their artist ID (the Spotify Artist API takes it); null when they have no artist page.
 	ArtistID *string `json:"artist_id"`
 }
 
 type SpotifyPostSpecific struct {
-	// The ID of the release it is on (spotify.album takes it); null when the source does not show it, as on the
-	// embed page.
+	// The ID of the release it is on (the Spotify Album API takes it); null when the source does not show it, as on
+	// the embed page.
 	AlbumID *string `json:"album_id"`
 	// The title of that release.
 	AlbumTitle *string `json:"album_title"`
@@ -4738,11 +4681,10 @@ type SpotifyPostSpecific struct {
 	Isrc *string `json:"isrc"`
 	// The record label of the release it is on; null when the source does not show it.
 	Label *string `json:"label"`
-	// The copyright lines of the release it is on; [] when none (listed in unknown_fields when the source cannot see
-	// them).
+	// The copyright lines of the release it is on; [] when none (or unknown: see unknown_fields).
 	Copyrights []AlbumCopyright `json:"copyrights"`
-	// Who wrote, performed and produced it, as Spotify's Credits panel lists them; [] when none (listed in
-	// unknown_fields when the source cannot see them).
+	// Who wrote, performed and produced it, as Spotify's Credits panel lists them; [] when none (or unknown: see
+	// unknown_fields).
 	Credits []SpotifyCredit `json:"credits"`
 	// Spotify marks it explicit.
 	IsExplicit *bool `json:"is_explicit"`
@@ -4754,8 +4696,7 @@ type SpotifyPostSpecific struct {
 	// Spotify's own score for this track ID, 0 to 100 and recent plays weighing most; two IDs of one recording score
 	// apart (canonical_track_id).
 	Popularity *int64 `json:"popularity"`
-	// The languages it is performed in, as Spotify's tags; [] when none is stated (listed in unknown_fields when the
-	// source cannot see them).
+	// The languages it is performed in, as Spotify's tags; [] when none is stated (or unknown: see unknown_fields).
 	Languages []string `json:"languages"`
 	// How many music videos Spotify links to it; null when the source does not show it.
 	MusicVideoCount *int64 `json:"music_video_count"`
@@ -4764,8 +4705,8 @@ type SpotifyPostSpecific struct {
 	CanonicalTrackID *string `json:"canonical_track_id"`
 	// When it was added to the playlist listed, RFC 3339 UTC; null outside a playlist's list. Format: date-time.
 	AddedAt *string `json:"added_at"`
-	// The listener who added it to the playlist listed: their username and page, and their name and picture when the
-	// source shows them; null outside a playlist's list and on Spotify's own lists, which name nobody.
+	// The listener who added it to the listed playlist: username and page, plus name and picture when shown; null
+	// outside a playlist's list and on Spotify's own lists.
 	AddedBy *ProfileRef `json:"added_by"`
 	// Its tempo in beats per minute, to two decimals, as Spotify measured it; null where the source does not show
 	// it, as everywhere but a playlist's list.
@@ -4776,7 +4717,7 @@ type SpotifyPostSpecific struct {
 	// Its key on the Camelot wheel DJs mix by (6A); null where the source does not show it, as everywhere but a
 	// playlist's list.
 	CamelotKey *string `json:"camelot_key"`
-	// An episode's show (spotify.podcast takes it); null on a track.
+	// An episode's show (the Spotify Podcast API takes it); null on a track.
 	PodcastID *string `json:"podcast_id"`
 	// An episode only subscribers can hear in full; null on a track.
 	IsPaywalled *bool `json:"is_paywalled"`
@@ -4791,7 +4732,8 @@ type ApplemusicPostSpecific struct {
 	// Who Apple credits for it, as one display string (Lady Gaga & Bradley Cooper), which can name more people than
 	// author and coauthors link.
 	ArtistName *string `json:"artist_name"`
-	// The ID of the album it is on (applemusic.album takes it); null for a music video or radio episode on none.
+	// The ID of the album it is on (the Apple Music Album API takes it); null for a music video or radio episode on
+	// none.
 	AlbumID *string `json:"album_id"`
 	// The title of the album it is on; null when on none.
 	AlbumTitle *string `json:"album_title"`
@@ -4845,9 +4787,8 @@ type ApplemusicPostSpecific struct {
 	VideoTraits []string `json:"video_traits"`
 	// Apple's ID of a radio episode's show, which is a curator and no artist; null on other posts.
 	CuratorID *string `json:"curator_id"`
-	// A radio episode's longer note, as Apple writes it: often the name of its show, or a shorter or older form of
-	// it, and sometimes something else, such as a date; so a hint, not an identity. Null when Apple has none, which
-	// depends on the store and language, and on other posts.
+	// A radio episode's longer note, often its show's name or a form of it, sometimes something else (a date): a
+	// hint, not an identity. Presence varies by store and language.
 	LongNote *string `json:"long_note"`
 	// When a radio episode's broadcast ended, RFC 3339 UTC; null on other posts. Format: date-time.
 	AirEndedAt *string `json:"air_ended_at"`
@@ -4871,8 +4812,8 @@ type PinterestPostSpecific struct {
 	Domain *string `json:"domain"`
 	// The board the pin is saved to.
 	Board *PinterestBoardRef `json:"board"`
-	// The account that first saved this picture or video to Pinterest (its uploader, for a pin made on Pinterest);
-	// null when Pinterest names none. author is the account whose pin this is, which for a repin is another.
+	// The account that first saved this picture or video to Pinterest (its uploader, for a pin made there); null
+	// when Pinterest names none. On a repin it differs from author.
 	OriginalPinner *ProfileRef `json:"original_pinner"`
 	// The pinner's exact follower count; null when the source does not state it.
 	AuthorFollowerCount *int64 `json:"author_follower_count"`
@@ -4897,7 +4838,7 @@ type PinterestPostSpecific struct {
 }
 
 type AmazonProductRef struct {
-	// The product's ASIN (what amazon.product takes).
+	// The product's ASIN (what the Amazon Product API takes).
 	Asin string `json:"asin"`
 	// The product's page in the list's marketplace. Format: uri.
 	URL string `json:"url"`
@@ -5009,10 +4950,8 @@ type Post struct {
 	Language *string `json:"language"`
 	// When the post went public, RFC 3339 UTC. Format: date-time.
 	PublishedAt *string `json:"published_at"`
-	// The posting account. An account the platform no longer names (a deleted account) has a null id and username
-	// and the platform's label as display_name (Reddit: [deleted]). A post credited to what is no account of the
-	// platform's (an Apple Music radio episode's show) has a null id and username, and every other field null too
-	// when the platform doesn't name it.
+	// The posting account. For a deleted account, or a credit that is no account (a radio show), id and username are
+	// null and display_name is the platform's label or name.
 	Author ProfileRef `json:"author"`
 	// Other accounts credited as co-authors of the post (Instagram and Facebook collabs, YouTube collaborations), in
 	// the platform's order, author excluded; [] if none.
@@ -5033,15 +4972,15 @@ type Post struct {
 	IsSponsored *bool `json:"is_sponsored"`
 	// Marked adult or sensitive by the platform.
 	IsNSFW *bool `json:"is_nsfw"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics PostMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific PostPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text. A list path (external_links) means
 	// the list may be incomplete. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -5051,8 +4990,8 @@ type EngagementPost struct {
 	// True when the post enters the figures: by the account itself, not pinned and not a repost (a post listed under
 	// the account's name whose counts are another account's post's).
 	IsCounted bool `json:"is_counted"`
-	// Interactions (likes + comments) per follower, as a fraction (0.042 = 4.2%); can exceed 1. Null when a count is
-	// unknown, there are no followers, or the post is a repost.
+	// Likes plus comments per follower, a fraction (0.042 = 4.2%) that can exceed 1. Null when a count is unknown,
+	// there are no followers, or the post is a repost.
 	EngagementRate *float64 `json:"engagement_rate"`
 	// Interactions (likes + comments) per view, as a fraction. Null when a count is unknown, there are no views, or
 	// the post is a repost.
@@ -5150,11 +5089,10 @@ type Engagement struct {
 	BottomPostID *string `json:"bottom_post_id"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific EngagementPlatformSpecific `json:"platform_specific"`
-	// JSON paths of figures computed from an approximate input (a rounded follower or view count, a relative publish
-	// time); a posts[] path means at least one post's. [] when all exact.
+	// JSON paths of figures computed from an approximate input (a rounded count, a relative publish time); a posts[]
+	// path means at least one post's. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (posts, metrics.formats). [] when every list is
-	// known.
+	// JSON paths of lists whose [] means unknown, not none (posts, metrics.formats). [] when every list is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -5194,9 +5132,8 @@ type FacebookEventSpecific struct {
 	TicketProvider *string `json:"ticket_provider"`
 	// The ticket price or range as Facebook shows it ("$25 – $40", "Free"); null when none is shown.
 	PriceText *string `json:"price_text"`
-	// When it happens, as Facebook shows it, in the event's own time zone ("Sun, Nov 8 at 3:00 PM EST and 7 more",
-	// "Sat, Nov 21 - Nov 22", "Happening now"): on a recurring event its next date, where start_at is its first.
-	// Display text in the viewer's language; null when not shown.
+	// Facebook's text for when it happens ("Sun, Nov 8 at 3:00 PM EST"), in the event's time zone and the viewer's
+	// language. For a recurring event, the next date (start_at is the first).
 	DateText *string `json:"date_text"`
 	// How often it repeats, as Facebook names it, lowercased (single for a one-off event); null when not shown.
 	Frequency *string `json:"frequency"`
@@ -5227,10 +5164,9 @@ type ScheduledEvent struct {
 	Name string `json:"name"`
 	// Its description as plain text; null when it has none.
 	Description *string `json:"description"`
-	// At fetch time: scheduled (not started), ongoing (started, not over), ended (over), canceled (called off by its
-	// hosts); unknown when the source that answered does not show it (a fallback whose results hold only a name and
-	// a picture). New values may be added; treat any other value as unknown. Known values: scheduled, ongoing,
-	// ended, canceled, unknown.
+	// The event's state at fetch time (canceled even after its date); unknown when the source does not show it. New
+	// values may be added; treat unknown values as unknown. Known values: scheduled, ongoing, ended, canceled,
+	// unknown.
 	Status string `json:"status"`
 	// When it starts, RFC 3339 UTC; null only when the platform shows no start. Format: date-time.
 	StartAt *string `json:"start_at"`
@@ -5247,8 +5183,8 @@ type ScheduledEvent struct {
 	IsOnline *bool `json:"is_online"`
 	// Where it is held; null for an online event with no venue or when not shown.
 	Place *PlaceRef `json:"place"`
-	// The accounts hosting it (pages and people), the main organizer first; [] when none are shown (listed in
-	// unknown_fields when the source cannot see them).
+	// The accounts hosting it (pages and people), the main organizer first; [] when none are shown (or unknown: see
+	// unknown_fields).
 	Hosts []ProfileRef `json:"hosts"`
 	// The event's cover image (a video cover's poster frame); null when it has none. Platform CDN URLs can expire
 	// within days. Format: uri.
@@ -5262,15 +5198,15 @@ type ScheduledEvent struct {
 	ParentID *string `json:"parent_id"`
 	// ID of the community it belongs to (the Facebook group it was created in; community.id); null when none.
 	CommunityID *string `json:"community_id"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics EventMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific EventPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text ("7.3K interested":
 	// platform_specific.facebook.metrics.interested_count). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -5362,15 +5298,15 @@ type Hashtag struct {
 	// The hashtag's own picture (not one of its posts' images); null when it has none. Platform CDN URLs can expire.
 	// Format: uri.
 	ThumbnailURL *string `json:"thumbnail_url"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics HashtagMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific HashtagPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text ("36M videos": metrics.post_count).
 	// [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -5414,10 +5350,9 @@ type GitHubIssueSpecific struct {
 	// GitHub's GraphQL node ID (I_kwDO…, PR_kwDO…): the same after the repository is renamed or transferred, unlike
 	// id.
 	NodeID *string `json:"node_id"`
-	// The author's relation to the repository: owner, member (of its organization), collaborator, contributor (has a
-	// merged commit), first_time_contributor, first_timer (first contribution on GitHub), mannequin (an imported
-	// placeholder) or none. New values may be added. Known values: owner, member, collaborator, contributor,
-	// first_time_contributor, first_timer, mannequin, none.
+	// The author's relation to the repository. member: of its organization; contributor: has a merged commit;
+	// first_timer: first contribution on GitHub; mannequin: an imported placeholder. New values may be added. Known
+	// values: owner, member, collaborator, contributor, first_time_contributor, first_timer, mannequin, none.
 	AuthorAssociation *string `json:"author_association"`
 	// The issue type its organization assigned (Bug, Feature, Task); null when none, and on a pull request.
 	IssueType *string `json:"issue_type"`
@@ -5450,9 +5385,8 @@ type IssuePlatformSpecific struct {
 type Issue struct {
 	// Platform ID (github, …).
 	Platform string `json:"platform"`
-	// The item's full reference on its host (owner/repo#123; group/project!34 for a GitLab merge request), as the
-	// host writes it to link it from anywhere; the issue endpoint takes it as input. It follows the repository's
-	// current name.
+	// The item's full reference as its host writes it (owner/repo#123; group/project!34 for a merge request), under
+	// the repository's current name; the issue endpoint takes it as input.
 	ID string `json:"id"`
 	// The item's page (an issue's or a pull request's). Format: uri.
 	URL string `json:"url"`
@@ -5469,16 +5403,15 @@ type Issue struct {
 	// open; closed (closed without merging, or an issue closed); merged (a pull request merged into its base). New
 	// values may be added; treat unknown values as closed. Known values: open, closed, merged.
 	State string `json:"state"`
-	// Why a closed item was closed: completed (done or fixed), not_planned (won't do, stale, invalid), duplicate
-	// (replaced by another item). Null on an open or merged item and where the host does not say. New values may be
-	// added; treat unknown values as null. Known values: completed, not_planned, duplicate.
+	// Why it was closed (not_planned: won't do, stale or invalid; duplicate: replaced by another item); null when
+	// open or merged. New values may be added; treat unknown values as null. Known values: completed, not_planned,
+	// duplicate.
 	StateReason *string `json:"state_reason"`
-	// Label names, in the host's order; [] when it has none (listed in unknown_fields when the source cannot see
-	// them).
+	// Label names, in the host's order; [] when it has none (or unknown: see unknown_fields).
 	Labels []string `json:"labels"`
 	// Who opened it.
 	Author ProfileRef `json:"author"`
-	// Accounts it is assigned to; [] when none (listed in unknown_fields when the source cannot see them).
+	// Accounts it is assigned to; [] when none (or unknown: see unknown_fields).
 	Assignees []ProfileRef `json:"assignees"`
 	// The milestone it is planned for; null when none or not shown.
 	Milestone *IssueMilestone `json:"milestone"`
@@ -5517,8 +5450,8 @@ type Issue struct {
 	PlatformSpecific IssuePlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -5542,9 +5475,8 @@ type JobPostingSalary struct {
 	Max *float64 `json:"max"`
 	// ISO 4217 code of both amounts (USD).
 	Currency string `json:"currency"`
-	// What one amount pays for: an hour, day, week, month or year of work, or total (a fixed price for the whole
-	// job, as an Upwork fixed-price budget); null when the board does not say. New values may be added; treat
-	// unknown values as null. Known values: hour, day, week, month, year, total.
+	// The time one amount pays for; total: a fixed price for the whole job. Null when not stated. New values may be
+	// added; treat unknown values as null. Known values: hour, day, week, month, year, total.
 	Period *string `json:"period"`
 	// The board estimated the pay itself rather than the employer stating it; false when the employer stated it;
 	// null when the board does not say.
@@ -5561,12 +5493,11 @@ type LinkedInJobPostingSpecific struct {
 	// ID of the standardized title LinkedIn files the job under (9: Software Engineer), as its job search's f_T
 	// filter takes it; null when not shown.
 	TitleID *string `json:"title_id"`
-	// IDs of the industries LinkedIn files the job under (43: Financial Services), as its job search's f_I filter
-	// takes them, in the order of industries; [] when none is shown (listed in unknown_fields when the source cannot
-	// see them).
+	// IDs of the industries LinkedIn files the job under (43: Financial Services), in industries' order, for its
+	// search's f_I filter. [] when none (or unknown: see unknown_fields).
 	IndustryIds []string `json:"industry_ids"`
-	// The members LinkedIn names as hiring for the job (the recruiter or hiring manager who posted it), the poster
-	// first; [] when none is shown (listed in unknown_fields when the source cannot see them).
+	// Members LinkedIn names as hiring for the job (the recruiter or hiring manager), the poster first; [] when none
+	// is shown (or unknown: see unknown_fields).
 	HiringTeam []ProfileRef `json:"hiring_team"`
 }
 
@@ -5584,9 +5515,8 @@ type HackernewsJobPostingSpecific struct {
 	Poster *ProfileRef `json:"poster"`
 	// The monthly Who is hiring thread the job was posted in.
 	Thread *HackernewsJobThread `json:"thread"`
-	// The job's first line as the poster wrote it (Company | Role | Location | REMOTE | Full-time | salary, by the
-	// thread's convention), from which title, employer, locations, workplace_type, employment_types and salary are
-	// read.
+	// The job's first line as the poster wrote it (Company | Role | Location | …), which title, employer, locations,
+	// workplace_type, employment_types and salary are read from.
 	Header *string `json:"header"`
 	// The first line says the job sponsors a visa (VISA, visa sponsorship); false when it says it doesn't; null when
 	// it says neither.
@@ -5611,23 +5541,22 @@ type JobPosting struct {
 	URL string `json:"url"`
 	// The job's title as the employer wrote it.
 	Title string `json:"title"`
-	// The company (or person) hiring, as the board names it: its account on the platform when it has one; null when
-	// the board does not say who is hiring (a confidential posting, an Upwork client).
+	// The company or person hiring, as the board names it (its account where it has one); null when unnamed (a
+	// confidential posting, an Upwork client).
 	Employer *ProfileRef `json:"employer"`
 	// The full description as plain text, line breaks kept (paragraphs and list items each on their own line); null
 	// when the board shows none.
 	Description *string `json:"description"`
-	// Where the job is based, the main location first, as the board shows them; [] when none is shown (a remote job
-	// with no location), listed in unknown_fields when the source cannot see them.
+	// Where the job is based, as the board shows it, main location first; [] when none is shown, as for a remote job
+	// (or unknown: see unknown_fields).
 	Locations []JobPostingLocation `json:"locations"`
 	// Where the work is done: on_site, hybrid (partly remote) or remote; null when the board does not say. New
 	// values may be added; treat unknown values as null. Known values: on_site, hybrid, remote.
 	WorkplaceType *string `json:"workplace_type"`
-	// The terms of employment, in the order the board gives them (a posting may name several: full_time and
-	// part_time): full_time, part_time, contract (freelance and contractor roles), temporary (seasonal too),
-	// internship, volunteer, other; [] when the board does not say (listed in unknown_fields when the source cannot
-	// see them). New values may be added; treat unknown values as other. Known values: full_time, part_time,
-	// contract, temporary, internship, volunteer, other.
+	// The terms of employment in the board's order (a posting can name several); contract includes freelance,
+	// temporary includes seasonal. [] when not stated (or unknown: see unknown_fields). New values may be added;
+	// treat unknown values as other. Known values: full_time, part_time, contract, temporary, internship, volunteer,
+	// other.
 	EmploymentTypes []string `json:"employment_types"`
 	// The experience level asked for, as the board labels it (Entry level, Mid-Senior level, Expert; not normalized:
 	// each board has its own scale); null when not stated.
@@ -5640,11 +5569,10 @@ type JobPosting struct {
 	// The kinds of work the board files the job under (Engineering, Sales), as shown (not normalized); [] when none
 	// is shown.
 	JobFunctions []string `json:"job_functions"`
-	// Skills the posting asks for, as the board tags them; [] when none (listed in unknown_fields when the source
-	// cannot see them).
+	// Skills the posting asks for, as the board tags them; [] when none (or unknown: see unknown_fields).
 	Skills []string `json:"skills"`
-	// Benefits the posting lists (Health insurance, 401(k)), as shown; [] when none (listed in unknown_fields when
-	// the source cannot see them).
+	// Benefits the posting lists (Health insurance, 401(k)), as shown; [] when none (or unknown: see
+	// unknown_fields).
 	Benefits []string `json:"benefits"`
 	// When the job was posted (its latest listing when reposted), RFC 3339 UTC; a date or relative label ("2 weeks
 	// ago") is listed in approximate_fields; null when not shown. Format: date-time.
@@ -5657,18 +5585,18 @@ type JobPosting struct {
 	// Applied for on the platform itself (LinkedIn's and Glassdoor's Easy Apply, Indeed Apply, an Upwork proposal);
 	// false when the application is on the employer's site (apply_url); null when not shown.
 	IsEasyApply *bool `json:"is_easy_apply"`
-	// The employer's application page, for a job applied for off the platform (is_easy_apply false); null for one
-	// applied for on the platform, or when the board does not show the link. Format: uri.
+	// The employer's application page for a job applied for off the platform (is_easy_apply false); null otherwise
+	// or when the board does not show it. Format: uri.
 	ApplyURL *string `json:"apply_url"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics JobPostingMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific JobPostingPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text ("Over 200 applicants":
 	// metrics.applicant_count; "2 weeks ago": published_at). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -5775,8 +5703,8 @@ type XLiveSpecific struct {
 	Cohosts []ProfileRef `json:"cohosts"`
 	// The accounts with the right to speak: those on stage now while live, everyone who spoke once ended.
 	Speakers []ProfileRef `json:"speakers"`
-	// The listeners in the room now that X names, at most 50, while the Space is live
-	// (metrics.concurrent_viewer_count counts them all); [] once it ends, since X names no past listeners.
+	// Listeners in the room that X names, at most 50, while the Space is live (metrics.concurrent_viewer_count
+	// counts all); [] once it ends.
 	Listeners []ProfileRef `json:"listeners"`
 	// IDs of the accounts X lists the Space as mentioning (the host tags them); [] when none.
 	MentionedAccountIds []string `json:"mentioned_account_ids"`
@@ -5822,29 +5750,29 @@ type Live struct {
 	ScheduledStartAt *string `json:"scheduled_start_at"`
 	// Cover or preview image URL. Platform CDN URLs can expire within hours. Format: uri.
 	ThumbnailURL *string `json:"thumbnail_url"`
-	// ID of the post the platform keeps the broadcast as (equals post.id: a YouTube or Rumble video; on X, the post
-	// the Space was shared in); null when it keeps none (TikTok LIVE) or none yet.
+	// ID of the post the platform keeps the broadcast as (equals post.id; on X, the post the Space was shared in);
+	// null when it keeps none or none yet.
 	PostID *string `json:"post_id"`
 	// Playback links of the broadcast while live, one per rendition and format, best first; [] when not live or when
 	// the platform's links only work from SocialTap's network (YouTube).
 	Streams []LiveStream `json:"streams"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics LiveMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific LivePlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text. A list path means the list may be
 	// incomplete. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
 type OfferShipping struct {
 	// The seller ships this offer (false: local pickup only); null when not shown.
 	IsOffered *bool `json:"is_offered"`
-	// Standard shipping fee of this item alone, in major units of the offer's currency; 0 = free shipping; null when
-	// it depends on the order (free over a threshold) or is not shown.
+	// Standard shipping fee for this item alone, in major units of the offer's currency; 0 = free; null when it
+	// depends on the order (free over a threshold).
 	Fee *float64 `json:"fee"`
 	// First day of the standard delivery estimate, as that date at 00:00:00Z (date-only: approximate_fields); equal
 	// to latest_delivery_at for a one-day estimate; null when the platform gives no start. Format: date-time.
@@ -5865,9 +5793,8 @@ type AmazonOfferSpecific struct {
 	// Amazon ships the offer from its own warehouses (Fulfillment by Amazon, or sold by Amazon); false when the
 	// seller ships it; null when not shown.
 	IsFulfilledByAmazon *bool `json:"is_fulfilled_by_amazon"`
-	// Share of the seller's ratings in the last 12 months that were positive, a whole percent (77); over the
-	// seller's lifetime for a seller Amazon shows that for (a new one); null when not shown (Amazon's own retail
-	// shows none).
+	// Share of the seller's ratings that were positive over the last 12 months (lifetime for a new seller), a whole
+	// percent; null when not shown (Amazon's own retail).
 	SellerPositivePercent *int64 `json:"seller_positive_percent"`
 	// The seller's or Amazon's notes on the item's condition (Item will come in original packaging.), as shown under
 	// it; null when none is shown, as on new offers.
@@ -5884,10 +5811,9 @@ type OfferPlatformSpecific struct {
 type Offer struct {
 	// Platform ID (amazon, …).
 	Platform string `json:"platform"`
-	// The offer's ID: the platform's own where it is stable across fetches, else derived from the product, the
-	// seller and the condition (B0FQFB8FMG:ALAQLAKJ574UN:new), with ~2, ~3 for a seller's further offers in one
-	// condition, counted across the list's pages in the platform's order. A derived ID is stable while the seller's
-	// offers in that condition keep their order; two of them can swap IDs when their order changes.
+	// The platform's offer ID where stable across fetches, else product:seller:condition
+	// (B0FQFB8FMG:ALAQLAKJ574UN:new), with ~2, ~3 for a seller's further offers in one condition, in the platform's
+	// order across pages. Two derived IDs swap when those offers swap places.
 	ID string `json:"id"`
 	// ID of the product offered (equals product.id of the platform's product endpoints).
 	ProductID string `json:"product_id"`
@@ -5908,9 +5834,8 @@ type Offer struct {
 	OriginalPrice *float64 `json:"original_price"`
 	// ISO 4217 code of every amount of this offer (USD); null when no amount is shown.
 	Currency *string `json:"currency"`
-	// Item condition, coarse: new, used (any grade) or refurbished; null when the platform does not say. The
-	// platform's own grade is condition_label. New values may be added; treat unknown values as used. Known values:
-	// new, used, refurbished.
+	// Item condition, coarse: used is any grade, the platform's own grade being condition_label. Null when not
+	// stated. New values may be added; treat unknown values as used. Known values: new, used, refurbished.
 	Condition *string `json:"condition"`
 	// The condition as the platform labels it (Used - Like New, Pre-Owned: Good, Renewed).
 	ConditionLabel *string `json:"condition_label"`
@@ -5921,8 +5846,8 @@ type Offer struct {
 	// The offer the product page shows by default (the buy box); at most one offer of a product is. Null where the
 	// platform features none.
 	IsFeatured *bool `json:"is_featured"`
-	// The seller's average rating out of 5 (metrics.seller_rating_count ratings behind it), as the platform shows it
-	// (rounded ones in approximate_fields); null when the seller is unrated or the platform does not show it.
+	// The seller's average rating out of 5, over metrics.seller_rating_count ratings, as the platform shows it
+	// (rounded ones in approximate_fields); null when unrated or not shown.
 	SellerRating *float64 `json:"seller_rating"`
 	// Delivery terms of this offer; each null when not shown.
 	Shipping OfferShipping `json:"shipping"`
@@ -5935,8 +5860,7 @@ type Offer struct {
 	// JSON paths of values rounded by the platform or parsed from display text (a seller rating in half stars, a
 	// date-only delivery estimate). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none; null already means unknown for every other field.
-	// [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none. [] when every list is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -5952,8 +5876,7 @@ type PlaceMetrics struct {
 
 type TikTokPlaceSpecific struct {
 	// TikTok's category from broadest to most specific (Food and Drink, Fast Food, Pizza Fast Food), repeats
-	// dropped; category is the last. [] when TikTok shows none (listed in unknown_fields when the source cannot see
-	// it).
+	// dropped; category is the last. [] when none (or unknown: see unknown_fields).
 	CategoryPath []string `json:"category_path"`
 	// ID of the place TikTok files this one under (the city of a venue); a TikTok place ID. Null for a top-level
 	// place or when unknown.
@@ -5964,8 +5887,8 @@ type TikTokPlaceSpecific struct {
 	Rating *float64 `json:"rating"`
 	// True when a business has claimed the place on TikTok, false when none has; null when unknown.
 	IsClaimed *bool `json:"is_claimed"`
-	// The highlight tags TikTok shows from reviews (Excellent service, Pleasant atmosphere); [] when none (listed in
-	// unknown_fields when the source cannot see them).
+	// The highlight tags TikTok shows from reviews (Excellent service, Pleasant atmosphere); [] when none (or
+	// unknown: see unknown_fields).
 	Highlights []string `json:"highlights"`
 }
 
@@ -6001,9 +5924,9 @@ type Place struct {
 	Name string `json:"name"`
 	// Canonical place page URL. Format: uri.
 	URL string `json:"url"`
-	// Coarse kind: venue for one spot (a business, landmark or address), area for a region (a neighborhood, city,
-	// state or country); unknown when the platform does not say. New values may be added; treat unknown values as
-	// unknown. Known values: venue, area, unknown.
+	// venue: one spot (a business, landmark or address); area: a region (a neighborhood, city, state or country);
+	// unknown: not stated. New values may be added; treat unknown values as unknown. Known values: venue, area,
+	// unknown.
 	Type string `json:"type"`
 	// The platform's category label (Cafe, City, Pizza Fast Food), as shown; not normalized across platforms.
 	Category *string `json:"category"`
@@ -6028,20 +5951,20 @@ type Place struct {
 	WebsiteURL *string `json:"website_url"`
 	// The business's price range, 1 (inexpensive, $) to 4 (expensive, $$$$); null when the platform shows none.
 	PriceRange *int64 `json:"price_range"`
-	// Pictures of the place the platform shows, in its order; each of type image. [] when none (listed in
-	// unknown_fields when the source cannot see them). Platform CDN URLs can expire within hours: see expires_at.
+	// Pictures of the place the platform shows, in its order, each of type image; [] when none (or unknown: see
+	// unknown_fields). Platform CDN URLs can expire within hours: see expires_at.
 	Images []Media `json:"images"`
 	// The platform account that represents the place (its business account or Page); null when none is linked.
 	Account *ProfileRef `json:"account"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics PlaceMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific PlacePlatformSpecific `json:"platform_specific"`
-	// JSON paths of values rounded by the platform or parsed from display text (e.g. metrics.post_count). [] when
-	// all exact.
+	// JSON paths of values rounded by the platform or parsed from display text (metrics.post_count). [] when all
+	// exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -6092,8 +6015,8 @@ type ApplemusicPlaylistSpecific struct {
 	// Who makes the playlist, as Apple says: editorial, external (a curator's), personal-mix, user-shared, …; null
 	// on a station. New values may be added.
 	PlaylistType *string `json:"playlist_type"`
-	// What Apple says an editorial playlist is built around: artist-franchise (one artist, such as their Essentials
-	// or a set list); null when it says nothing, and on a station. New values may be added.
+	// What Apple says an editorial playlist is built around (artist-franchise: one artist's Essentials or set list);
+	// null when unsaid and on a station. New values may be added.
 	EditorialKind *string `json:"editorial_kind"`
 	// Apple's finer word for that: artist-set-list, artist-created-set-list; null when it says nothing, and on a
 	// station. New values may be added.
@@ -6114,9 +6037,8 @@ type ApplemusicPlaylistSpecific struct {
 	// How a live station is carried, as Apple says: FM, AM, DAB, Sat, Stream, …; null when it says nothing, and on a
 	// playlist. New values may be added.
 	Band *string `json:"band"`
-	// A broadcast station's frequency as Apple states it, in its band's usual unit (90.1 on FM, 1026 on AM); a
-	// station on several frequencies lists them separated by / (105.1/105.3/105.7); null when it states none, and on
-	// a playlist.
+	// A broadcast station's frequency in its band's usual unit (90.1 on FM, 1026 on AM), several joined by /
+	// (105.1/105.3); null when none is stated, and on a playlist.
 	Frequency *string `json:"frequency"`
 	// A station that streams live rather than picking songs; null on a playlist.
 	IsLive *bool `json:"is_live"`
@@ -6130,8 +6052,8 @@ type PinterestPlaylistSpecific struct {
 	// When the board was created, RFC 3339 UTC; null on a section and when the source does not state it. Format:
 	// date-time.
 	CreatedAt *string `json:"created_at"`
-	// public, or protected: a board Pinterest keeps off its owner's profile and out of search engines but shows
-	// anyone with its link (a shop's catalog of products). New values may be added.
+	// public, or protected: a board Pinterest keeps off its owner's profile and search engines but shows anyone with
+	// its link (a shop's product catalog). New values may be added.
 	Privacy *string `json:"privacy"`
 	// Accounts other than its owner that can save pins to the board, exact; 0 on a board only its owner saves to.
 	CollaboratorCount *int64 `json:"collaborator_count"`
@@ -6189,9 +6111,9 @@ type Playlist struct {
 	ID string `json:"id"`
 	// Canonical playlist URL. Format: uri.
 	URL string `json:"url"`
-	// playlist: a list its owner curates and orders (TikTok playlists, YouTube playlists, Facebook playlists and
-	// series); collection: posts an account saved from any creator into a named public folder (TikTok collections).
-	// New values may be added; treat unknown values as playlist. Known values: playlist, collection.
+	// playlist: a list its owner curates and orders; collection: posts an account saved into a named public folder
+	// (TikTok's collections). New values may be added; treat unknown values as playlist. Known values: playlist,
+	// collection.
 	Type string `json:"type"`
 	// The platform's own label, lowercase (mix, collection, playlist, series, podcast, …).
 	PlatformType *string `json:"platform_type"`
@@ -6199,9 +6121,8 @@ type Playlist struct {
 	Title *string `json:"title"`
 	// Description as plain text; null when it has none or the platform shows none (TikTok).
 	Description *string `json:"description"`
-	// The account that curates it (for a collection, the account that saved the posts, not their authors). Where a
-	// platform's curators are not accounts (Apple Music), what it states of them: a name, perhaps a page and a
-	// picture, with id and username null, and every field null when it names no one.
+	// The curating account (for a collection, the one that saved the posts). Where curators are not accounts (Apple
+	// Music), only what the platform names, with id and username null.
 	Owner ProfileRef `json:"owner"`
 	// Cover image URL (the owner's chosen cover, else the platform's pick, often the first post's). Platform CDN
 	// URLs can expire within hours. Format: uri.
@@ -6211,14 +6132,14 @@ type Playlist struct {
 	IsCollaborative *bool `json:"is_collaborative"`
 	// When its owner created it, RFC 3339 UTC; null where the platform doesn't state it. Format: date-time.
 	CreatedAt *string `json:"created_at"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics PlaylistMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific PlaylistPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform, date-only or parsed from display text. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -6261,7 +6182,7 @@ type Podcast struct {
 	// the platform does not say. New values may be added. Known values: episodic, serial.
 	ShowType *string `json:"show_type"`
 	// Categories or topics the platform files it under, as shown (not normalized), the main one first; [] when none
-	// (listed in unknown_fields when the source cannot see them).
+	// (or unknown: see unknown_fields).
 	Categories []string `json:"categories"`
 	// Marked as holding explicit content by the platform; null when it does not say.
 	IsExplicit *bool `json:"is_explicit"`
@@ -6271,15 +6192,15 @@ type Podcast struct {
 	// When its newest episode came out, RFC 3339 UTC; listed in approximate_fields when read from display text or a
 	// date alone. Null when the source does not show it. Format: date-time.
 	LatestEpisodeAt *string `json:"latest_episode_at"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics PodcastMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific PodcastPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform, date-only or parsed from display text (rating at one decimal,
 	// metrics.rating_count from "2.6K"). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -6366,9 +6287,8 @@ type ProductVariant struct {
 type AmazonDeal struct {
 	// Amazon's ID of the deal; null for a product listed for its coupon alone.
 	ID *string `json:"id"`
-	// The kind of deal, as Amazon names it, lowercased: lightning_deal (a limited number of units for a few hours),
-	// best_deal (a limited time deal), others as Amazon adds them; coupon when the product is listed for its coupon
-	// alone.
+	// Amazon's deal kind, lowercased: lightning_deal (limited units for a few hours), best_deal (a limited time
+	// deal), others as Amazon adds them; coupon for a product listed for its coupon alone.
 	Type string `json:"type"`
 	// The deal's state, as Amazon names it, lowercased (available: it can be bought at the deal price now); null for
 	// a coupon alone.
@@ -6384,13 +6304,12 @@ type AmazonDeal struct {
 	// Share of the deal's units already claimed, in percent (0 to 100) as Amazon rounds it; null when Amazon shows
 	// none (most deals but lightning deals).
 	ClaimedPercent *float64 `json:"claimed_percent"`
-	// What original_price is: list (the list price), typical (the typical price of the last 90 days), rrp (the
-	// recommended retail price) or was (the price before the deal); null when no earlier price is shown or Amazon
-	// labels it otherwise. New values may be added; treat unknown values as null. Known values: list, typical, rrp,
-	// was.
+	// What original_price is (rrp: recommended retail price; typical: the last 90 days' typical price; was: before
+	// the deal); null when none is shown or labeled otherwise. New values may be added; treat unknown values as
+	// null. Known values: list, typical, rrp, was.
 	OriginalPriceLabel *string `json:"original_price_label"`
-	// The browse nodes Amazon's deals list files the deal under, in no particular order (one to several, from a
-	// department down to a sub-category): each is a category the Amazon Deals API takes. Empty when it names none.
+	// Browse nodes Amazon's deals list files the deal under, unordered, from a department down to a sub-category;
+	// each is a category the Amazon Deals API takes. [] when none.
 	DepartmentIds []string `json:"department_ids"`
 	// The price after the product's clippable coupon, in major units of the product's currency; null when it has no
 	// coupon or the coupon shows no price.
@@ -6426,8 +6345,8 @@ type AmazonProductSpecific struct {
 	// ASIN of the variation family this product belongs to (every color and size of it shares it); null for a
 	// product without variations.
 	ParentAsin *string `json:"parent_asin"`
-	// Every variation of the product (its colors, sizes, styles), each an ASIN with its options, in Amazon's order;
-	// prices and stock are this product's only, so they are null on variants. [] for a product without variations.
+	// Every variation (colors, sizes, styles) in Amazon's order: its ASIN, title and options only. Send a variant's
+	// ASIN for its price and stock. [] for a product without variations.
 	Variants []ProductVariant `json:"variants"`
 	// The buy box's stock line, as Amazon words it (Only 1 left in stock - order soon.); null when the page shows
 	// none.
@@ -6511,13 +6430,13 @@ type TikTokShopProductSpecific struct {
 	// Average review score out of 5 (metrics.review_count reviews behind it); null when unrated.
 	Rating *float64 `json:"rating"`
 	// The purchasable variants (SKUs: a color, a size, a bundle), in TikTok Shop's order; [] for a product without
-	// variants (listed in unknown_fields when the source cannot see them).
+	// variants (or unknown: see unknown_fields).
 	Variants []ProductVariant `json:"variants"`
 	// Fewest days TikTok Shop estimates delivery takes in the product's market.
 	DeliveryMinDays *int64 `json:"delivery_min_days"`
 	// Most days TikTok Shop estimates delivery takes in the product's market.
 	DeliveryMaxDays *int64 `json:"delivery_max_days"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics TikTokShopProductMetrics `json:"metrics"`
 	// The selling shop's rating and counts (seller names the shop); null when the page shows none.
 	Shop *TikTokShopShop `json:"shop"`
@@ -6541,9 +6460,8 @@ type Product struct {
 	ID string `json:"id"`
 	// Canonical product page URL. Format: uri.
 	URL string `json:"url"`
-	// product: a catalog product a shop sells in many units, often in variants (TikTok Shop, Instagram and YouTube
-	// shopping); listing: a single item a person or business lists for sale (Facebook Marketplace). New values may
-	// be added; treat unknown values as product. Known values: product, listing.
+	// product: a catalog product a shop sells in many units; listing: one item a person or business lists for sale.
+	// New values may be added; treat unknown values as product. Known values: product, listing.
 	Type string `json:"type"`
 	// Product name or listing title, as the seller wrote it.
 	Title string `json:"title"`
@@ -6557,9 +6475,8 @@ type Product struct {
 	CategoryID *string `json:"category_id"`
 	// The shop or account selling it; null only when the source does not show it.
 	Seller *ProfileRef `json:"seller"`
-	// Current price in major units of currency (58.47), discounts applied; for a product whose variants cost
-	// different amounts, the lowest (the platform's "from" price). Coupons and shipping excluded. 0 = free; null
-	// when not shown.
+	// Current price in major units of currency (58.47), discounts applied, coupons and shipping excluded; for
+	// variants at different prices, the lowest (the platform's "from" price). 0 = free.
 	Price *float64 `json:"price"`
 	// Highest current variant price, in major units of currency; equal to price when every variant costs the same;
 	// null when unknown (a source that shows one price).
@@ -6569,14 +6486,12 @@ type Product struct {
 	OriginalPrice *float64 `json:"original_price"`
 	// ISO 4217 code of every amount of this product (USD); null when no amount is shown.
 	Currency *string `json:"currency"`
-	// in_stock: can be bought now; out_of_stock: sold out for now (a product can be restocked); pre_order: ships
-	// later; pending: a listing with a sale pending; sold: a listing marked sold. Null when the platform does not
-	// say. New values may be added; treat unknown values as null. Known values: in_stock, out_of_stock, pre_order,
-	// pending, sold.
+	// out_of_stock: sold out for now; pre_order: ships later; pending, sold: a one-off listing with a sale pending
+	// or made. New values may be added; treat unknown values as null. Known values: in_stock, out_of_stock,
+	// pre_order, pending, sold.
 	Availability *string `json:"availability"`
-	// Item condition, coarse: new, used (any grade) or refurbished; null when the platform does not say. The
-	// platform's own grade is condition_label. New values may be added; treat unknown values as used. Known values:
-	// new, used, refurbished.
+	// Item condition, coarse: used is any grade, the platform's own grade being condition_label. Null when not
+	// stated. New values may be added; treat unknown values as used. Known values: new, used, refurbished.
 	Condition *string `json:"condition"`
 	// The condition as the platform labels it (Used - Like New, Used - Good, Pre-owned).
 	ConditionLabel *string `json:"condition_label"`
@@ -6593,11 +6508,11 @@ type Product struct {
 	// Fields only this platform has, under its ID (platform_specific.<platform>): TikTok Shop's brand, rating,
 	// variants, stock and units sold; Marketplace's location and listing date. Each null when unknown.
 	PlatformSpecific ProductPlatformSpecific `json:"platform_specific"`
-	// JSON paths of values rounded by the platform or parsed from display text ("10K+ sold"), and of Facebook's
-	// coarse listing coordinates. [] when all exact.
+	// JSON paths of values rounded by the platform, parsed from display text ("10K+ sold") or placing an area rather
+	// than a point (coordinates). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a list or search result that does not show
-	// attributes or variants); null already means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a list or search result that does not show attributes or
+	// variants). [] when every list is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -6623,9 +6538,9 @@ type Readme struct {
 	// The branch or tag the README was read at (GitHub: the default branch, master or main); null when the platform
 	// does not say.
 	Ref *string `json:"ref"`
-	// The markup the text is written in, which decides how to render it: markdown, rst (reStructuredText), asciidoc,
-	// org, text (plain), other. Null when the platform does not say. New values may be added. Known values:
-	// markdown, rst, asciidoc, org, text, other.
+	// The markup the text is written in, which decides how to render it (rst: reStructuredText; text: plain). Null
+	// when the platform does not say. New values may be added. Known values: markdown, rst, asciidoc, org, text,
+	// other.
 	Format *string `json:"format"`
 	// The README's full text as written, in its markup (not rendered to HTML), front matter included; null when the
 	// file is empty.
@@ -6634,7 +6549,7 @@ type Readme struct {
 	PlatformSpecific ReadmePlatformSpecific `json:"platform_specific"`
 	// JSON paths of values the platform rounds; a README has none, so always [].
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none; a README has no lists, so always [].
+	// JSON paths of lists whose [] means unknown, not none; a README has no lists, so always [].
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -6688,8 +6603,8 @@ type ReleaseAsset struct {
 }
 
 type ReleaseMetrics struct {
-	// Downloads of the release's files: the sum of its assets' download counts. Source archives are not counted.
-	// Null when no asset's downloads are counted (a release with no files, a platform that counts none).
+	// Downloads of the release's files, the sum of its assets' counts, source archives excluded; null when no
+	// asset's downloads are counted (no files, or a platform that counts none).
 	DownloadCount *int64 `json:"download_count"`
 }
 
@@ -6748,8 +6663,7 @@ type Release struct {
 	// When the release was published, RFC 3339 UTC; on GitLab it can be a future date (an upcoming release). Null
 	// when the platform does not show it. Format: date-time.
 	PublishedAt *string `json:"published_at"`
-	// Files published with the release, in the platform's order; [] when none (listed in unknown_fields when the
-	// source cannot see them).
+	// Files published with the release, in the platform's order; [] when none (or unknown: see unknown_fields).
 	Assets []ReleaseAsset `json:"assets"`
 	// The source code at the release's tag as a .tar.gz archive, built by the platform; null when it serves none (a
 	// package registry, a repository that hides archives). Format: uri.
@@ -6757,14 +6671,14 @@ type Release struct {
 	// The source code at the release's tag as a .zip archive, built by the platform; null when it serves none.
 	// Format: uri.
 	ZipballURL *string `json:"zipball_url"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics ReleaseMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific ReleasePlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see a release's assets);
-	// null already means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see a release's assets). [] when
+	// every list is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -6783,8 +6697,8 @@ type RepositoryMetrics struct {
 	ForkCount *int64 `json:"fork_count"`
 	// Accounts watching it for notifications (not its stars); null when the platform does not state a count.
 	WatcherCount *int64 `json:"watcher_count"`
-	// Open issues, pull requests not counted (0 when its issue tracker is off); null when the platform does not
-	// state it apart from them. Listed in approximate_fields when read from display text ("1.1k").
+	// Open issues, pull requests not counted (0 when the issue tracker is off); null when the platform does not
+	// count them apart. In approximate_fields when rounded ("1.1k").
 	OpenIssueCount *int64 `json:"open_issue_count"`
 	// Open pull requests (merge requests on GitLab); null when the platform does not state a count.
 	OpenPullRequestCount *int64 `json:"open_pull_request_count"`
@@ -6861,9 +6775,8 @@ type Repository struct {
 	Description *string `json:"description"`
 	// The account that owns it: a person or an organization (owner_type).
 	Owner ProfileRef `json:"owner"`
-	// Whether the owner is a person's account or an organization's (a GitHub organization, a GitLab group, a
-	// Bitbucket team); null when the platform does not say. New values may be added. Known values: person,
-	// organization.
+	// Whether the owner is a person or an organization (GitLab groups and Bitbucket teams included); null when the
+	// platform does not say. New values may be added. Known values: person, organization.
 	OwnerType *string `json:"owner_type"`
 	// The project's website as its owner set it, as an absolute URL (https:// added to a bare example.com); null
 	// when none is set or it is not a web address. Format: uri.
@@ -6892,20 +6805,20 @@ type Repository struct {
 	// When the repository was created, RFC 3339 UTC (a fork's: when it was forked); null when the platform does not
 	// say. Format: date-time.
 	CreatedAt *string `json:"created_at"`
-	// When anything about the repository last changed as the platform counts it (on GitHub a new star counts), RFC
-	// 3339 UTC; pushed_at says when its code did. Null when the platform does not say. Format: date-time.
+	// When anything about the repository last changed, as the platform counts it (a new star counts on GitHub), RFC
+	// 3339 UTC; pushed_at says when its code did. Format: date-time.
 	UpdatedAt *string `json:"updated_at"`
 	// When code was last pushed to it, RFC 3339 UTC; null when the platform does not say. Format: date-time.
 	PushedAt *string `json:"pushed_at"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics RepositoryMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific RepositoryPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text (size_bytes from kilobytes,
 	// metrics.open_issue_count from "1.1k"). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see the topics); null
-	// already means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see the topics). [] when every list
+	// is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -6954,15 +6867,15 @@ type Review struct {
 	IsIncentivized *bool `json:"is_incentivized"`
 	// When the review was posted, RFC 3339 UTC. Format: date-time.
 	PublishedAt *string `json:"published_at"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics ReviewMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific ReviewPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform or parsed from display text (a date-only time). [] when all
 	// exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see a review's photos); null
-	// already means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see a review's photos). [] when
+	// every list is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -6981,9 +6894,8 @@ type SoundMetrics struct {
 }
 
 type TikTokMatchedSong struct {
-	// TikTok's ID of the song (not a sound ID: a sound endpoint does not take it). An official clip of a song and
-	// the original sounds matched to it share it, so grouping on it counts every use of the song; null when not
-	// stated.
+	// TikTok's song ID, not a sound ID (sound endpoints don't take it). A song's official clip and its matched
+	// original sounds share it, so grouping on it counts every use.
 	ID *string `json:"id"`
 	// The matched song on music streaming services, as TikTok links it; [] when none.
 	StreamingLinks []StreamingLink `json:"streaming_links"`
@@ -6992,9 +6904,8 @@ type TikTokMatchedSong struct {
 type TikTokSoundSpecific struct {
 	// Album of a catalogue track; null for original sounds and when not stated.
 	Album *string `json:"album"`
-	// TikTok's own is_commerce_music flag, as served. Not a licence check: TikTok sets it on original sounds and
-	// leaves it false on many licensed catalogue tracks, so it does not say a sound is cleared for business accounts
-	// or ads.
+	// TikTok's is_commerce_music flag, not a license check. TikTok sets it on original sounds and leaves it false on
+	// many licensed tracks, so it doesn't clear a sound for business use.
 	IsCommercialMusic *bool `json:"is_commercial_music"`
 	// The catalogue song TikTok matched the sound's audio to (for a catalogue track, the track itself): the song
 	// behind an original sound. null when TikTok names none.
@@ -7002,7 +6913,7 @@ type TikTokSoundSpecific struct {
 }
 
 type InstagramSoundSourcePost struct {
-	// The reel's shortcode: its post ID (equals post.id of instagram.post).
+	// The reel's shortcode: its post ID (equals the Instagram Post API's post.id).
 	ID *string `json:"id"`
 	// The reel's link (instagram.com/reel/<id>/). Format: uri.
 	URL *string `json:"url"`
@@ -7062,15 +6973,15 @@ type Sound struct {
 	// The same track on music streaming services, as the platform links it; [] when none (always for original
 	// sounds).
 	StreamingLinks []StreamingLink `json:"streaming_links"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics SoundMetrics `json:"metrics"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific SoundPlatformSpecific `json:"platform_specific"`
-	// JSON paths of values rounded by the platform or parsed from display text (e.g. metrics.post_count from "80K
-	// reels"). A list path means the list may be incomplete. [] when all exact.
+	// JSON paths of values rounded by the platform or parsed from display text ("80K reels": metrics.post_count). A
+	// list path means the list may be incomplete. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -7082,7 +6993,7 @@ type HashtagRef struct {
 	Name string `json:"name"`
 	// Canonical hashtag page URL. Format: uri.
 	URL string `json:"url"`
-	// Counts at fetch time; null = hidden or not exposed, 0 = zero.
+	// Counts at fetch time; null = not shown, 0 = zero.
 	Metrics HashtagMetrics `json:"metrics"`
 }
 
@@ -7103,8 +7014,8 @@ type GoogleSuggestionSpecific struct {
 	// The country an advertiser suggestion's advertiser is based in, an ISO 3166-1 alpha-2 code; null for a website
 	// suggestion, or when not shown.
 	CountryCode *string `json:"country_code"`
-	// The ads the center shows for an advertiser suggestion's advertiser, as Google's range (equal bounds when
-	// exact), in the region the request names where it takes one; null for a website suggestion, or when not shown.
+	// How many ads the center shows for a suggested advertiser, as Google's range (equal bounds when exact), in the
+	// request's region where it takes one; null for a website suggestion.
 	Ads *Range `json:"ads"`
 }
 
@@ -7148,16 +7059,15 @@ type Suggestion struct {
 	// The suggestion as the platform shows it, whitespace-trimmed: the completed search for a query suggestion, the
 	// account's name for a profile one, the domain for a website one.
 	Text string `json:"text"`
-	// query = a completed search to run; profile = an account (or community) the platform proposes, described in
-	// profile; hashtag = a hashtag, described in hashtag; website = a website the platform proposes: text is its
-	// domain (nike.com), as the platform's searches by website take it. New values may be added. Known values:
-	// query, profile, hashtag, website.
+	// query: a completed search to run. profile, hashtag: described in the field of that name (a profile can be a
+	// community). website: text is its domain (nike.com), as searches by website take it. New values may be added.
+	// Known values: query, profile, hashtag, website.
 	Type string `json:"type"`
 	// Zero-based rank of the suggestion in the list, counting every type: the platform's order (each endpoint's
 	// notes say how a list combining several of the platform's searches is ordered).
 	Position int64 `json:"position"`
-	// Where the suggestion leads on the platform: the search results page for a query, the account's page for a
-	// profile, the hashtag's page for a hashtag, the platform's page for the website for a website. Format: uri.
+	// Where the suggestion leads on the platform: the results page for a query, or the platform's page for the
+	// profile, hashtag or website. Format: uri.
 	URL string `json:"url"`
 	// The account a profile suggestion names; null for every other type.
 	Profile *ProfileRef `json:"profile"`
@@ -7169,8 +7079,7 @@ type Suggestion struct {
 	// JSON paths of values rounded or capped by the platform (hashtag.metrics.post_count at Instagram's ceiling). []
 	// when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none; [] when every list is known (a suggestion has
-	// none yet).
+	// JSON paths of lists whose [] means unknown, not none; [] when every list is known (a suggestion has none yet).
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -7266,8 +7175,8 @@ type Topic struct {
 	// JSON paths of values rounded by the platform or parsed from display text ("189M reels":
 	// platform_specific.instagram.post_count). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them); null already
-	// means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them). [] when every list is
+	// known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -7297,11 +7206,11 @@ type RumbleTranscriptSpecific struct {
 }
 
 type XTranscriptSpecific struct {
-	// ID of the post the transcribed video is attached to: the post itself, the reposted post for a repost, or the
-	// quoted post for a quote without a video of its own; null when unknown.
+	// ID of the post the transcribed video is attached to: this post, the reposted one, or the quoted one for a
+	// quote without its own video.
 	VideoPostID *string `json:"video_post_id"`
-	// Index of the transcribed video in the media of the post video_post_id names (0 for the first attachment, as
-	// x.post's media); null when unknown.
+	// Index of the transcribed video in the media of the post video_post_id names (0 for the first attachment, as in
+	// the post's media).
 	MediaIndex *int64 `json:"media_index"`
 	// The WebVTT file of X's caption track used (public, unsigned); null for speech-to-text. Format: uri.
 	CaptionURL *string `json:"caption_url"`
@@ -7362,8 +7271,8 @@ type TrendPoint struct {
 type GoogleTrendSpecific struct {
 	// ISO 3166-1 alpha-2 country whose searches the trend counts; null for a worldwide board.
 	CountryCode *string `json:"country_code"`
-	// How much the term's searches rose since it started trending, a fraction (1 = +100 %), in Google's steps;
-	// Google caps it at 10 (+1,000 %), a lower bound then (listed in approximate_fields).
+	// How much the term's searches rose since it started trending, a fraction in Google's steps (1 = +100 %); capped
+	// at 10 (+1,000 %), a lower bound then (in approximate_fields).
 	Growth *float64 `json:"growth"`
 	// When the term started trending, RFC 3339 UTC. Format: date-time.
 	StartedAt *string `json:"started_at"`
@@ -7377,8 +7286,8 @@ type GoogleTrendSpecific struct {
 	RelatedSearches []string `json:"related_searches"`
 	// Google's counts for the trend; null = not shown.
 	Metrics GoogleTrendMetrics `json:"metrics"`
-	// How much the term was searched over time, oldest first, each interval relative to the series' peak (1); [] on
-	// a board, which does not read the series (listed in unknown_fields): a trend's own endpoint fills it.
+	// The term's search interest over time, oldest first, each interval relative to the series' peak (1); [] on a
+	// board (listed in unknown_fields); a trend's own endpoint fills it.
 	History []TrendPoint `json:"history"`
 }
 
@@ -7386,15 +7295,13 @@ type PinterestTrendSpecific struct {
 	// ISO 3166-1 alpha-2 country whose searches the figures count (Pinterest counts some countries together: the
 	// endpoint's notes say which).
 	CountryCode *string `json:"country_code"`
-	// Every country whose searches the figures count together, as ISO 3166-1 alpha-2 codes: ["US"] for a country
-	// Pinterest publishes a board for on its own, its group's (["GB", "IE"] for IE) for one Pinterest counts with
-	// others. [] when unknown.
+	// Countries whose searches the figures count together, ISO 3166-1 alpha-2: ["US"] for a country with its own
+	// Pinterest board, else its group's (["GB", "IE"] for IE). [] when unknown.
 	MarketCountryCodes []string `json:"market_country_codes"`
 	// How much the term is searched in the table's period, relative to the table's most searched term (100).
 	SearchIndex *int64 `json:"search_index"`
-	// Change in the term's searches over the past week, a fraction (0.3 = +30 %, -0.5 = -50 %), rounded by Pinterest
-	// to one or two significant digits (always listed in approximate_fields); capped at 100 (+10,000 %), a lower
-	// bound then.
+	// Past week's change in the term's searches, a fraction (0.3 = +30 %). Pinterest rounds it to one or two
+	// significant digits (always in approximate_fields) and caps it at 100 (+10,000 %), a lower bound then.
 	WeeklyChange *float64 `json:"weekly_change"`
 	// Change over the past month, a fraction like weekly_change, rounded by Pinterest the same way (always listed in
 	// approximate_fields); capped at 100, a lower bound then.
@@ -7418,9 +7325,9 @@ type InstagramTrendMetrics struct {
 }
 
 type InstagramTrendSpecific struct {
-	// The section of Instagram's popular page the term sits on, as Instagram names it internally, in lower case:
-	// trending_now, entertainment, get_inspired, learn_something_new, shop_the_trends, trending_month or
-	// browse_categories (new ones may appear). rank counts within it.
+	// The section of Instagram's popular page the term is on, by Instagram's internal name (trending_now,
+	// entertainment, get_inspired, learn_something_new, shop_the_trends, trending_month, browse_categories; others
+	// may appear); rank counts within it.
 	Section *string `json:"section"`
 	// The section's title as Instagram shows it (Trending now, Pop culture moments, Find what you're into):
 	// Instagram's copy, which it may reword, so group or filter by section instead.
@@ -7446,29 +7353,27 @@ type TrendPlatformSpecific struct {
 type Trend struct {
 	// Platform ID (pinterest, google, bluesky, …).
 	Platform string `json:"platform"`
-	// The trend's words as the platform shows them, whitespace-trimmed: a search term (Pinterest, Google and
-	// Instagram, usually lowercase: pass it as query to the platform's search endpoints) or a topic's headline
-	// (Bluesky).
+	// The trend's words as the platform shows them, trimmed: a search term, usually lowercase, to pass as query to
+	// the platform's search endpoints, or a topic's headline (Bluesky).
 	Term string `json:"term"`
-	// The trend's public page on the platform: its trend page where one answers logged out (Google Trends' explore
-	// page, Instagram's page for the term, Bluesky's feed of the topic's posts), else the platform's search results
-	// for it (Pinterest). Format: uri.
+	// The trend's page on the platform where one opens logged out, else the platform's search results for it
+	// (Pinterest). Format: uri.
 	URL string `json:"url"`
 	// Position on the requested board, 1 = top; null when the answer is not a board.
 	Rank *int64 `json:"rank"`
-	// Categories the platform files the trend under, as shown (not normalized), the main one first; [] when none
-	// (listed in unknown_fields when the source cannot see them).
+	// Categories the platform files the trend under, as shown (not normalized), the main one first; [] when none (or
+	// unknown: see unknown_fields).
 	Categories []string `json:"categories"`
-	// A picture the platform shows beside the trend (a Pin's on Pinterest, a news article's on Google, a post's on
-	// Instagram); null when none or not read. Platform CDN URLs can expire. Format: uri.
+	// A picture the platform shows beside the trend (a Pin's, a news article's, a post's); null when none or not
+	// read. Platform CDN URLs can expire. Format: uri.
 	ThumbnailURL *string `json:"thumbnail_url"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific TrendPlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded, bucketed or capped by the platform (Google's search volume bucket, Pinterest's
 	// rounded changes). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none (a source that cannot see them, such as a board's
-	// history); null already means unknown for every other field. [] when every list is known.
+	// JSON paths of lists whose [] means unknown, not none (a source that cannot see them, such as a board's
+	// history). [] when every list is known.
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -7486,33 +7391,29 @@ type Username struct {
 	// The username checked, without @, in the platform's canonical form (lowercase where usernames are
 	// case-insensitive).
 	Username string `json:"username"`
-	// The profile page at this username: the account's page when it is taken, the page it would have once registered
-	// (until then the platform answers it as not found); null when that address is one of the platform's own pages
-	// (instagram.com/explore/), not an account's. Format: uri.
+	// The profile page at this username: the account's when taken, else the page it would have (not found until
+	// registered); null when the address is the platform's own page (instagram.com/explore/). Format: uri.
 	URL *string `json:"url"`
 	// True when the platform would let someone register the username now; false when it is taken, reserved or breaks
-	// the platform's username rules (reason and message say which); null when the platform did not say.
+	// its rules (see reason and message).
 	IsAvailable *bool `json:"is_available"`
-	// Why the username is not available: taken = registered to an account or reserved by the platform (platforms
-	// don't tell the two apart); invalid = breaks the platform's username rules (length, characters). Null when it
-	// is available or the platform gave no reason. New values may be added. Known values: taken, invalid.
+	// Why it is unavailable. taken: registered or reserved (platforms don't tell them apart); invalid: breaks the
+	// platform's rules (length, characters). Null when available or unexplained. New values may be added. Known
+	// values: taken, invalid.
 	Reason *string `json:"reason"`
 	// The platform's own explanation when the username is not available, as its sign-up form shows it (English);
 	// null when it is available.
 	Message *string `json:"message"`
-	// Free usernames the platform's sign-up form proposes for this one, in its order; [] when it proposes none
-	// (platforms suggest nothing for short, protected or brand names). Free when proposed: someone can take one at
-	// any time.
+	// Usernames the platform's sign-up form proposes instead, in its order, free when proposed (anyone can take one
+	// later); [] when none, as for short, protected or brand names.
 	Suggestions []string `json:"suggestions"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific UsernamePlatformSpecific `json:"platform_specific"`
 }
 
 type WebPageMetrics struct {
-	// How many times the platform's users shared this link to it, as its own share or save button counts them
-	// (Pinterest: saves, each a Pin of the page). 0 when none did, which is also the answer for a page that doesn't
-	// exist: platforms count links without opening them. Rounded where the platform shows it rounded (Facebook; see
-	// approximate_fields). Null when the platform gave no count.
+	// Shares of this link on the platform, as its own share or save button counts them. 0 when none, even for a page
+	// that doesn't exist. In approximate_fields when rounded.
 	ShareCount *int64 `json:"share_count"`
 }
 
@@ -7533,7 +7434,7 @@ type WebPage struct {
 	PlatformSpecific WebPagePlatformSpecific `json:"platform_specific"`
 	// JSON paths of values rounded by the platform (Facebook's "57K": metrics.share_count). [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none; a web page has no lists, so always [].
+	// JSON paths of lists whose [] means unknown, not none; a web page has no lists, so always [].
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -7575,13 +7476,13 @@ type PostSummary struct {
 	// it does not. Format: date-time.
 	PublishedAt *string `json:"published_at"`
 	// The posting account as the link and the index's text name it (a /@<username>/video/ link's username, the
-	// title's display name); its id, avatar_url and is_verified null until the result is filled.
+	// title's display name); id, avatar_url and is_verified null until filled.
 	Author ProfileRef `json:"author"`
 	// Cover or poster image URL; null until the result is filled (an index's thumbnails are its own copies). Format:
 	// uri.
 	ThumbnailURL *string `json:"thumbnail_url"`
-	// Counts as the index's snippet states them ("1,234 likes, 56 comments"; rounded, as old as the index's copy:
-	// see approximate_fields), or the platform's current ones once filled; null = not stated.
+	// Counts as the index's snippet states them ("1,234 likes"; rounded and as old as the index's copy: see
+	// approximate_fields), or current ones once filled.
 	Metrics PostMetrics `json:"metrics"`
 }
 
@@ -7693,9 +7594,8 @@ type WebResultDetails struct {
 }
 
 type FacebookWebResultSpecific struct {
-	// What the index's text says the account is: page (Facebook describes it with counts, as it does a Page, and a
-	// person in professional mode) or person (Facebook's "is on Facebook" text). Null when the text doesn't say. New
-	// values may be added. Known values: page, person.
+	// The account kind the index's text implies. page: described with counts (a Page, or a person in professional
+	// mode); person: "is on Facebook". New values may be added. Known values: page, person.
 	AccountType *string `json:"account_type"`
 	// The Page's likes as the index's snippet states them; null when it does not, as for most Pages, which show
 	// followers instead.
@@ -7711,14 +7611,13 @@ type FacebookWebResultSpecific struct {
 }
 
 type LinkedInWebResultSpecific struct {
-	// What the account is on LinkedIn, as its link says: a company's Page, a school's, a showcase page, or a member.
-	// Null when unknown. New values may be added; treat unknown values as unknown. Known values: company, school,
-	// showcase, member.
+	// What the account is on LinkedIn, as its link says; showcase: a company's page for one brand or product. New
+	// values may be added; treat unknown values as unknown. Known values: company, school, showcase, member.
 	Kind *string `json:"kind"`
 	// A Page's tagline as the index's snippet quotes it; null when it quotes none, and for a member.
 	Tagline *string `json:"tagline"`
-	// What the index's title says of a member after their name: their headline, or where LinkedIn hides it their
-	// current employer, school or place (often cut short); null when it says none, and for a Page.
+	// What the index's title says of a member after their name: their headline, or where LinkedIn hides it, current
+	// employer, school or place (often cut short); null for a Page.
 	Headline *string `json:"headline"`
 	// Where a member is, as the index's snippet or title says it; null when it does not, and for a Page.
 	Location *string `json:"location"`
@@ -7744,11 +7643,9 @@ type WebResultPlatformSpecific struct {
 type WebResult struct {
 	// Platform the item is on.
 	Platform string `json:"platform"`
-	// The kind of item the result names, as the resource that describes it: profile (an account), post, hashtag,
-	// sound, place or community. The item's summary is the field of that name, and a filled result's record is
-	// details.<type>. A search that finds several kinds (a platform's top search) mixes them in one list. New values
-	// may be added as more kinds are searchable; treat unknown values as other. Known values: profile, post,
-	// hashtag, sound, place, community.
+	// The kind of item the result names, by the resource that describes it; its summary is the field of that name,
+	// and a filled result's record is details.<type>. A platform's top search mixes kinds. New values may be added;
+	// treat unknown values as other. Known values: profile, post, hashtag, sound, place, community.
 	Type string `json:"type"`
 	// Zero-based rank of the result in the list, across pages: the search engine's order, counting only the results
 	// kept.
@@ -7762,8 +7659,8 @@ type WebResult struct {
 	// The page's title as the index shows it: often the item's name, but not the item's own field. Null when the
 	// index shows none.
 	Title *string `json:"title"`
-	// The index's excerpt of the page: often the item's description and counts as the page stated them when it was
-	// indexed, days or weeks ago. Null when the index shows none.
+	// The index's excerpt of the page, often the item's description and counts as of indexing, days or weeks ago;
+	// null when none.
 	Snippet *string `json:"snippet"`
 	// The account the result names (type profile): what its link and the index's text say of it, completed from
 	// details when the result is filled. Null for every other type.
@@ -7780,22 +7677,19 @@ type WebResult struct {
 	// The place the result names (type place): what its link and the index's text say of it, completed from details
 	// when the result is filled. Null for every other type.
 	Place *PlaceSummary `json:"place"`
-	// The community the result names (type community: a group, a subreddit): what its link and the index's text say
-	// of it, completed from details when the result is filled. Null for every other type.
+	// The community the result names (type community: a group, a subreddit), from its link and the index's text,
+	// completed from details once filled. Null for other types.
 	Community *CommunitySummary `json:"community"`
-	// The item's own record from the platform, fetched when the request asked for it (fill=true): what the
-	// platform's endpoint for the kind returns, under the result's type (details.profile). Null when not asked for,
-	// when the platform has no endpoint for the kind, or when it did not serve the item (meta.warnings says how
-	// many).
+	// The item's record as the platform's endpoint for its kind returns it, under the result's type
+	// (details.profile), when the request sets fill=true. Null otherwise, when no endpoint serves the kind, or when
+	// the item was not served (meta.warnings has partial_data).
 	Details *WebResultDetails `json:"details"`
 	// Fields only this platform has, under its ID (platform_specific.<platform>); each null when unknown.
 	PlatformSpecific WebResultPlatformSpecific `json:"platform_specific"`
-	// JSON paths of values parsed from the index's display text or rounded there (profile.metrics.follower_count
-	// from "13K followers", a profile.bio or post.text the snippet cut short). Filled values are exact and leave the
-	// list. [] when all exact.
+	// JSON paths of values read from the index's display text (a rounded follower count, a bio or text the snippet
+	// cut). Filled values leave the list. [] when all exact.
 	ApproximateFields []string `json:"approximate_fields"`
-	// JSON paths of lists whose [] means unknown rather than none; [] when every list is known (a result has none
-	// yet).
+	// JSON paths of lists whose [] means unknown, not none; [] when every list is known (a result has none yet).
 	UnknownFields []string `json:"unknown_fields"`
 }
 
@@ -7815,9 +7709,8 @@ type Warning struct {
 	Message string `json:"message"`
 	// Where to read more (the changelog entry, the endpoint's docs).
 	DocURL string `json:"doc_url"`
-	// partial_data and fields_unavailable: the output fields (catalog paths such as metrics.view_count) that are
-	// null or [] because part of the data could not be fetched (partial_data) or the platform doesn't show what they
-	// are made from (fields_unavailable); absent for other codes.
+	// For partial_data and fields_unavailable: the fields (paths such as metrics.view_count) left null or [] because
+	// part of the data couldn't be fetched or the platform doesn't show it. Absent for other codes.
 	Fields []string `json:"fields"`
 }
 
@@ -7827,7 +7720,8 @@ type ResponseMeta struct {
 	RequestID string `json:"request_id"`
 	// Platform ID of the endpoint (youtube, tiktok, …).
 	Platform string `json:"platform"`
-	// Which upstream strategy produced the data.
+	// The kind of source that answered (api, page, captions, …; the credits guide lists them); a price that varies
+	// by source follows it.
 	Source string `json:"source"`
 	// True when served from the cache (free); see max_age.
 	IsCached bool `json:"is_cached"`
@@ -7838,12 +7732,11 @@ type ResponseMeta struct {
 	// When the data was fetched from the platform, RFC 3339 UTC (older than the request for cache hits). Format:
 	// date-time.
 	FetchedAt string `json:"fetched_at"`
-	// What the request's url or handle resolved to: kind, platform ID and canonical URL, so you can confirm what was
-	// fetched; null for searches.
+	// What the request's url or handle resolved to (kind, platform ID, canonical URL), to confirm what was fetched;
+	// null for searches.
 	Input *InputRef `json:"input"`
-	// Account balance after this request (the x-credits-remaining header); for a busy account an estimate that may
-	// not yet subtract concurrent requests (about a second of usage), never below the real balance; null when
-	// SocialTap could not read it.
+	// Account balance after this request, as in the x-credits-remaining header. With requests in parallel it can lag
+	// about a second, never below the real balance; null when unavailable.
 	CreditsRemaining *int64 `json:"credits_remaining"`
 	// Your x-client-request-id, echoed; null when you sent none.
 	ClientRequestID *string `json:"client_request_id"`
@@ -7858,12 +7751,11 @@ type PageInfo struct {
 	HasMore bool `json:"has_more"`
 	// Pass as cursor, with the same other parameters, to get the next page; null at the end.
 	NextCursor *string `json:"next_cursor"`
-	// When next_cursor stops working, RFC 3339 UTC; null at the end. Don't store cursors. Format: date-time.
+	// When next_cursor stops working, RFC 3339 UTC; null at the end. Format: date-time.
 	NextCursorExpiresAt *string `json:"next_cursor_expires_at"`
-	// Why there are no more pages; null while has_more is true. end: the list ended, or reached since/until.
-	// platform_limit: the platform stops serving further pages although the list goes on. max_pages: SocialTap's cap
-	// on pages in one walk. New values may be added. A short or empty page is not the end: only has_more false is.
-	// Known values: end, platform_limit, max_pages.
+	// Why the walk ended; null while has_more is true. end: the list ended or reached since/until. platform_limit:
+	// the platform serves no more pages though the list goes on. max_pages: SocialTap's cap per walk. New values may
+	// be added. Known values: end, platform_limit, max_pages.
 	EndReason *string `json:"end_reason"`
 }
 
@@ -7919,17 +7811,15 @@ type APIKey struct {
 	LastUsedAt *string `json:"last_used_at"`
 	// When the key was revoked; null while it is not. Format: date-time.
 	RevokedAt *string `json:"revoked_at"`
-	// true for the account's built-in dashboard key: the dashboard's playground runs as it (so its requests are
-	// logged, counted and billed like any key's). Nobody holds its secret, so it works only from the signed-in
-	// dashboard. Only its spend_limit can be changed (to cap what the playground spends live); renaming, rescoping,
-	// restricting, rotating or revoking it is forbidden (details.reason dashboard_key). It is made on first use and
-	// revoked with the account.
+	// true for the account's built-in dashboard key, which the playground runs as: logged and billed like any key,
+	// usable only from the dashboard, made on first use. Only its spend_limit changes; anything else is forbidden,
+	// reason dashboard_key.
 	Dashboard bool `json:"dashboard"`
 	// Until then the secret this key had before its last rotation works too (rotate_secret), RFC 3339 UTC; null when
 	// none does. Format: date-time.
 	PreviousSecretExpiresAt *string `json:"previous_secret_expires_at"`
-	// The API key (key_…) that last created this key, gave it the admin scope or rotated it: revoking that key also
-	// revokes this one if this one has admin. Null when none did, or a person has rotated it in the dashboard since.
+	// The key (key_…) that last created, gave admin to or rotated this key: revoking it revokes this one too, when
+	// this one has admin. Null when none did, or after a dashboard rotation.
 	CreatedByKey *string `json:"created_by_key"`
 	// The person (GET /v1/members user_id) who created this key in the dashboard, or whose key created it. They may
 	// have left the account since. Null when no person did (an operator, or a key from before this was recorded).
@@ -7955,11 +7845,9 @@ type Account struct {
 	// credits.low fires (event and email) when a request takes the balance from above this to at or below it; null
 	// when off.
 	LowBalanceThreshold *int64 `json:"low_balance_threshold"`
-	// The account's runaway-protection ceiling, in requests per second: a safety limit that stops a runaway client,
-	// not a plan limit (plans have no rate limit). Requests above it fail with rate_limited (free) and Retry-After;
-	// short bursts above it are admitted (the RateLimit-Policy header states the burst). GET /v1/usage/rate shows
-	// how close the account runs to it; ask support to raise it. An account that has never paid has a lower ceiling,
-	// which its first payment removes within a minute.
+	// Runaway-protection ceiling, in requests per second: a safety limit, not a plan limit. Above it, past a short
+	// burst (RateLimit-Policy), requests fail with rate_limited (free). GET /v1/usage/rate shows how close you run;
+	// support raises it. Lower until the account's first payment, then lifted within a minute.
 	MaxRps int64 `json:"max_rps"`
 	// Whether each request's answer body is kept, for 7 days (GET /v1/requests/{id}/response); off by default.
 	KeepResponseBodies bool `json:"keep_response_bodies"`
@@ -8047,9 +7935,8 @@ type UsageRateBucket struct {
 	StartingAt string `json:"starting_at"`
 	// Bucket end, exclusive. Format: date-time.
 	EndingAt string `json:"ending_at"`
-	// Requests the ceiling counted, refused ones included: endpoint requests (Prefer: respond-async ones too) and
-	// the gateway's own routes, from every key and the dashboard's playground. Loading the dashboard's pages doesn't
-	// count. Not counted: a job's items (the job paces them).
+	// Requests the ceiling counted, refused ones included: endpoint requests (Prefer: respond-async too) and the
+	// gateway's own routes, from every key and the playground. Not counted: dashboard page loads and a job's items.
 	Requests int64 `json:"requests"`
 	// Of requests, those refused with rate_limited (free) because the account was above its ceiling.
 	RateLimited int64 `json:"rate_limited"`
@@ -8377,17 +8264,15 @@ type APIKeyCreated struct {
 	LastUsedAt *string `json:"last_used_at"`
 	// When the key was revoked; null while it is not. Format: date-time.
 	RevokedAt *string `json:"revoked_at"`
-	// true for the account's built-in dashboard key: the dashboard's playground runs as it (so its requests are
-	// logged, counted and billed like any key's). Nobody holds its secret, so it works only from the signed-in
-	// dashboard. Only its spend_limit can be changed (to cap what the playground spends live); renaming, rescoping,
-	// restricting, rotating or revoking it is forbidden (details.reason dashboard_key). It is made on first use and
-	// revoked with the account.
+	// true for the account's built-in dashboard key, which the playground runs as: logged and billed like any key,
+	// usable only from the dashboard, made on first use. Only its spend_limit changes; anything else is forbidden,
+	// reason dashboard_key.
 	Dashboard bool `json:"dashboard"`
 	// Until then the secret this key had before its last rotation works too (rotate_secret), RFC 3339 UTC; null when
 	// none does. Format: date-time.
 	PreviousSecretExpiresAt *string `json:"previous_secret_expires_at"`
-	// The API key (key_…) that last created this key, gave it the admin scope or rotated it: revoking that key also
-	// revokes this one if this one has admin. Null when none did, or a person has rotated it in the dashboard since.
+	// The key (key_…) that last created, gave admin to or rotated this key: revoking it revokes this one too, when
+	// this one has admin. Null when none did, or after a dashboard rotation.
 	CreatedByKey *string `json:"created_by_key"`
 	// The person (GET /v1/members user_id) who created this key in the dashboard, or whose key created it. They may
 	// have left the account since. Null when no person did (an operator, or a key from before this was recorded).
@@ -8434,17 +8319,15 @@ type APIKeyRevoked struct {
 	LastUsedAt *string `json:"last_used_at"`
 	// When the key was revoked; null while it is not. Format: date-time.
 	RevokedAt *string `json:"revoked_at"`
-	// true for the account's built-in dashboard key: the dashboard's playground runs as it (so its requests are
-	// logged, counted and billed like any key's). Nobody holds its secret, so it works only from the signed-in
-	// dashboard. Only its spend_limit can be changed (to cap what the playground spends live); renaming, rescoping,
-	// restricting, rotating or revoking it is forbidden (details.reason dashboard_key). It is made on first use and
-	// revoked with the account.
+	// true for the account's built-in dashboard key, which the playground runs as: logged and billed like any key,
+	// usable only from the dashboard, made on first use. Only its spend_limit changes; anything else is forbidden,
+	// reason dashboard_key.
 	Dashboard bool `json:"dashboard"`
 	// Until then the secret this key had before its last rotation works too (rotate_secret), RFC 3339 UTC; null when
 	// none does. Format: date-time.
 	PreviousSecretExpiresAt *string `json:"previous_secret_expires_at"`
-	// The API key (key_…) that last created this key, gave it the admin scope or rotated it: revoking that key also
-	// revokes this one if this one has admin. Null when none did, or a person has rotated it in the dashboard since.
+	// The key (key_…) that last created, gave admin to or rotated this key: revoking it revokes this one too, when
+	// this one has admin. Null when none did, or after a dashboard rotation.
 	CreatedByKey *string `json:"created_by_key"`
 	// The person (GET /v1/members user_id) who created this key in the dashboard, or whose key created it. They may
 	// have left the account since. Null when no person did (an operator, or a key from before this was recorded).
