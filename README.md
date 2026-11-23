@@ -5,7 +5,7 @@
 SocialTap is the social media scraper API for developers and AI agents. Send a public link, a handle or a search and get live data back in one schema. Failed requests are free.
 
 The Go SDK for the SocialTap API: a method for every endpoint, typed models and errors, retries and pagination.
-Generated from the SocialTap catalog (version 1.585.34). Docs: https://socialtap.dev/docs. Source: https://github.com/SocialTapDev/socialtap-go.
+Generated from the SocialTap catalog (version 1.597.37). Docs: https://socialtap.dev/docs/. Source: https://github.com/SocialTapDev/socialtap-go.
 
 ## Install
 
@@ -30,7 +30,9 @@ decodes an event's data by its type; each endpoint's Params has a method buildin
 The client reads your API key from `SOCIALTAP_API_KEY`, or takes it as an option. Requests send it in the
 `x-api-key` header. Get a key at https://socialtap.dev/signup/: every account starts with 100 free credits.
 
-## First call: Exact follower and like counts, bio and country
+## First call
+
+TikTok Profile API (`tiktok.profile`). Exact follower and like counts, bio and country.
 
 ```go
 package main
@@ -159,11 +161,11 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `facebook.search_ads` | `client.Facebook.SearchAds.List()` | 1 credit |
 | `facebook.search_advertisers` | `client.Facebook.SearchAdvertisers.List()` | 1 credit |
 | `facebook.search_events` | `client.Facebook.SearchEvents.List()` | 1 credit |
-| `facebook.search_groups` | `client.Facebook.SearchGroups.List()` | 1 credit + 1 per result filled in |
+| `facebook.search_groups` | `client.Facebook.SearchGroups.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `facebook.search_listings` | `client.Facebook.SearchListings.List()` | 1 credit |
 | `facebook.search_places` | `client.Facebook.SearchPlaces.List()` | 1 credit |
-| `facebook.search_posts` | `client.Facebook.SearchPosts.List()` | 1 credit + 1 per result filled in |
-| `facebook.search_profiles` | `client.Facebook.SearchProfiles.List()` | 1 credit + 1 per result filled in |
+| `facebook.search_posts` | `client.Facebook.SearchPosts.List()` | 1 credit + 1 per result filled in (with fill=true) |
+| `facebook.search_profiles` | `client.Facebook.SearchProfiles.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `facebook.transcript` | `client.Facebook.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
 | `github.activity` | `client.GitHub.Activity.List()` | 1 credit |
 | `github.contributions` | `client.GitHub.Contributions.Get()` | 1 credit |
@@ -218,10 +220,10 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `instagram.profile` | `client.Instagram.Profile.Get()` | 1 credit |
 | `instagram.reels` | `client.Instagram.Reels.List()` | 1 credit |
 | `instagram.search_hashtags` | `client.Instagram.SearchHashtags.List()` | 1 credit |
-| `instagram.search_places` | `client.Instagram.SearchPlaces.List()` | 1 credit + 1 per result filled in |
+| `instagram.search_places` | `client.Instagram.SearchPlaces.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `instagram.search_posts` | `client.Instagram.SearchPosts.List()` | 1 credit |
-| `instagram.search_profiles` | `client.Instagram.SearchProfiles.List()` | 1 credit + 1 per result filled in |
-| `instagram.search_sounds` | `client.Instagram.SearchSounds.List()` | 1 credit + 1 per result filled in |
+| `instagram.search_profiles` | `client.Instagram.SearchProfiles.List()` | 1 credit + 1 per result filled in (with fill=true) |
+| `instagram.search_sounds` | `client.Instagram.SearchSounds.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `instagram.search_suggestions` | `client.Instagram.SearchSuggestions.List()` | 1 credit |
 | `instagram.similar_profiles` | `client.Instagram.SimilarProfiles.List()` | 1 credit |
 | `instagram.sound` | `client.Instagram.Sound.Get()` | 1 credit |
@@ -256,8 +258,8 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `linkedin.profile_groups` | `client.LinkedIn.ProfileGroups.List()` | 5 credits |
 | `linkedin.search_ads` | `client.LinkedIn.SearchAds.List()` | 1 credit |
 | `linkedin.search_jobs` | `client.LinkedIn.SearchJobs.List()` | 1 credit |
-| `linkedin.search_posts` | `client.LinkedIn.SearchPosts.List()` | 1 credit + 1 per result filled in |
-| `linkedin.search_profiles` | `client.LinkedIn.SearchProfiles.List()` | 1 credit + 1 per result filled in |
+| `linkedin.search_posts` | `client.LinkedIn.SearchPosts.List()` | 1 credit + 1 per result filled in (with fill=true) |
+| `linkedin.search_profiles` | `client.LinkedIn.SearchProfiles.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `linkedin.transcript` | `client.LinkedIn.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
 | `linkme.profile` | `client.Linkme.Profile.Get()` | 1 credit |
 | `linktree.profile` | `client.Linktree.Profile.Get()` | 1 credit |
@@ -313,7 +315,7 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `telegram.channel` | `client.Telegram.Channel.Get()` | 1 credit |
 | `telegram.channel_posts` | `client.Telegram.ChannelPosts.List()` | 1 credit |
 | `telegram.post` | `client.Telegram.Post.Get()` | 1 credit |
-| `telegram.search_channels` | `client.Telegram.SearchChannels.List()` | 1 credit + 1 per result filled in |
+| `telegram.search_channels` | `client.Telegram.SearchChannels.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `threads.comments` | `client.Threads.Comments.List()` | 1 credit |
 | `threads.post` | `client.Threads.Post.Get()` | 1 credit |
 | `threads.posts` | `client.Threads.Posts.List()` | 1 credit |
@@ -341,12 +343,12 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `tiktok.profile` | `client.TikTok.Profile.Get()` | 1 credit |
 | `tiktok.replies` | `client.TikTok.Replies.List()` | 1 credit |
 | `tiktok.search_ads` | `client.TikTok.SearchAds.List()` | 1 credit |
-| `tiktok.search_hashtags` | `client.TikTok.SearchHashtags.List()` | 1 credit + 1 per result filled in |
+| `tiktok.search_hashtags` | `client.TikTok.SearchHashtags.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `tiktok.search_posts` | `client.TikTok.SearchPosts.List()` | 1 credit |
-| `tiktok.search_profiles` | `client.TikTok.SearchProfiles.List()` | 1 credit + 1 per result filled in |
-| `tiktok.search_sounds` | `client.TikTok.SearchSounds.List()` | 1 credit + 1 per result filled in |
+| `tiktok.search_profiles` | `client.TikTok.SearchProfiles.List()` | 1 credit + 1 per result filled in (with fill=true) |
+| `tiktok.search_sounds` | `client.TikTok.SearchSounds.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `tiktok.search_suggestions` | `client.TikTok.SearchSuggestions.List()` | 1 credit |
-| `tiktok.search_top` | `client.TikTok.SearchTop.List()` | 1 credit + 1 per result filled in |
+| `tiktok.search_top` | `client.TikTok.SearchTop.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `tiktok.sound` | `client.TikTok.Sound.Get()` | 1 credit |
 | `tiktok.sound_posts` | `client.TikTok.SoundPosts.List()` | 1 credit |
 | `tiktok.top_ads` | `client.TikTok.TopAds.List()` | 1 credit |
@@ -377,17 +379,21 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `x.posts` | `client.X.Posts.List()` | 1 credit |
 | `x.profile` | `client.X.Profile.Get()` | 1 credit |
 | `x.profile_mentions` | `client.X.ProfileMentions.List()` | 1 credit |
-| `x.search_communities` | `client.X.SearchCommunities.List()` | 1 credit + 1 per result filled in |
+| `x.search_communities` | `client.X.SearchCommunities.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `x.search_hashtags` | `client.X.SearchHashtags.List()` | 1 credit |
-| `x.search_posts` | `client.X.SearchPosts.List()` | 1 credit + 1 per result filled in |
-| `x.search_profiles` | `client.X.SearchProfiles.List()` | 1 credit + 1 per result filled in |
+| `x.search_posts` | `client.X.SearchPosts.List()` | 1 credit + 1 per result filled in (with fill=true) |
+| `x.search_profiles` | `client.X.SearchProfiles.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `x.space` | `client.X.Space.Get()` | 1 credit |
 | `x.transcript` | `client.X.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
 | `youtube.comments` | `client.YouTube.Comments.List()` | 1 credit |
 | `youtube.engagement` | `client.YouTube.Engagement.Get()` | 1 credit |
+| `youtube.hashtag_posts` | `client.YouTube.HashtagPosts.List()` | 1 credit |
 | `youtube.post` | `client.YouTube.Post.Get()` | 1 credit |
 | `youtube.posts` | `client.YouTube.Posts.List()` | 1 credit |
 | `youtube.profile` | `client.YouTube.Profile.Get()` | 1 credit |
+| `youtube.search_posts` | `client.YouTube.SearchPosts.List()` | 1 credit |
+| `youtube.search_profiles` | `client.YouTube.SearchProfiles.List()` | 1 credit |
+| `youtube.search_suggestions` | `client.YouTube.SearchSuggestions.List()` | 1 credit |
 | `youtube.transcript` | `client.YouTube.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
 
 ### Endpoints newer than this package
@@ -570,7 +576,7 @@ act on them. Transport failures raise as for any request, and tools that may be 
 for _, t := range socialtap.Tools {
 	fmt.Println(t.Name, t.Description, string(t.InputSchema))
 }
-r, err := client.CallTool(ctx, "find_endpoint", map[string]any{"query": "Exact follower and like counts, bio and country"})
+r, err := client.CallTool(ctx, "find_endpoint", map[string]any{"query": "TikTok profile"})
 if err != nil {
 	log.Fatal(err)
 }

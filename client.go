@@ -21,7 +21,7 @@ import "context"
 // Google, Hacker News, Instagram, Komi, Kwai, LinkedIn, Linkme, Linktree, Lnk.Bio, Pillar, Pinterest, Reddit,
 // Rumble, Snapchat, SoundCloud, Spotify, Telegram, Threads, TikTok, Truth Social, Twitch, X and YouTube; readmes
 // on GitHub; relationships on X; releases on GitHub; repositories on GitHub; reviews on Amazon and TikTok Shop;
-// sounds on Instagram and TikTok; suggestions on Google, Instagram and TikTok; topics on Instagram and
+// sounds on Instagram and TikTok; suggestions on Google, Instagram, TikTok and YouTube; topics on Instagram and
 // Pinterest; transcripts on Facebook, Instagram, Kick, LinkedIn, Reddit, Rumble, TikTok, Twitch, X and YouTube;
 // trends on Instagram and Pinterest; usernames on Instagram; web pages on Pinterest; web results on Facebook,
 // Instagram, LinkedIn, Telegram, TikTok and X.
@@ -146,7 +146,7 @@ func NewClient(opts ...Option) (*Client, error) {
 	c.TruthSocial = &TruthSocialService{Post: &TruthSocialPostService{t}, Posts: &TruthSocialPostsService{t}, Profile: &TruthSocialProfileService{t}}
 	c.Twitch = &TwitchService{Profile: &TwitchProfileService{t}, Schedule: &TwitchScheduleService{t}, Transcript: &TwitchTranscriptService{t}, Video: &TwitchVideoService{t}, Videos: &TwitchVideosService{t}}
 	c.X = &XService{Comments: &XCommentsService{t}, Community: &XCommunityService{t}, CommunityPosts: &XCommunityPostsService{t}, Engagement: &XEngagementService{t}, Friendship: &XFriendshipService{t}, List: &XListService{t}, ListFollowers: &XListFollowersService{t}, Post: &XPostService{t}, Posts: &XPostsService{t}, Profile: &XProfileService{t}, ProfileMentions: &XProfileMentionsService{t}, SearchCommunities: &XSearchCommunitiesService{t}, SearchHashtags: &XSearchHashtagsService{t}, SearchPosts: &XSearchPostsService{t}, SearchProfiles: &XSearchProfilesService{t}, Space: &XSpaceService{t}, Transcript: &XTranscriptService{t}}
-	c.YouTube = &YouTubeService{Comments: &YouTubeCommentsService{t}, Engagement: &YouTubeEngagementService{t}, Post: &YouTubePostService{t}, Posts: &YouTubePostsService{t}, Profile: &YouTubeProfileService{t}, Transcript: &YouTubeTranscriptService{t}}
+	c.YouTube = &YouTubeService{Comments: &YouTubeCommentsService{t}, Engagement: &YouTubeEngagementService{t}, HashtagPosts: &YouTubeHashtagPostsService{t}, Post: &YouTubePostService{t}, Posts: &YouTubePostsService{t}, Profile: &YouTubeProfileService{t}, SearchPosts: &YouTubeSearchPostsService{t}, SearchProfiles: &YouTubeSearchProfilesService{t}, SearchSuggestions: &YouTubeSearchSuggestionsService{t}, Transcript: &YouTubeTranscriptService{t}}
 	c.Account = &AccountService{t}
 	c.Usage = &UsageService{t: t, Rate: &UsageRateService{t}}
 	c.CreditTransactions = &CreditTransactionsService{t}

@@ -4281,7 +4281,7 @@ type FacebookSearchGroupsService struct{ t *transport }
 // group's full, live record in the same response: ID, exact member count, privacy, rules, admins and activity.
 // Page through the results with the cursor.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -4296,7 +4296,7 @@ func (s *FacebookSearchGroupsService) List(ctx context.Context, params FacebookS
 // range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when
 // it could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *FacebookSearchGroupsService) Iterate(ctx context.Context, params FacebookSearchGroupsParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/facebook/search_groups", params.query(), 51, guards, opts)
 }
@@ -4705,7 +4705,7 @@ type FacebookSearchPostsService struct{ t *transport }
 // text, media, exact reaction, comment and share counts and publish time. media=video finds videos instead. Page
 // through the results with the cursor.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -4720,7 +4720,7 @@ func (s *FacebookSearchPostsService) List(ctx context.Context, params FacebookSe
 // pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when it
 // could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *FacebookSearchPostsService) Iterate(ctx context.Context, params FacebookSearchPostsParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/facebook/search_posts", params.query(), 51, guards, opts)
 }
@@ -4827,7 +4827,7 @@ type FacebookSearchProfilesService struct{ t *transport }
 // response: ID, exact counts, verified badge, picture and contact details. account_type narrows the results to
 // Pages or to people.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -4842,7 +4842,7 @@ func (s *FacebookSearchProfilesService) List(ctx context.Context, params Faceboo
 // range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when
 // it could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *FacebookSearchProfilesService) Iterate(ctx context.Context, params FacebookSearchProfilesParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/facebook/search_profiles", params.query(), 51, guards, opts)
 }
@@ -10001,7 +10001,7 @@ type InstagramSearchPlacesService struct{ t *transport }
 // Add fill=true to get each location's current Instagram record (category, coordinates, address, exact post
 // count) in the same response.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -10016,7 +10016,7 @@ func (s *InstagramSearchPlacesService) List(ctx context.Context, params Instagra
 // range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when
 // it could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *InstagramSearchPlacesService) Iterate(ctx context.Context, params InstagramSearchPlacesParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/instagram/search_places", params.query(), 51, guards, opts)
 }
@@ -10198,7 +10198,7 @@ type InstagramSearchProfilesService struct{ t *transport }
 // search index shows them. Add fill=true to get each account's current profile (user ID, exact counts, verified
 // badge, picture, links) in the same response.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -10213,7 +10213,7 @@ func (s *InstagramSearchProfilesService) List(ctx context.Context, params Instag
 // range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when
 // it could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *InstagramSearchProfilesService) Iterate(ctx context.Context, params InstagramSearchProfilesParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/instagram/search_profiles", params.query(), 51, guards, opts)
 }
@@ -10303,7 +10303,7 @@ type InstagramSearchSoundsService struct{ t *transport }
 // when the search index shows it. Add fill=true to get each audio's current record (exact reel count, length,
 // cover art, audio file, Spotify link) in the same response.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -10318,7 +10318,7 @@ func (s *InstagramSearchSoundsService) List(ctx context.Context, params Instagra
 // range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when
 // it could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *InstagramSearchSoundsService) Iterate(ctx context.Context, params InstagramSearchSoundsParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/instagram/search_sounds", params.query(), 51, guards, opts)
 }
@@ -13225,7 +13225,7 @@ type LinkedInSearchPostsService struct{ t *transport }
 // count. Add fill=true to get each post's full, live record in the same response: whole text, media, exact
 // reaction and comment counts and top comments.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -13240,7 +13240,7 @@ func (s *LinkedInSearchPostsService) List(ctx context.Context, params LinkedInSe
 // pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when it
 // could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *LinkedInSearchPostsService) Iterate(ctx context.Context, params LinkedInSearchPostsParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/linkedin/search_posts", params.query(), 51, guards, opts)
 }
@@ -13354,7 +13354,7 @@ type LinkedInSearchProfilesService struct{ t *transport }
 // Add fill=true to get the live LinkedIn profile of each account LinkedIn shows logged out, in the same
 // response.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -13369,7 +13369,7 @@ func (s *LinkedInSearchProfilesService) List(ctx context.Context, params LinkedI
 // range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when
 // it could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *LinkedInSearchProfilesService) Iterate(ctx context.Context, params LinkedInSearchProfilesParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/linkedin/search_profiles", params.query(), 51, guards, opts)
 }
@@ -18173,7 +18173,7 @@ type TelegramSearchChannelsService struct{ t *transport }
 // fill=true to get each channel's full, current record in the same response: exact subscribers, photo, badge,
 // creation date, numeric ID, and whether it is a channel or a group. Page through the results with the cursor.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -18188,7 +18188,7 @@ func (s *TelegramSearchChannelsService) List(ctx context.Context, params Telegra
 // range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when
 // it could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *TelegramSearchChannelsService) Iterate(ctx context.Context, params TelegramSearchChannelsParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/telegram/search_channels", params.query(), 51, guards, opts)
 }
@@ -20407,7 +20407,7 @@ type TikTokSearchHashtagsService struct{ t *transport }
 // Its post count and TikTok's description of it come too when the search index shows them. Add fill=true to also
 // get each hashtag's full live record (its ID, exact post and view counts, picture) in the same response.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -20422,7 +20422,7 @@ func (s *TikTokSearchHashtagsService) List(ctx context.Context, params TikTokSea
 // range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when
 // it could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *TikTokSearchHashtagsService) Iterate(ctx context.Context, params TikTokSearchHashtagsParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/tiktok/search_hashtags", params.query(), 51, guards, opts)
 }
@@ -20607,7 +20607,7 @@ type TikTokSearchProfilesService struct{ t *transport }
 // them. Add fill=true to also get each account's full live profile (user ID, exact counts, verification, avatar)
 // in the same response.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -20622,7 +20622,7 @@ func (s *TikTokSearchProfilesService) List(ctx context.Context, params TikTokSea
 // range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when
 // it could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *TikTokSearchProfilesService) Iterate(ctx context.Context, params TikTokSearchProfilesParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/tiktok/search_profiles", params.query(), 51, guards, opts)
 }
@@ -20711,7 +20711,7 @@ type TikTokSearchSoundsService struct{ t *transport }
 // fill=true to also get each sound's full live record (sound ID, duration, cover art, audio link, album, exact
 // video count) in the same response.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -20726,7 +20726,7 @@ func (s *TikTokSearchSoundsService) List(ctx context.Context, params TikTokSearc
 // pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when it
 // could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *TikTokSearchSoundsService) Iterate(ctx context.Context, params TikTokSearchSoundsParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/tiktok/search_sounds", params.query(), 51, guards, opts)
 }
@@ -20903,7 +20903,7 @@ type TikTokSearchTopService struct{ t *transport }
 // a video's caption and likes, a hashtag's post count, a sound's artist and video count. Add fill=true to also
 // get each result's full live record in the same response.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -20918,7 +20918,7 @@ func (s *TikTokSearchTopService) List(ctx context.Context, params TikTokSearchTo
 // pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when it
 // could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *TikTokSearchTopService) Iterate(ctx context.Context, params TikTokSearchTopParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/tiktok/search_top", params.query(), 51, guards, opts)
 }
@@ -23711,7 +23711,7 @@ type XSearchCommunitiesService struct{ t *transport }
 // response: ID, exact member count, rules, topic, banner, admin, NSFW flag and how people join. Page through
 // results with the cursor.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -23726,7 +23726,7 @@ func (s *XSearchCommunitiesService) List(ctx context.Context, params XSearchComm
 // pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when it
 // could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *XSearchCommunitiesService) Iterate(ctx context.Context, params XSearchCommunitiesParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/x/search_communities", params.query(), 51, guards, opts)
 }
@@ -23919,7 +23919,7 @@ type XSearchPostsService struct{ t *transport }
 // get each post's full record from X in the same response: full text, media, views, likes, reposts, replies and
 // the author's verification. Filter by date with since and until, and page through results with the cursor.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -23934,7 +23934,7 @@ func (s *XSearchPostsService) List(ctx context.Context, params XSearchPostsParam
 // pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when it
 // could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *XSearchPostsService) Iterate(ctx context.Context, params XSearchPostsParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/x/search_posts", params.query(), 51, guards, opts)
 }
@@ -24023,7 +24023,7 @@ type XSearchProfilesService struct{ t *transport }
 // fill=true to get each account's full profile from X in the same response: user ID, exact counts, verification,
 // avatar and links. Page through results with the cursor.
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 //
 // Lists up to 50 items per page (the search engine's ranking (most relevant first)); `page.next_cursor`
 // continues the list. An empty page with has_more is not the end.
@@ -24038,7 +24038,7 @@ func (s *XSearchProfilesService) List(ctx context.Context, params XSearchProfile
 // pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 51 credits and is not fetched when it
 // could take the total over).
 //
-// Cost per page: 1 credit + 1 per result filled in. Failed requests and cache hits are free.
+// Cost per page: 1 credit + 1 per result filled in (with fill=true). Failed requests and cache hits are free.
 func (s *XSearchProfilesService) Iterate(ctx context.Context, params XSearchProfilesParams, guards IterateOptions, opts ...Option) *Pager[WebResult] {
 	return iterate[WebResult](ctx, s.t, "/v1/x/search_profiles", params.query(), 51, guards, opts)
 }
@@ -24408,6 +24408,118 @@ func (s *YouTubeEngagementService) Get(ctx context.Context, params YouTubeEngage
 	return get[Engagement](ctx, s.t, "/v1/youtube/engagement", params.query(), opts)
 }
 
+// YouTubeHashtagPostsKind is a value of youtube.hashtag_posts's kind param.
+type YouTubeHashtagPostsKind string
+
+// Values of YouTubeHashtagPostsKind.
+const (
+	YouTubeHashtagPostsKindAll   YouTubeHashtagPostsKind = "all"
+	YouTubeHashtagPostsKindShort YouTubeHashtagPostsKind = "short"
+)
+
+// YouTubeHashtagPostsParams are the params of youtube.hashtag_posts (GET /v1/youtube/hashtag_posts).
+type YouTubeHashtagPostsParams struct {
+	// Required. A YouTube hashtag link (youtube.com/hashtag/cooking, or its Shorts tab:
+	// youtube.com/hashtag/cooking/shorts), or the hashtag itself with or without the # (cooking, #cooking). Hashtags
+	// are case-insensitive and may be in any script (#料理). At most 2048 characters. Example:
+	// https://www.youtube.com/hashtag/cooking
+	URL string
+	// Which tab of the hashtag's page: all (default: its videos, shorts and streams, each with its channel, exact
+	// view count, upload time and length) or short (its Shorts tab: a separate list of shorts, each with its title,
+	// channel ID and rounded view count). A Shorts tab link sent without kind lists short. One of: all, short.
+	// Example: short
+	Kind *YouTubeHashtagPostsKind
+	// Only items at or after this time: RFC 3339 (2026-10-01T12:00:00Z) or a date (2026-10-01, midnight UTC). On
+	// newest-first lists, paging stops when it is reached, so later pages are not fetched or charged. The videos
+	// come in YouTube's order for the hashtag, not by time, so since and until filter each page by published_at
+	// (from YouTube's relative upload label, to the day beyond a day old). Not with kind=short: the Shorts tab shows
+	// no upload time. Example: 2026-10-01
+	Since *string
+	// Only items before this time (exclusive): RFC 3339 or a date (midnight UTC). Example: 2026-10-08
+	Until *string
+	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
+	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
+	MaxAge *int
+	// Return only these fields of each item: comma-separated paths in the schema's notation
+	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
+	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
+	// returned whole.
+	Fields *string
+	// Items per page, 1 to the endpoint's page size (its default and maximum; larger values are reduced to it). Omit
+	// it: every page costs the same, so a smaller limit means more pages to pay for. Range: 1 to 36. Default: 36.
+	Limit *int
+	// page.next_cursor from the previous response. Send the same other parameters; omit to start from the first
+	// page.
+	Cursor *string
+}
+
+func (p YouTubeHashtagPostsParams) query() url.Values {
+	q := url.Values{}
+	q.Set("url", p.URL)
+	if p.Kind != nil {
+		q.Set("kind", string(*p.Kind))
+	}
+	if p.Since != nil {
+		q.Set("since", *p.Since)
+	}
+	if p.Until != nil {
+		q.Set("until", *p.Until)
+	}
+	if p.MaxAge != nil {
+		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.Fields != nil {
+		q.Set("fields", *p.Fields)
+	}
+	if p.Limit != nil {
+		q.Set("limit", strconv.Itoa(*p.Limit))
+	}
+	if p.Cursor != nil {
+		q.Set("cursor", *p.Cursor)
+	}
+	return q
+}
+
+// JobRequest is a job item requesting youtube.hashtag_posts with these params (set its optional members on the
+// result).
+func (p YouTubeHashtagPostsParams) JobRequest(customId string) JobRequest {
+	params := map[string]any{}
+	for k, v := range p.query() {
+		params[k] = v[0]
+	}
+	return JobRequest{CustomID: customId, Endpoint: "youtube.hashtag_posts", Params: params}
+}
+
+// YouTubeHashtagPostsService is youtube.hashtag_posts: Videos and shorts under a hashtag with exact views.
+type YouTubeHashtagPostsService struct{ t *transport }
+
+// List fetches one page of youtube.hashtag_posts: Videos and shorts under a hashtag with exact views.
+//
+// Returns the videos and shorts YouTube lists under a hashtag, in YouTube's order, from the hashtag's link or
+// its name. Each video has its title, channel with its handle and verification badge, exact view count, upload
+// time and length. Set kind to short for the hashtag's Shorts tab, a separate list of shorts. A hashtag no video
+// uses returns not_found.
+//
+// Cost per page: 1 credit. Failed requests and cache hits are free.
+//
+// Lists up to 36 items per page (YouTube's order for the hashtag (its hashtag page's feed), not by time);
+// `page.next_cursor` continues the list. An empty page with has_more is not the end.
+//
+// With Fields set the answer carries only the selected members: Data is left zero (Partial is true) and Raw
+// holds them, so nothing is invented for the others (Iterate: range over AllRaw).
+func (s *YouTubeHashtagPostsService) List(ctx context.Context, params YouTubeHashtagPostsParams, opts ...Option) (*ListResponse[Post], error) {
+	return list[Post](ctx, s.t, "/v1/youtube/hashtag_posts", params.query(), opts)
+}
+
+// Iterate walks every page of youtube.hashtag_posts, starting at params.Cursor when set: `for item, err := range
+// pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 1 credits and is not fetched when it
+// could take the total over).
+//
+// Cost per page: 1 credit. Failed requests and cache hits are free.
+func (s *YouTubeHashtagPostsService) Iterate(ctx context.Context, params YouTubeHashtagPostsParams, guards IterateOptions, opts ...Option) *Pager[Post] {
+	return iterate[Post](ctx, s.t, "/v1/youtube/hashtag_posts", params.query(), 1, guards, opts)
+}
+
 // YouTubePostParams are the params of youtube.post (GET /v1/youtube/post).
 type YouTubePostParams struct {
 	// Required. YouTube video, short or live stream URL (watch, youtu.be, shorts, live, embed; m. and music. hosts)
@@ -24644,6 +24756,334 @@ func (s *YouTubeProfileService) Get(ctx context.Context, params YouTubeProfilePa
 	return get[Profile](ctx, s.t, "/v1/youtube/profile", params.query(), opts)
 }
 
+// YouTubeSearchPostsKind is a value of youtube.search_posts's kind param.
+type YouTubeSearchPostsKind string
+
+// Values of YouTubeSearchPostsKind.
+const (
+	YouTubeSearchPostsKindAll   YouTubeSearchPostsKind = "all"
+	YouTubeSearchPostsKindVideo YouTubeSearchPostsKind = "video"
+	YouTubeSearchPostsKindShort YouTubeSearchPostsKind = "short"
+	YouTubeSearchPostsKindLive  YouTubeSearchPostsKind = "live"
+)
+
+// YouTubeSearchPostsDuration is a value of youtube.search_posts's duration param.
+type YouTubeSearchPostsDuration string
+
+// Values of YouTubeSearchPostsDuration.
+const (
+	YouTubeSearchPostsDurationShort  YouTubeSearchPostsDuration = "short"
+	YouTubeSearchPostsDurationMedium YouTubeSearchPostsDuration = "medium"
+	YouTubeSearchPostsDurationLong   YouTubeSearchPostsDuration = "long"
+)
+
+// YouTubeSearchPostsSort is a value of youtube.search_posts's sort param.
+type YouTubeSearchPostsSort string
+
+// Values of YouTubeSearchPostsSort.
+const (
+	YouTubeSearchPostsSortRelevance YouTubeSearchPostsSort = "relevance"
+	YouTubeSearchPostsSortPopular   YouTubeSearchPostsSort = "popular"
+)
+
+// YouTubeSearchPostsParams are the params of youtube.search_posts (GET /v1/youtube/search_posts).
+type YouTubeSearchPostsParams struct {
+	// Required. Words or a phrase, matched by YouTube's search as on youtube.com, in any language. YouTube's
+	// operators pass through: "exact phrase", intitle:word, -word, #hashtag. At most 500 characters. Example:
+	// marathon training
+	Query string
+	// Which results: all (default: the videos, streams and shorts in YouTube's result list, without its shelves),
+	// video (YouTube's Videos filter), short (its Shorts filter, each with its channel, upload time and length) or
+	// live (streams on air now). platform_type says which each result is. One of: all, video, short, live. Default:
+	// all. Example: short
+	Kind *YouTubeSearchPostsKind
+	// Only videos of a length: short (under 3 minutes), medium (3 to 20 minutes) or long (over 20 minutes), by
+	// YouTube's Duration filter. Lists videos only (no shorts or streams), so not with kind short or live. One of:
+	// short, medium, long. Example: long
+	Duration *YouTubeSearchPostsDuration
+	// Only this channel's videos, as its Search tab finds them: a handle (@MrBeast), any channel link or a UC…
+	// channel ID. Its results come in YouTube's order for the channel, so not with kind, duration or sort=popular.
+	// All of YouTube when omitted. At most 512 characters. Example: @NASA
+	Author *string
+	// Order of the results. relevance (default): YouTube's best match. popular: YouTube's Popularity ranking,
+	// roughly most viewed first. One of: relevance, popular. Default: relevance.
+	Sort *YouTubeSearchPostsSort
+	// Only items at or after this time: RFC 3339 (2026-10-01T12:00:00Z) or a date (2026-10-01, midnight UTC). On
+	// newest-first lists, paging stops when it is reached, so later pages are not fetched or charged. Results are
+	// ranked, not ordered by time, so since and until filter each page by published_at, which comes from YouTube's
+	// relative upload label ("1 month ago") and can be up to one label unit later than the upload: a result whose
+	// label could fall inside the window is kept, so results up to one label unit older may be included. Send a
+	// date. YouTube's own Upload date filter (this week, month or year) is applied when it covers since, so fewer
+	// pages are fetched. Example: 2026-10-01
+	Since *string
+	// Only items before this time (exclusive): RFC 3339 or a date (midnight UTC). Example: 2026-10-08
+	Until *string
+	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
+	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
+	MaxAge *int
+	// Return only these fields of each item: comma-separated paths in the schema's notation
+	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
+	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
+	// returned whole.
+	Fields *string
+	// Items per page, 1 to the endpoint's page size (its default and maximum; larger values are reduced to it). Omit
+	// it: every page costs the same, so a smaller limit means more pages to pay for. Range: 1 to 30. Default: 30.
+	Limit *int
+	// page.next_cursor from the previous response. Send the same other parameters; omit to start from the first
+	// page.
+	Cursor *string
+}
+
+func (p YouTubeSearchPostsParams) query() url.Values {
+	q := url.Values{}
+	q.Set("query", p.Query)
+	if p.Kind != nil {
+		q.Set("kind", string(*p.Kind))
+	}
+	if p.Duration != nil {
+		q.Set("duration", string(*p.Duration))
+	}
+	if p.Author != nil {
+		q.Set("author", *p.Author)
+	}
+	if p.Sort != nil {
+		q.Set("sort", string(*p.Sort))
+	}
+	if p.Since != nil {
+		q.Set("since", *p.Since)
+	}
+	if p.Until != nil {
+		q.Set("until", *p.Until)
+	}
+	if p.MaxAge != nil {
+		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.Fields != nil {
+		q.Set("fields", *p.Fields)
+	}
+	if p.Limit != nil {
+		q.Set("limit", strconv.Itoa(*p.Limit))
+	}
+	if p.Cursor != nil {
+		q.Set("cursor", *p.Cursor)
+	}
+	return q
+}
+
+// JobRequest is a job item requesting youtube.search_posts with these params (set its optional members on the
+// result).
+func (p YouTubeSearchPostsParams) JobRequest(customId string) JobRequest {
+	params := map[string]any{}
+	for k, v := range p.query() {
+		params[k] = v[0]
+	}
+	return JobRequest{CustomID: customId, Endpoint: "youtube.search_posts", Params: params}
+}
+
+// YouTubeSearchPostsService is youtube.search_posts: Videos, shorts and live streams by keyword.
+type YouTubeSearchPostsService struct{ t *transport }
+
+// List fetches one page of youtube.search_posts: Videos, shorts and live streams by keyword.
+//
+// Returns the YouTube videos, shorts and live streams that match a keyword, across YouTube or in one channel, by
+// best match or popularity. Videos come with their channel and verification badge, exact view count, upload day,
+// length and, across YouTube, the part of the description that matched. Shorts have rounded views, and streams
+// on air no views, upload time or length. Narrow it with kind, length and upload date.
+//
+// Cost per page: 1 credit. Failed requests and cache hits are free.
+//
+// Lists up to 30 items per page (YouTube's relevance ranking (its search order)); `page.next_cursor` continues
+// the list. An empty page with has_more is not the end.
+//
+// With Fields set the answer carries only the selected members: Data is left zero (Partial is true) and Raw
+// holds them, so nothing is invented for the others (Iterate: range over AllRaw).
+func (s *YouTubeSearchPostsService) List(ctx context.Context, params YouTubeSearchPostsParams, opts ...Option) (*ListResponse[Post], error) {
+	return list[Post](ctx, s.t, "/v1/youtube/search_posts", params.query(), opts)
+}
+
+// Iterate walks every page of youtube.search_posts, starting at params.Cursor when set: `for item, err := range
+// pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 1 credits and is not fetched when it
+// could take the total over).
+//
+// Cost per page: 1 credit. Failed requests and cache hits are free.
+func (s *YouTubeSearchPostsService) Iterate(ctx context.Context, params YouTubeSearchPostsParams, guards IterateOptions, opts ...Option) *Pager[Post] {
+	return iterate[Post](ctx, s.t, "/v1/youtube/search_posts", params.query(), 1, guards, opts)
+}
+
+// YouTubeSearchProfilesParams are the params of youtube.search_profiles (GET /v1/youtube/search_profiles).
+type YouTubeSearchProfilesParams struct {
+	// Required. Words, a name or a handle, matched by YouTube's channel search as on youtube.com, in any language: a
+	// channel's name, its handle (@mrbeast) and the words in its description. At most 500 characters. Example:
+	// marathon
+	Query string
+	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
+	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
+	MaxAge *int
+	// Return only these fields of each item: comma-separated paths in the schema's notation
+	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
+	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
+	// returned whole.
+	Fields *string
+	// Items per page, 1 to the endpoint's page size (its default and maximum; larger values are reduced to it). Omit
+	// it: every page costs the same, so a smaller limit means more pages to pay for. Range: 1 to 20. Default: 20.
+	Limit *int
+	// page.next_cursor from the previous response. Send the same other parameters; omit to start from the first
+	// page.
+	Cursor *string
+}
+
+func (p YouTubeSearchProfilesParams) query() url.Values {
+	q := url.Values{}
+	q.Set("query", p.Query)
+	if p.MaxAge != nil {
+		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.Fields != nil {
+		q.Set("fields", *p.Fields)
+	}
+	if p.Limit != nil {
+		q.Set("limit", strconv.Itoa(*p.Limit))
+	}
+	if p.Cursor != nil {
+		q.Set("cursor", *p.Cursor)
+	}
+	return q
+}
+
+// JobRequest is a job item requesting youtube.search_profiles with these params (set its optional members on the
+// result).
+func (p YouTubeSearchProfilesParams) JobRequest(customId string) JobRequest {
+	params := map[string]any{}
+	for k, v := range p.query() {
+		params[k] = v[0]
+	}
+	return JobRequest{CustomID: customId, Endpoint: "youtube.search_profiles", Params: params}
+}
+
+// YouTubeSearchProfilesService is youtube.search_profiles: Channels by keyword, with subscribers and handles.
+type YouTubeSearchProfilesService struct{ t *transport }
+
+// List fetches one page of youtube.search_profiles: Channels by keyword, with subscribers and handles.
+//
+// Returns the YouTube channels that match a keyword, a name or a handle, in YouTube's order. Each channel has
+// its ID, handle, name, link, avatar, an excerpt of its description, its subscriber count and its verified and
+// official artist badges. Page through every result with the cursor. A search with no match returns an empty
+// page.
+//
+// Cost per page: 1 credit. Failed requests and cache hits are free.
+//
+// Lists up to 20 items per page (YouTube's relevance ranking (its search order)); `page.next_cursor` continues
+// the list. An empty page with has_more is not the end.
+//
+// With Fields set the answer carries only the selected members: Data is left zero (Partial is true) and Raw
+// holds them, so nothing is invented for the others (Iterate: range over AllRaw).
+func (s *YouTubeSearchProfilesService) List(ctx context.Context, params YouTubeSearchProfilesParams, opts ...Option) (*ListResponse[Profile], error) {
+	return list[Profile](ctx, s.t, "/v1/youtube/search_profiles", params.query(), opts)
+}
+
+// Iterate walks every page of youtube.search_profiles, starting at params.Cursor when set: `for item, err :=
+// range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 1 credits and is not fetched when
+// it could take the total over).
+//
+// Cost per page: 1 credit. Failed requests and cache hits are free.
+func (s *YouTubeSearchProfilesService) Iterate(ctx context.Context, params YouTubeSearchProfilesParams, guards IterateOptions, opts ...Option) *Pager[Profile] {
+	return iterate[Profile](ctx, s.t, "/v1/youtube/search_profiles", params.query(), 1, guards, opts)
+}
+
+// YouTubeSearchSuggestionsParams are the params of youtube.search_suggestions (GET /v1/youtube/search_suggestions).
+type YouTubeSearchSuggestionsParams struct {
+	// Required. The start of a search, as typed into YouTube's search box: a word, part of a word, a channel's name
+	// or @handle, in any language (marathon tr, mrbea, 料理). Up to 100 characters, YouTube's own limit, where an
+	// emoji counts as two. At most 100 characters. Example: marathon tr
+	Query string
+	// Preferred language: a BCP-47 tag such as en or pt-BR (case-insensitive; _ is read as -). The language of the
+	// search box: YouTube completes in it where it can and writes entity descriptions in it. A BCP-47 tag such as
+	// en, ja or pt-BR (case-insensitive). Default: en. Default: en. Example: en
+	Lang *string
+	// Region: an ISO 3166-1 alpha-2 country code such as US or BR (case-insensitive). The country whose searches to
+	// complete with: an ISO 3166-1 alpha-2 code such as US, GB or JP (case-insensitive). A country YouTube keeps no
+	// list of its own for gets its worldwide list, the US one. Default: US. Default: US. Example: US
+	Country *string
+	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
+	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
+	MaxAge *int
+	// Return only these fields of each item: comma-separated paths in the schema's notation
+	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
+	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
+	// returned whole.
+	Fields *string
+	// Items per page, 1 to the endpoint's page size (its default and maximum; larger values are reduced to it). Omit
+	// it: every page costs the same, so a smaller limit means more pages to pay for. Range: 1 to 14. Default: 14.
+	Limit *int
+	// page.next_cursor from the previous response. Send the same other parameters; omit to start from the first
+	// page.
+	Cursor *string
+}
+
+func (p YouTubeSearchSuggestionsParams) query() url.Values {
+	q := url.Values{}
+	q.Set("query", p.Query)
+	if p.Lang != nil {
+		q.Set("lang", *p.Lang)
+	}
+	if p.Country != nil {
+		q.Set("country", *p.Country)
+	}
+	if p.MaxAge != nil {
+		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.Fields != nil {
+		q.Set("fields", *p.Fields)
+	}
+	if p.Limit != nil {
+		q.Set("limit", strconv.Itoa(*p.Limit))
+	}
+	if p.Cursor != nil {
+		q.Set("cursor", *p.Cursor)
+	}
+	return q
+}
+
+// JobRequest is a job item requesting youtube.search_suggestions with these params (set its optional members on
+// the result).
+func (p YouTubeSearchSuggestionsParams) JobRequest(customId string) JobRequest {
+	params := map[string]any{}
+	for k, v := range p.query() {
+		params[k] = v[0]
+	}
+	return JobRequest{CustomID: customId, Endpoint: "youtube.search_suggestions", Params: params}
+}
+
+// YouTubeSearchSuggestionsService is youtube.search_suggestions: Search box autocomplete for a partial query.
+type YouTubeSearchSuggestionsService struct{ t *transport }
+
+// List fetches one page of youtube.search_suggestions: Search box autocomplete for a partial query.
+//
+// Returns the searches YouTube's search box completes a partial query to, in YouTube's order, from a word, part
+// of a word or a channel's name. Each suggestion has its text, rank and a link to its results. A channel YouTube
+// proposes comes with its channel ID, handle, name and avatar, and a person or show with its Knowledge Graph ID,
+// description and picture. Set country and lang to get what people there search.
+//
+// Cost per page: 1 credit. Failed requests and cache hits are free.
+//
+// Lists up to 14 items per page (YouTube's search box order (most likely search first)); `page.next_cursor`
+// continues the list. An empty page with has_more is not the end.
+//
+// With Fields set the answer carries only the selected members: Data is left zero (Partial is true) and Raw
+// holds them, so nothing is invented for the others (Iterate: range over AllRaw).
+func (s *YouTubeSearchSuggestionsService) List(ctx context.Context, params YouTubeSearchSuggestionsParams, opts ...Option) (*ListResponse[Suggestion], error) {
+	return list[Suggestion](ctx, s.t, "/v1/youtube/search_suggestions", params.query(), opts)
+}
+
+// Iterate walks every page of youtube.search_suggestions, starting at params.Cursor when set: `for item, err :=
+// range pager.All()`. Guards: MaxPages, and MaxCredits (a page costs at most 1 credits and is not fetched when
+// it could take the total over).
+//
+// Cost per page: 1 credit. Failed requests and cache hits are free.
+func (s *YouTubeSearchSuggestionsService) Iterate(ctx context.Context, params YouTubeSearchSuggestionsParams, guards IterateOptions, opts ...Option) *Pager[Suggestion] {
+	return iterate[Suggestion](ctx, s.t, "/v1/youtube/search_suggestions", params.query(), 1, guards, opts)
+}
+
 // YouTubeTranscriptTranscribeAudio is a value of youtube.transcript's transcribe_audio param.
 type YouTubeTranscriptTranscribeAudio string
 
@@ -24726,18 +25166,28 @@ func (s *YouTubeTranscriptService) Get(ctx context.Context, params YouTubeTransc
 // YouTubeService groups the YouTube endpoints. Public YouTube channel profiles with subscriber counts, and
 // posts: any video, short or live stream with exact view, like and comment counts, or a channel's uploads,
 // newest or most popular first. Get a video's timed transcript, from its captions or its audio, and its comments
-// a page at a time. Engagement adds a channel's views per upload, median views and posting cadence.
+// a page at a time. Engagement adds a channel's views per upload, median views and posting cadence. Search
+// YouTube by keyword for videos, shorts and live streams, or for channels, and get the suggestions its search
+// box shows for a query.
 type YouTubeService struct {
 	// Comments is youtube.comments: Newest or top first, with likes and reply counts.
 	Comments *YouTubeCommentsService
 	// Engagement is youtube.engagement: Views per upload, cadence and outlier videos.
 	Engagement *YouTubeEngagementService
+	// HashtagPosts is youtube.hashtag_posts: Videos and shorts under a hashtag with exact views.
+	HashtagPosts *YouTubeHashtagPostsService
 	// Post is youtube.post: Video or short with exact view, like and comment counts.
 	Post *YouTubePostService
 	// Posts is youtube.posts: Videos, shorts and live streams of a channel.
 	Posts *YouTubePostsService
 	// Profile is youtube.profile: Subscribers, exact view counts and social links.
 	Profile *YouTubeProfileService
+	// SearchPosts is youtube.search_posts: Videos, shorts and live streams by keyword.
+	SearchPosts *YouTubeSearchPostsService
+	// SearchProfiles is youtube.search_profiles: Channels by keyword, with subscribers and handles.
+	SearchProfiles *YouTubeSearchProfilesService
+	// SearchSuggestions is youtube.search_suggestions: Search box autocomplete for a partial query.
+	SearchSuggestions *YouTubeSearchSuggestionsService
 	// Transcript is youtube.transcript: Timed transcript from captions or audio.
 	Transcript *YouTubeTranscriptService
 }
@@ -24831,8 +25281,8 @@ type UsageRateService struct{ t *transport }
 // How close the account runs to its runaway-protection ceiling (max_rps in GET /v1/account): per time bucket,
 // the requests the ceiling counted, the busiest second (peak_rps), the average rate and the requests refused
 // with rate_limited. The ceiling is a safety limit that stops a runaway client, not a plan limit: plans have no
-// rate limit. Account-wide (every key and the dashboard). Buckets are listed oldest first, cursor-paged. Data is
-// complete to within about 5 minutes. Free.
+// rate limit. Account-wide: every key and the dashboard's playground (loading the dashboard's pages doesn't
+// count). Buckets are listed oldest first, cursor-paged. Data is complete to within about 5 minutes. Free.
 //
 // Free; needs an API key with the `account:read` scope (GET /v1/usage/rate).
 //

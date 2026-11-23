@@ -505,7 +505,7 @@ func (t *transport) once(ctx context.Context, cfg config, method, path string, q
 		hr.Header[k] = v
 	}
 	hr.Header.Set("Accept", "application/json")
-	hr.Header.Set("User-Agent", "socialtap-go/"+Version)
+	hr.Header.Set("User-Agent", clientName+"/"+Version)
 	hr.Header.Set(headerAPIKey, cfg.apiKey)
 	if body != nil {
 		hr.Header.Set("Content-Type", "application/json")

@@ -85,7 +85,7 @@ func (c *Client) CallTool(ctx context.Context, name string, args map[string]any,
 			"arguments": args,
 			"_meta": map[string]any{
 				"io.modelcontextprotocol/protocolVersion":    MCPProtocolVersion,
-				"io.modelcontextprotocol/clientInfo":         map[string]string{"name": "socialtap-go", "version": Version},
+				"io.modelcontextprotocol/clientInfo":         map[string]string{"name": clientName, "version": Version},
 				"io.modelcontextprotocol/clientCapabilities": map[string]any{},
 			},
 		},

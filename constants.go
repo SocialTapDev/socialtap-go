@@ -5,7 +5,10 @@ package socialtap
 import "time"
 
 // Version is the SDK version: 1.<contract facts>.<generator revision> (sdk/README.md).
-const Version = "1.585.34"
+const Version = "1.597.37"
+
+// clientName is what this SDK sends as its User-Agent's product and its MCP clientInfo name (catalog clients).
+const clientName = "socialtap-go"
 
 // DefaultBaseURL is the production API origin.
 const DefaultBaseURL = "https://socialtap.dev"

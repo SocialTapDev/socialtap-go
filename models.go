@@ -7108,6 +7108,27 @@ type GoogleSuggestionSpecific struct {
 	Ads *Range `json:"ads"`
 }
 
+type YouTubeSuggestionEntity struct {
+	// Google's Knowledge Graph ID of the entity (/m/0dl567, /g/11ffmnm29k), as Google's Knowledge Graph Search API
+	// takes it.
+	ID string `json:"id"`
+	// The entity's name as the search box shows it; null on a profile suggestion, whose name is
+	// profile.display_name, or when not shown.
+	Name *string `json:"name"`
+	// Its short description in the request's language (American singer-songwriter); null on a profile suggestion,
+	// where the search box shows the channel's handle instead, or when not shown.
+	Description *string `json:"description"`
+	// The entity's picture; null on a profile suggestion, whose picture is profile.avatar_url, or when not shown.
+	// CDN URLs can expire. Format: uri.
+	ImageURL *string `json:"image_url"`
+}
+
+type YouTubeSuggestionSpecific struct {
+	// The Knowledge Graph entity YouTube's search box shows with the suggestion (a person, a show, a channel), with
+	// its picture; null when it shows none.
+	Entity *YouTubeSuggestionEntity `json:"entity"`
+}
+
 type SuggestionPlatformSpecific struct {
 	// A TikTok suggestion's own fields.
 	Tiktok *TikTokSuggestionSpecific `json:"tiktok,omitempty"`
@@ -7115,6 +7136,8 @@ type SuggestionPlatformSpecific struct {
 	Instagram *InstagramSuggestionSpecific `json:"instagram,omitempty"`
 	// A Google Ads Transparency Center suggestion's own fields.
 	Google *GoogleSuggestionSpecific `json:"google,omitempty"`
+	// A YouTube suggestion's own fields.
+	Youtube *YouTubeSuggestionSpecific `json:"youtube,omitempty"`
 }
 
 // Suggestion is the suggestion resource: Autocomplete suggestions from a platform's search box for a partial
@@ -7792,8 +7815,9 @@ type Warning struct {
 	Message string `json:"message"`
 	// Where to read more (the changelog entry, the endpoint's docs).
 	DocURL string `json:"doc_url"`
-	// partial_data: the output fields (catalog paths such as metrics.view_count) that are null or [] because part of
-	// the data could not be fetched; absent for other codes.
+	// partial_data and fields_unavailable: the output fields (catalog paths such as metrics.view_count) that are
+	// null or [] because part of the data could not be fetched (partial_data) or the platform doesn't show what they
+	// are made from (fields_unavailable); absent for other codes.
 	Fields []string `json:"fields"`
 }
 
@@ -8024,7 +8048,8 @@ type UsageRateBucket struct {
 	// Bucket end, exclusive. Format: date-time.
 	EndingAt string `json:"ending_at"`
 	// Requests the ceiling counted, refused ones included: endpoint requests (Prefer: respond-async ones too) and
-	// the gateway's own routes, from every key and the dashboard. Not counted: a job's items (the job paces them).
+	// the gateway's own routes, from every key and the dashboard's playground. Loading the dashboard's pages doesn't
+	// count. Not counted: a job's items (the job paces them).
 	Requests int64 `json:"requests"`
 	// Of requests, those refused with rate_limited (free) because the account was above its ceiling.
 	RateLimited int64 `json:"rate_limited"`
