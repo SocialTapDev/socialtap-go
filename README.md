@@ -5,7 +5,7 @@
 SocialTap is the social media scraper API for developers and AI agents. Send a public link, a handle or a search and get live data back in one schema. Failed requests are free.
 
 The Go SDK for the SocialTap API: a method for every endpoint, typed models and errors, retries and pagination.
-Generated from the SocialTap catalog (version 1.597.37). Docs: https://socialtap.dev/docs/. Source: https://github.com/SocialTapDev/socialtap-go.
+Generated from the SocialTap catalog (version 1.598.37). Docs: https://socialtap.dev/docs/. Source: https://github.com/SocialTapDev/socialtap-go.
 
 ## Install
 
@@ -141,7 +141,7 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `bluesky.profile` | `client.Bluesky.Profile.Get()` | 1 credit |
 | `bluesky.search_posts` | `client.Bluesky.SearchPosts.List()` | 1 credit |
 | `facebook.ad` | `client.Facebook.Ad.Get()` | 1 credit |
-| `facebook.ad_transcript` | `client.Facebook.AdTranscript.Get()` | 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `facebook.ad_transcript` | `client.Facebook.AdTranscript.Get()` | 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `facebook.ads` | `client.Facebook.Ads.List()` | 1 credit |
 | `facebook.advertiser` | `client.Facebook.Advertiser.Get()` | 1 credit |
 | `facebook.comments` | `client.Facebook.Comments.List()` | 1 credit |
@@ -166,7 +166,7 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `facebook.search_places` | `client.Facebook.SearchPlaces.List()` | 1 credit |
 | `facebook.search_posts` | `client.Facebook.SearchPosts.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `facebook.search_profiles` | `client.Facebook.SearchProfiles.List()` | 1 credit + 1 per result filled in (with fill=true) |
-| `facebook.transcript` | `client.Facebook.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `facebook.transcript` | `client.Facebook.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `github.activity` | `client.GitHub.Activity.List()` | 1 credit |
 | `github.contributions` | `client.GitHub.Contributions.Get()` | 1 credit |
 | `github.followers` | `client.GitHub.Followers.List()` | 1 credit |
@@ -230,11 +230,11 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `instagram.sound_posts` | `client.Instagram.SoundPosts.List()` | 1 credit |
 | `instagram.story` | `client.Instagram.Story.Get()` | 1 credit |
 | `instagram.topic` | `client.Instagram.Topic.Get()` | 1 credit |
-| `instagram.transcript` | `client.Instagram.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `instagram.transcript` | `client.Instagram.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `instagram.trending_posts` | `client.Instagram.TrendingPosts.List()` | 1 credit |
 | `instagram.username` | `client.Instagram.Username.Get()` | 1 credit |
 | `kick.post` | `client.Kick.Post.Get()` | 1 credit |
-| `kick.transcript` | `client.Kick.Transcript.Get()` | 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `kick.transcript` | `client.Kick.Transcript.Get()` | 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `komi.page` | `client.Komi.Page.Get()` | 1 credit |
 | `kwai.post` | `client.Kwai.Post.Get()` | 1 credit |
 | `kwai.posts` | `client.Kwai.Posts.List()` | 1 credit |
@@ -260,7 +260,7 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `linkedin.search_jobs` | `client.LinkedIn.SearchJobs.List()` | 1 credit |
 | `linkedin.search_posts` | `client.LinkedIn.SearchPosts.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `linkedin.search_profiles` | `client.LinkedIn.SearchProfiles.List()` | 1 credit + 1 per result filled in (with fill=true) |
-| `linkedin.transcript` | `client.LinkedIn.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `linkedin.transcript` | `client.LinkedIn.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `linkme.profile` | `client.Linkme.Profile.Get()` | 1 credit |
 | `linktree.profile` | `client.Linktree.Profile.Get()` | 1 credit |
 | `pillar.page` | `client.Pillar.Page.Get()` | 1 credit |
@@ -286,14 +286,14 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `reddit.search_subreddits` | `client.Reddit.SearchSubreddits.List()` | 1 credit |
 | `reddit.subreddit` | `client.Reddit.Subreddit.Get()` | 1 credit |
 | `reddit.subreddit_posts` | `client.Reddit.SubredditPosts.List()` | 1 credit |
-| `reddit.transcript` | `client.Reddit.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `reddit.transcript` | `client.Reddit.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `rumble.comments` | `client.Rumble.Comments.List()` | 1 credit |
 | `rumble.engagement` | `client.Rumble.Engagement.Get()` | 1 credit |
 | `rumble.post` | `client.Rumble.Post.Get()` | 1 credit |
 | `rumble.posts` | `client.Rumble.Posts.List()` | 1 credit |
 | `rumble.profile` | `client.Rumble.Profile.Get()` | 1 credit |
 | `rumble.search_posts` | `client.Rumble.SearchPosts.List()` | 1 credit |
-| `rumble.transcript` | `client.Rumble.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `rumble.transcript` | `client.Rumble.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `snapchat.comments` | `client.Snapchat.Comments.List()` | 1 credit |
 | `snapchat.profile` | `client.Snapchat.Profile.Get()` | 1 credit |
 | `snapchat.spotlight` | `client.Snapchat.Spotlight.Get()` | 1 credit |
@@ -353,7 +353,7 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `tiktok.sound_posts` | `client.TikTok.SoundPosts.List()` | 1 credit |
 | `tiktok.top_ads` | `client.TikTok.TopAds.List()` | 1 credit |
 | `tiktok.top_posts` | `client.TikTok.TopPosts.List()` | 1 credit |
-| `tiktok.transcript` | `client.TikTok.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `tiktok.transcript` | `client.TikTok.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `tiktok.trending_hashtags` | `client.TikTok.TrendingHashtags.List()` | 1 credit |
 | `tiktok.trending_posts` | `client.TikTok.TrendingPosts.List()` | 1 credit |
 | `tiktokshop.product` | `client.TikTokShop.Product.Get()` | 1 credit |
@@ -365,7 +365,7 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `truthsocial.profile` | `client.TruthSocial.Profile.Get()` | 1 credit |
 | `twitch.profile` | `client.Twitch.Profile.Get()` | 1 credit |
 | `twitch.schedule` | `client.Twitch.Schedule.List()` | 1 credit |
-| `twitch.transcript` | `client.Twitch.Transcript.Get()` | 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `twitch.transcript` | `client.Twitch.Transcript.Get()` | 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `twitch.video` | `client.Twitch.Video.Get()` | 1 credit |
 | `twitch.videos` | `client.Twitch.Videos.List()` | 1 credit |
 | `x.comments` | `client.X.Comments.List()` | 1 credit |
@@ -384,7 +384,7 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `x.search_posts` | `client.X.SearchPosts.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `x.search_profiles` | `client.X.SearchProfiles.List()` | 1 credit + 1 per result filled in (with fill=true) |
 | `x.space` | `client.X.Space.Get()` | 1 credit |
-| `x.transcript` | `client.X.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `x.transcript` | `client.X.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 | `youtube.comments` | `client.YouTube.Comments.List()` | 1 credit |
 | `youtube.engagement` | `client.YouTube.Engagement.Get()` | 1 credit |
 | `youtube.hashtag_posts` | `client.YouTube.HashtagPosts.List()` | 1 credit |
@@ -394,7 +394,7 @@ Every result also carries the envelope `meta` (request ID, source, cache status,
 | `youtube.search_posts` | `client.YouTube.SearchPosts.List()` | 1 credit |
 | `youtube.search_profiles` | `client.YouTube.SearchProfiles.List()` | 1 credit |
 | `youtube.search_suggestions` | `client.YouTube.SearchSuggestions.List()` | 1 credit |
-| `youtube.transcript` | `client.YouTube.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, with transcribe_audio=true) |
+| `youtube.transcript` | `client.YouTube.Transcript.Get()` | 1 credit (captions) or 2 credits + 2 per started minute of media (speech-to-text, automatic up to 3 minutes, longer with transcribe_audio=true) |
 
 ### Endpoints newer than this package
 

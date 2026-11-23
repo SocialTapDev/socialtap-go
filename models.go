@@ -7317,7 +7317,7 @@ type TranscriptPlatformSpecific struct {
 }
 
 // Transcript is the transcript resource: Timed transcripts of public videos: the platform's caption track, or
-// speech-to-text on the audio when there is none and you ask for it.
+// speech-to-text on the audio when there is none.
 type Transcript struct {
 	// Platform the media is hosted on.
 	Platform string `json:"platform"`

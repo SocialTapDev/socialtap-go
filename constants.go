@@ -5,7 +5,7 @@ package socialtap
 import "time"
 
 // Version is the SDK version: 1.<contract facts>.<generator revision> (sdk/README.md).
-const Version = "1.597.37"
+const Version = "1.598.37"
 
 // clientName is what this SDK sends as its User-Agent's product and its MCP clientInfo name (catalog clients).
 const clientName = "socialtap-go"
@@ -92,7 +92,8 @@ const (
 	// on the code.
 	CodePrivateOrUnavailable ErrorCode = "private_or_unavailable"
 	// CodeNoTranscript (HTTP 404): The video or audio exists but has no transcript: the platform has no captions for
-	// it, and speech-to-text was not asked for (transcribe_audio) or found no speech.
+	// it, and speech-to-text found no speech, or did not run (the media is longer than it transcribes without
+	// transcribe_audio=true, or transcribe_audio=false).
 	CodeNoTranscript ErrorCode = "no_transcript"
 	// CodeNoLive (HTTP 404): The account exists but has no live broadcast to show: nothing on air or scheduled, and
 	// no past broadcast the platform still shows.
