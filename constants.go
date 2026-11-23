@@ -5,7 +5,7 @@ package socialtap
 import "time"
 
 // Version is the SDK version: 1.<contract facts>.<generator revision> (sdk/README.md).
-const Version = "1.602.39"
+const Version = "1.603.40"
 
 // clientName is what this SDK sends as its User-Agent's product and its MCP clientInfo name (catalog clients).
 const clientName = "socialtap-go"
@@ -55,7 +55,8 @@ const (
 	// stops with it too when its account is suspended or the key that created it is revoked or expires. It is about
 	// the key, never the item: a private item is private_or_unavailable, also 403, so branch on the code.
 	CodeForbidden ErrorCode = "forbidden"
-	// CodeInsufficientCredits (HTTP 402): The account does not have enough credits for this request.
+	// CodeInsufficientCredits (HTTP 402): The account does not have enough credits for this request, or the request
+	// costs more than the max_credits it was sent with (details.reason max_credits). Either way it is free.
 	CodeInsufficientCredits ErrorCode = "insufficient_credits"
 	// CodeSpendLimitReached (HTTP 402): The API key reached its spend limit for this period. The account may still
 	// have credits.

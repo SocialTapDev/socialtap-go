@@ -29,6 +29,11 @@ type AmazonDealProductsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -52,6 +57,9 @@ func (p AmazonDealProductsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -119,6 +127,11 @@ type AmazonOffersParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -140,6 +153,9 @@ func (p AmazonOffersParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -208,6 +224,11 @@ type AmazonProductParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -223,6 +244,9 @@ func (p AmazonProductParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -278,6 +302,11 @@ type AmazonReviewsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -305,6 +334,9 @@ func (p AmazonReviewsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -386,6 +418,11 @@ type AmazonSearchProductsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -410,6 +447,9 @@ func (p AmazonSearchProductsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -477,6 +517,11 @@ type AmazonSellerParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -492,6 +537,9 @@ func (p AmazonSellerParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -541,6 +589,11 @@ type AmazonShopParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -556,6 +609,9 @@ func (p AmazonShopParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -605,6 +661,11 @@ type AmazonShopListsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -626,6 +687,9 @@ func (p AmazonShopListsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -707,6 +771,11 @@ type AmazonShopPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -731,6 +800,9 @@ func (p AmazonShopPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -819,6 +891,11 @@ type AmazonTopProductsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -843,6 +920,9 @@ func (p AmazonTopProductsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -943,6 +1023,11 @@ type AppleMusicAlbumParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -961,6 +1046,9 @@ func (p AppleMusicAlbumParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1014,6 +1102,11 @@ type AppleMusicArtistParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1032,6 +1125,9 @@ func (p AppleMusicArtistParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1082,6 +1178,11 @@ type AppleMusicSearchAlbumsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1106,6 +1207,9 @@ func (p AppleMusicSearchAlbumsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1174,6 +1278,11 @@ type AppleMusicSearchArtistsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1198,6 +1307,9 @@ func (p AppleMusicSearchArtistsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1277,6 +1389,11 @@ type AppleMusicSearchPlaylistsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1304,6 +1421,9 @@ func (p AppleMusicSearchPlaylistsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1387,6 +1507,11 @@ type AppleMusicSearchTracksParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1414,6 +1539,9 @@ func (p AppleMusicSearchTracksParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1485,6 +1613,11 @@ type AppleMusicTopAlbumsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1514,6 +1647,9 @@ func (p AppleMusicTopAlbumsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1579,6 +1715,11 @@ type AppleMusicTopPlaylistsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1602,6 +1743,9 @@ func (p AppleMusicTopPlaylistsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1685,6 +1829,11 @@ type AppleMusicTopTracksParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1717,6 +1866,9 @@ func (p AppleMusicTopTracksParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1790,6 +1942,11 @@ type AppleMusicTrackParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1808,6 +1965,9 @@ func (p AppleMusicTrackParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1901,6 +2061,11 @@ type BlueskyCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -1929,6 +2094,9 @@ func (p BlueskyCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -1993,6 +2161,11 @@ type BlueskyPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2005,6 +2178,9 @@ func (p BlueskyPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2071,6 +2247,11 @@ type BlueskyPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2098,6 +2279,9 @@ func (p BlueskyPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2161,6 +2345,11 @@ type BlueskyProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2173,6 +2362,9 @@ func (p BlueskyProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2253,6 +2445,11 @@ type BlueskySearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2298,6 +2495,9 @@ func (p BlueskySearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2377,6 +2577,11 @@ type FacebookAdParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2389,6 +2594,9 @@ func (p FacebookAdParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2450,6 +2658,11 @@ type FacebookAdTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2468,6 +2681,9 @@ func (p FacebookAdTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2570,6 +2786,11 @@ type FacebookAdsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2609,6 +2830,9 @@ func (p FacebookAdsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2671,6 +2895,11 @@ type FacebookAdvertiserParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2683,6 +2912,9 @@ func (p FacebookAdvertiserParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2749,6 +2981,11 @@ type FacebookCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2776,6 +3013,9 @@ func (p FacebookCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2838,6 +3078,11 @@ type FacebookEngagementParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2850,6 +3095,9 @@ func (p FacebookEngagementParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2896,6 +3144,11 @@ type FacebookEventParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2908,6 +3161,9 @@ func (p FacebookEventParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -2971,6 +3227,11 @@ type FacebookEventsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -2998,6 +3259,9 @@ func (p FacebookEventsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3060,6 +3324,11 @@ type FacebookGroupParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3072,6 +3341,9 @@ func (p FacebookGroupParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3132,6 +3404,11 @@ type FacebookGroupPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3153,6 +3430,9 @@ func (p FacebookGroupPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3215,6 +3495,11 @@ type FacebookListingParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3227,6 +3512,9 @@ func (p FacebookListingParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3293,6 +3581,11 @@ type FacebookPhotosParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3320,6 +3613,9 @@ func (p FacebookPhotosParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3406,6 +3702,11 @@ type FacebookPlaceEventsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3433,6 +3734,9 @@ func (p FacebookPlaceEventsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3496,6 +3800,11 @@ type FacebookPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3508,6 +3817,9 @@ func (p FacebookPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3559,6 +3871,11 @@ type FacebookPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3583,6 +3900,9 @@ func (p FacebookPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3645,6 +3965,11 @@ type FacebookProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3657,6 +3982,9 @@ func (p FacebookProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3710,6 +4038,11 @@ type FacebookReelsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3734,6 +4067,9 @@ func (p FacebookReelsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3807,6 +4143,11 @@ type FacebookRepliesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3834,6 +4175,9 @@ func (p FacebookRepliesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -3924,6 +4268,11 @@ type FacebookSearchAdsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -3957,6 +4306,9 @@ func (p FacebookSearchAdsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -4024,6 +4376,11 @@ type FacebookSearchAdvertisersParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -4045,6 +4402,9 @@ func (p FacebookSearchAdvertisersParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -4116,6 +4476,11 @@ type FacebookSearchEventsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -4143,6 +4508,9 @@ func (p FacebookSearchEventsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -4224,6 +4592,11 @@ type FacebookSearchGroupsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -4248,6 +4621,9 @@ func (p FacebookSearchGroupsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -4389,6 +4765,11 @@ type FacebookSearchListingsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -4443,6 +4824,9 @@ func (p FacebookSearchListingsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -4514,6 +4898,11 @@ type FacebookSearchPlacesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -4541,6 +4930,9 @@ func (p FacebookSearchPlacesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -4639,6 +5031,11 @@ type FacebookSearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -4672,6 +5069,9 @@ func (p FacebookSearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -4766,6 +5166,11 @@ type FacebookSearchProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -4793,6 +5198,9 @@ func (p FacebookSearchProfilesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -4870,6 +5278,11 @@ type FacebookTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -4885,6 +5298,9 @@ func (p FacebookTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5010,6 +5426,11 @@ type GitHubActivityParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5034,6 +5455,9 @@ func (p GitHubActivityParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5098,6 +5522,11 @@ type GitHubContributionsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5113,6 +5542,9 @@ func (p GitHubContributionsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5157,6 +5589,11 @@ type GitHubFollowersParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5175,6 +5612,9 @@ func (p GitHubFollowersParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5237,6 +5677,11 @@ type GitHubFollowingParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5255,6 +5700,9 @@ func (p GitHubFollowingParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5319,6 +5767,11 @@ type GitHubIssueParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5331,6 +5784,9 @@ func (p GitHubIssueParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5381,6 +5837,11 @@ type GitHubIssueCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5405,6 +5866,9 @@ func (p GitHubIssueCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5518,6 +5982,11 @@ type GitHubIssuesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5554,6 +6023,9 @@ func (p GitHubIssuesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5615,6 +6087,11 @@ type GitHubPinnedRepositoriesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5633,6 +6110,9 @@ func (p GitHubPinnedRepositoriesParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5695,6 +6175,11 @@ type GitHubProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5707,6 +6192,9 @@ func (p GitHubProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5788,6 +6276,11 @@ type GitHubProfilePullRequestsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5818,6 +6311,9 @@ func (p GitHubProfilePullRequestsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5882,6 +6378,11 @@ type GitHubReadmeParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5894,6 +6395,9 @@ func (p GitHubReadmeParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -5945,6 +6449,11 @@ type GitHubReleasesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -5969,6 +6478,9 @@ func (p GitHubReleasesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -6066,6 +6578,11 @@ type GitHubRepositoriesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -6096,6 +6613,9 @@ func (p GitHubRepositoriesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -6160,6 +6680,11 @@ type GitHubRepositoryParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -6172,6 +6697,9 @@ func (p GitHubRepositoryParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -6217,6 +6745,11 @@ type GitHubRepositoryContributorsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -6235,6 +6768,9 @@ func (p GitHubRepositoryContributorsParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -6356,6 +6892,11 @@ type GitHubSearchIssuesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -6389,6 +6930,9 @@ func (p GitHubSearchIssuesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -6469,6 +7013,11 @@ type GitHubSearchProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -6490,6 +7039,9 @@ func (p GitHubSearchProfilesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -6575,6 +7127,11 @@ type GitHubSearchRepositoriesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -6602,6 +7159,9 @@ func (p GitHubSearchRepositoriesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -6678,6 +7238,11 @@ type GitHubTrendingProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -6701,6 +7266,9 @@ func (p GitHubTrendingProfilesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -6779,6 +7347,11 @@ type GitHubTrendingRepositoriesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -6805,6 +7378,9 @@ func (p GitHubTrendingRepositoriesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -6916,6 +7492,11 @@ type GoogleAdParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -6928,6 +7509,9 @@ func (p GoogleAdParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -7038,6 +7622,11 @@ type GoogleAdsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -7077,6 +7666,9 @@ func (p GoogleAdsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -7142,6 +7734,11 @@ type GoogleAdvertiserParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -7157,6 +7754,9 @@ func (p GoogleAdvertiserParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -7267,6 +7867,11 @@ type GoogleSearchAdsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -7306,6 +7911,9 @@ func (p GoogleSearchAdsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -7384,6 +7992,11 @@ type GoogleSearchAdvertisersParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -7408,6 +8021,9 @@ func (p GoogleSearchAdvertisersParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -7474,6 +8090,11 @@ type GoogleSearchSuggestionsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -7495,6 +8116,9 @@ func (p GoogleSearchSuggestionsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -7580,6 +8204,11 @@ type HackerNewsCommentParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -7592,6 +8221,9 @@ func (p HackerNewsCommentParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -7658,6 +8290,11 @@ type HackerNewsCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -7686,6 +8323,9 @@ func (p HackerNewsCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -7768,6 +8408,11 @@ type HackerNewsFeedStoriesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -7794,6 +8439,9 @@ func (p HackerNewsFeedStoriesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -7895,6 +8543,11 @@ type HackerNewsSearchCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -7931,6 +8584,9 @@ func (p HackerNewsSearchCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8056,6 +8712,11 @@ type HackerNewsSearchStoriesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8101,6 +8762,9 @@ func (p HackerNewsSearchStoriesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8164,6 +8828,11 @@ type HackerNewsStoryParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8176,6 +8845,9 @@ func (p HackerNewsStoryParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8219,6 +8891,11 @@ type HackerNewsUserParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8231,6 +8908,9 @@ func (p HackerNewsUserParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8280,6 +8960,11 @@ type HackerNewsUserCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8304,6 +8989,9 @@ func (p HackerNewsUserCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8365,6 +9053,11 @@ type HackerNewsUserFavoritesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8383,6 +9076,9 @@ func (p HackerNewsUserFavoritesParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8468,6 +9164,11 @@ type HackerNewsUserStoriesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8495,6 +9196,9 @@ func (p HackerNewsUserStoriesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8563,6 +9267,11 @@ type HackerNewsWhoishiringJobsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8589,6 +9298,9 @@ func (p HackerNewsWhoishiringJobsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8685,6 +9397,11 @@ type InstagramCommentParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8700,6 +9417,9 @@ func (p InstagramCommentParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8750,6 +9470,11 @@ type InstagramCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8774,6 +9499,9 @@ func (p InstagramCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8844,6 +9572,11 @@ type InstagramEmbedParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8865,6 +9598,9 @@ func (p InstagramEmbedParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8910,6 +9646,11 @@ type InstagramEngagementParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8922,6 +9663,9 @@ func (p InstagramEngagementParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -8967,6 +9711,11 @@ type InstagramHashtagParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -8979,6 +9728,9 @@ func (p InstagramHashtagParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9029,6 +9781,11 @@ type InstagramHashtagPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9053,6 +9810,9 @@ func (p InstagramHashtagPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9116,6 +9876,11 @@ type InstagramHighlightsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9134,6 +9899,9 @@ func (p InstagramHighlightsParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9195,6 +9963,11 @@ type InstagramPlaceParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9207,6 +9980,9 @@ func (p InstagramPlaceParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9270,6 +10046,11 @@ type InstagramPlacePostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9297,6 +10078,9 @@ func (p InstagramPlacePostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9365,6 +10149,11 @@ type InstagramPlaylistStoriesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9389,6 +10178,9 @@ func (p InstagramPlaylistStoriesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9466,6 +10258,11 @@ type InstagramPopularTrendsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9486,6 +10283,9 @@ func (p InstagramPopularTrendsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9549,6 +10349,11 @@ type InstagramPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9561,6 +10366,9 @@ func (p InstagramPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9610,6 +10418,11 @@ type InstagramPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9634,6 +10447,9 @@ func (p InstagramPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9697,6 +10513,11 @@ type InstagramProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9709,6 +10530,9 @@ func (p InstagramProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9760,6 +10584,11 @@ type InstagramReelsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9784,6 +10613,9 @@ func (p InstagramReelsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9846,6 +10678,11 @@ type InstagramSearchHashtagsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9864,6 +10701,9 @@ func (p InstagramSearchHashtagsParams) query() url.Values {
 	q.Set("query", p.Query)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -9944,6 +10784,11 @@ type InstagramSearchPlacesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -9968,6 +10813,9 @@ func (p InstagramSearchPlacesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10037,6 +10885,11 @@ type InstagramSearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10061,6 +10914,9 @@ func (p InstagramSearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10141,6 +10997,11 @@ type InstagramSearchProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10165,6 +11026,9 @@ func (p InstagramSearchProfilesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10246,6 +11110,11 @@ type InstagramSearchSoundsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10270,6 +11139,9 @@ func (p InstagramSearchSoundsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10332,6 +11204,11 @@ type InstagramSearchSuggestionsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10350,6 +11227,9 @@ func (p InstagramSearchSuggestionsParams) query() url.Values {
 	q.Set("query", p.Query)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10412,6 +11292,11 @@ type InstagramSimilarProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10430,6 +11315,9 @@ func (p InstagramSimilarProfilesParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10492,6 +11380,11 @@ type InstagramSoundParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10504,6 +11397,9 @@ func (p InstagramSoundParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10555,6 +11451,11 @@ type InstagramSoundPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10579,6 +11480,9 @@ func (p InstagramSoundPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10642,6 +11546,11 @@ type InstagramStoryParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10654,6 +11563,9 @@ func (p InstagramStoryParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10699,6 +11611,11 @@ type InstagramTopicParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10711,6 +11628,9 @@ func (p InstagramTopicParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10768,6 +11688,11 @@ type InstagramTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10783,6 +11708,9 @@ func (p InstagramTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10831,6 +11759,11 @@ type InstagramTrendingPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10854,6 +11787,9 @@ func (p InstagramTrendingPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -10915,6 +11851,11 @@ type InstagramUsernameParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -10927,6 +11868,9 @@ func (p InstagramUsernameParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11038,6 +11982,11 @@ type KickPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11050,6 +11999,9 @@ func (p KickPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11113,6 +12065,11 @@ type KickTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11131,6 +12088,9 @@ func (p KickTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11186,6 +12146,11 @@ type KomiPageParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11198,6 +12163,9 @@ func (p KomiPageParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11250,6 +12218,11 @@ type KwaiPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11262,6 +12235,9 @@ func (p KwaiPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11313,6 +12289,11 @@ type KwaiPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11337,6 +12318,9 @@ func (p KwaiPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11398,6 +12382,11 @@ type KwaiProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11410,6 +12399,9 @@ func (p KwaiProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11463,6 +12455,11 @@ type LnkBioProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11475,6 +12472,9 @@ func (p LnkBioProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11527,6 +12527,11 @@ type LinkedInAdParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11539,6 +12544,9 @@ func (p LinkedInAdParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11586,6 +12594,11 @@ type LinkedInCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11604,6 +12617,9 @@ func (p LinkedInCommentsParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11672,6 +12688,11 @@ type LinkedInEmployeesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11693,6 +12714,9 @@ func (p LinkedInEmployeesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11755,6 +12779,11 @@ type LinkedInEngagementParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11767,6 +12796,9 @@ func (p LinkedInEngagementParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11828,6 +12860,11 @@ type LinkedInFollowingParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11849,6 +12886,9 @@ func (p LinkedInFollowingParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11911,6 +12951,11 @@ type LinkedInJobParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -11923,6 +12968,9 @@ func (p LinkedInJobParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -11979,6 +13027,11 @@ type LinkedInJobRelatedJobsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12000,6 +13053,9 @@ func (p LinkedInJobRelatedJobsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12077,6 +13133,11 @@ type LinkedInJobsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12107,6 +13168,9 @@ func (p LinkedInJobsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12176,6 +13240,11 @@ type LinkedInLikedPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12200,6 +13269,9 @@ func (p LinkedInLikedPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12263,6 +13335,11 @@ type LinkedInPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12275,6 +13352,9 @@ func (p LinkedInPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12346,6 +13426,11 @@ type LinkedInPostReactionsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12367,6 +13452,9 @@ func (p LinkedInPostReactionsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12440,6 +13528,11 @@ type LinkedInPostRepostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12464,6 +13557,9 @@ func (p LinkedInPostRepostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12549,6 +13645,11 @@ type LinkedInPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12576,6 +13677,9 @@ func (p LinkedInPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12640,6 +13744,11 @@ type LinkedInProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12652,6 +13761,9 @@ func (p LinkedInProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12708,6 +13820,11 @@ type LinkedInProfileCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12732,6 +13849,9 @@ func (p LinkedInProfileCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12794,6 +13914,11 @@ type LinkedInProfileGroupsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12812,6 +13937,9 @@ func (p LinkedInProfileGroupsParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -12925,6 +14053,11 @@ type LinkedInSearchAdsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -12967,6 +14100,9 @@ func (p LinkedInSearchAdsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13054,6 +14190,11 @@ type LinkedInSearchJobsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13087,6 +14228,9 @@ func (p LinkedInSearchJobsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13168,6 +14312,11 @@ type LinkedInSearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13192,6 +14341,9 @@ func (p LinkedInSearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13293,6 +14445,11 @@ type LinkedInSearchProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13320,6 +14477,9 @@ func (p LinkedInSearchProfilesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13399,6 +14559,11 @@ type LinkedInTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13414,6 +14579,9 @@ func (p LinkedInTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13512,6 +14680,11 @@ type LinkmeProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13524,6 +14697,9 @@ func (p LinkmeProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13575,6 +14751,11 @@ type LinktreeProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13587,6 +14768,9 @@ func (p LinktreeProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13637,6 +14821,11 @@ type PillarPageParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13649,6 +14838,9 @@ func (p PillarPageParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13702,6 +14894,11 @@ type PinterestBoardParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13714,6 +14911,9 @@ func (p PinterestBoardParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13759,6 +14959,11 @@ type PinterestBoardPinsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13777,6 +14982,9 @@ func (p PinterestBoardPinsParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13840,6 +15048,11 @@ type PinterestBoardsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13858,6 +15071,9 @@ func (p PinterestBoardsParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13920,6 +15136,11 @@ type PinterestPinParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -13932,6 +15153,9 @@ func (p PinterestPinParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -13995,6 +15219,11 @@ type PinterestPinsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14022,6 +15251,9 @@ func (p PinterestPinsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14083,6 +15315,11 @@ type PinterestProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14095,6 +15332,9 @@ func (p PinterestProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14139,6 +15379,11 @@ type PinterestSearchPinsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14157,6 +15402,9 @@ func (p PinterestSearchPinsParams) query() url.Values {
 	q.Set("query", p.Query)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14305,6 +15553,11 @@ type PinterestTopTrendsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14343,6 +15596,9 @@ func (p PinterestTopTrendsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14406,6 +15662,11 @@ type PinterestTopicParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14418,6 +15679,9 @@ func (p PinterestTopicParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14463,6 +15727,11 @@ type PinterestWebPageParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14475,6 +15744,9 @@ func (p PinterestWebPageParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14591,6 +15863,11 @@ type RedditCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14621,6 +15898,9 @@ func (p RedditCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14686,6 +15966,11 @@ type RedditEngagementParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14698,6 +15983,9 @@ func (p RedditEngagementParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14744,6 +16032,11 @@ type RedditPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14756,6 +16049,9 @@ func (p RedditPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14826,6 +16122,11 @@ type RedditPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14853,6 +16154,9 @@ func (p RedditPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14916,6 +16220,11 @@ type RedditProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -14928,6 +16237,9 @@ func (p RedditProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -14995,6 +16307,11 @@ type RedditProfileCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15022,6 +16339,9 @@ func (p RedditProfileCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15107,6 +16427,11 @@ type RedditSearchCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15137,6 +16462,9 @@ func (p RedditSearchCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15243,6 +16571,11 @@ type RedditSearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15279,6 +16612,9 @@ func (p RedditSearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15342,6 +16678,11 @@ type RedditSearchProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15360,6 +16701,9 @@ func (p RedditSearchProfilesParams) query() url.Values {
 	q.Set("query", p.Query)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15420,6 +16764,11 @@ type RedditSearchSubredditsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15438,6 +16787,9 @@ func (p RedditSearchSubredditsParams) query() url.Values {
 	q.Set("query", p.Query)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15499,6 +16851,11 @@ type RedditSubredditParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15511,6 +16868,9 @@ func (p RedditSubredditParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15580,6 +16940,11 @@ type RedditSubredditPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15607,6 +16972,9 @@ func (p RedditSubredditPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15692,6 +17060,11 @@ type RedditTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15710,6 +17083,9 @@ func (p RedditTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15808,6 +17184,11 @@ type RumbleCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15835,6 +17216,9 @@ func (p RumbleCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15915,6 +17299,11 @@ type RumbleEngagementParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15930,6 +17319,9 @@ func (p RumbleEngagementParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -15975,6 +17367,11 @@ type RumblePostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -15987,6 +17384,9 @@ func (p RumblePostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16080,6 +17480,11 @@ type RumblePostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16113,6 +17518,9 @@ func (p RumblePostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16178,6 +17586,11 @@ type RumbleProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16190,6 +17603,9 @@ func (p RumbleProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16276,6 +17692,11 @@ type RumbleSearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16309,6 +17730,9 @@ func (p RumbleSearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16391,6 +17815,11 @@ type RumbleTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16409,6 +17838,9 @@ func (p RumbleTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16485,6 +17917,11 @@ type SnapchatCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16512,6 +17949,9 @@ func (p SnapchatCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16574,6 +18014,11 @@ type SnapchatProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16586,6 +18031,9 @@ func (p SnapchatProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16631,6 +18079,11 @@ type SnapchatSpotlightParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16643,6 +18096,9 @@ func (p SnapchatSpotlightParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16701,6 +18157,11 @@ type SoundCloudArtistParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16713,6 +18174,9 @@ func (p SoundCloudArtistParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16758,6 +18222,11 @@ type SoundCloudTrackParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16770,6 +18239,9 @@ func (p SoundCloudTrackParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16822,6 +18294,11 @@ type SoundCloudTracksParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16846,6 +18323,9 @@ func (p SoundCloudTracksParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16921,6 +18401,11 @@ type SpotifyAlbumParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16933,6 +18418,9 @@ func (p SpotifyAlbumParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -16977,6 +18465,11 @@ type SpotifyArtistParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -16989,6 +18482,9 @@ func (p SpotifyArtistParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17033,6 +18529,11 @@ type SpotifyPlaylistParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17045,6 +18546,9 @@ func (p SpotifyPlaylistParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17090,6 +18594,11 @@ type SpotifyPlaylistTracksParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17108,6 +18617,9 @@ func (p SpotifyPlaylistTracksParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17170,6 +18682,11 @@ type SpotifyPodcastParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17182,6 +18699,9 @@ func (p SpotifyPodcastParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17232,6 +18752,11 @@ type SpotifyPodcastEpisodesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17256,6 +18781,9 @@ func (p SpotifyPodcastEpisodesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17323,6 +18851,11 @@ type SpotifySearchAlbumsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17344,6 +18877,9 @@ func (p SpotifySearchAlbumsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17423,6 +18959,11 @@ type SpotifySearchArtistsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17447,6 +18988,9 @@ func (p SpotifySearchArtistsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17514,6 +19058,11 @@ type SpotifySearchPlaylistsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17535,6 +19084,9 @@ func (p SpotifySearchPlaylistsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17601,6 +19153,11 @@ type SpotifySearchPodcastsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17622,6 +19179,9 @@ func (p SpotifySearchPodcastsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17699,6 +19259,11 @@ type SpotifySearchTracksParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17723,6 +19288,9 @@ func (p SpotifySearchTracksParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17787,6 +19355,11 @@ type SpotifyTrackParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17799,6 +19372,9 @@ func (p SpotifyTrackParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17871,6 +19447,11 @@ type TelegramChannelParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17883,6 +19464,9 @@ func (p TelegramChannelParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -17938,6 +19522,11 @@ type TelegramChannelPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -17965,6 +19554,9 @@ func (p TelegramChannelPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18030,6 +19622,11 @@ type TelegramPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18042,6 +19639,9 @@ func (p TelegramPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18110,6 +19710,11 @@ type TelegramSearchChannelsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18140,6 +19745,9 @@ func (p TelegramSearchChannelsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18224,6 +19832,11 @@ type ThreadsCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18248,6 +19861,9 @@ func (p ThreadsCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18310,6 +19926,11 @@ type ThreadsPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18322,6 +19943,9 @@ func (p ThreadsPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18371,6 +19995,11 @@ type ThreadsPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18395,6 +20024,9 @@ func (p ThreadsPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18457,6 +20089,11 @@ type ThreadsProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18469,6 +20106,9 @@ func (p ThreadsProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18531,6 +20171,11 @@ type ThreadsSearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18558,6 +20203,9 @@ func (p ThreadsSearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18619,6 +20267,11 @@ type ThreadsSearchProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18637,6 +20290,9 @@ func (p ThreadsSearchProfilesParams) query() url.Values {
 	q.Set("query", p.Query)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18715,6 +20371,11 @@ type TikTokAdParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18727,6 +20388,9 @@ func (p TikTokAdParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18775,6 +20439,11 @@ type TikTokCommentParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18790,6 +20459,9 @@ func (p TikTokCommentParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18841,6 +20513,11 @@ type TikTokCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18865,6 +20542,9 @@ func (p TikTokCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18926,6 +20606,11 @@ type TikTokDownloadParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18938,6 +20623,9 @@ func (p TikTokDownloadParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -18983,6 +20671,11 @@ type TikTokEffectParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -18995,6 +20688,9 @@ func (p TikTokEffectParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19044,6 +20740,11 @@ type TikTokEffectPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19068,6 +20769,9 @@ func (p TikTokEffectPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19129,6 +20833,11 @@ type TikTokEngagementParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19141,6 +20850,9 @@ func (p TikTokEngagementParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19185,6 +20897,11 @@ type TikTokFollowersParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19203,6 +20920,9 @@ func (p TikTokFollowersParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19264,6 +20984,11 @@ type TikTokFollowingParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19282,6 +21007,9 @@ func (p TikTokFollowingParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19345,6 +21073,11 @@ type TikTokHashtagParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19357,6 +21090,9 @@ func (p TikTokHashtagParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19407,6 +21143,11 @@ type TikTokHashtagPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19431,6 +21172,9 @@ func (p TikTokHashtagPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19498,6 +21242,11 @@ type TikTokLikedPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19522,6 +21271,9 @@ func (p TikTokLikedPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19584,6 +21336,11 @@ type TikTokLiveParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19596,6 +21353,9 @@ func (p TikTokLiveParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19646,6 +21406,11 @@ type TikTokPlacePostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19670,6 +21435,9 @@ func (p TikTokPlacePostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19738,6 +21506,11 @@ type TikTokPlaylistPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19762,6 +21535,9 @@ func (p TikTokPlaylistPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19822,6 +21598,11 @@ type TikTokPlaylistsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19840,6 +21621,9 @@ func (p TikTokPlaylistsParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19900,6 +21684,11 @@ type TikTokPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19912,6 +21701,9 @@ func (p TikTokPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -19959,6 +21751,11 @@ type TikTokPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -19983,6 +21780,9 @@ func (p TikTokPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20043,6 +21843,11 @@ type TikTokProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20055,6 +21860,9 @@ func (p TikTokProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20103,6 +21911,11 @@ type TikTokRepliesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20124,6 +21937,9 @@ func (p TikTokRepliesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20234,6 +22050,11 @@ type TikTokSearchAdsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20273,6 +22094,9 @@ func (p TikTokSearchAdsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20352,6 +22176,11 @@ type TikTokSearchHashtagsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20376,6 +22205,9 @@ func (p TikTokSearchHashtagsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20445,6 +22277,11 @@ type TikTokSearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20472,6 +22309,9 @@ func (p TikTokSearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20551,6 +22391,11 @@ type TikTokSearchProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20575,6 +22420,9 @@ func (p TikTokSearchProfilesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20655,6 +22503,11 @@ type TikTokSearchSoundsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20679,6 +22532,9 @@ func (p TikTokSearchSoundsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20746,6 +22602,11 @@ type TikTokSearchSuggestionsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20767,6 +22628,9 @@ func (p TikTokSearchSuggestionsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20847,6 +22711,11 @@ type TikTokSearchTopParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20871,6 +22740,9 @@ func (p TikTokSearchTopParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20935,6 +22807,11 @@ type TikTokSoundParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -20947,6 +22824,9 @@ func (p TikTokSoundParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -20997,6 +22877,11 @@ type TikTokSoundPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -21021,6 +22906,9 @@ func (p TikTokSoundPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -21193,6 +23081,11 @@ type TikTokTopAdsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -21228,6 +23121,9 @@ func (p TikTokTopAdsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -21340,6 +23236,11 @@ type TikTokTopPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -21375,6 +23276,9 @@ func (p TikTokTopPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -21455,6 +23359,11 @@ type TikTokTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -21473,6 +23382,9 @@ func (p TikTokTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -21559,6 +23471,11 @@ type TikTokTrendingHashtagsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -21585,6 +23502,9 @@ func (p TikTokTrendingHashtagsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -21680,6 +23600,11 @@ type TikTokTrendingPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -21706,6 +23631,9 @@ func (p TikTokTrendingPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -21845,6 +23773,11 @@ type TikTokShopProductParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -21857,6 +23790,9 @@ func (p TikTokShopProductParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -21901,6 +23837,11 @@ type TikTokShopProductsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -21919,6 +23860,9 @@ func (p TikTokShopProductsParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -21980,6 +23924,11 @@ type TikTokShopReviewsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -21998,6 +23947,9 @@ func (p TikTokShopReviewsParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22059,6 +24011,11 @@ type TikTokShopSearchProductsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22077,6 +24034,9 @@ func (p TikTokShopSearchProductsParams) query() url.Values {
 	q.Set("query", p.Query)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22154,6 +24114,11 @@ type TruthSocialPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22166,6 +24131,9 @@ func (p TruthSocialPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22217,6 +24185,11 @@ type TruthSocialPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22241,6 +24214,9 @@ func (p TruthSocialPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22304,6 +24280,11 @@ type TruthSocialProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22316,6 +24297,9 @@ func (p TruthSocialProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22372,6 +24356,11 @@ type TwitchProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22384,6 +24373,9 @@ func (p TwitchProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22427,6 +24419,11 @@ type TwitchScheduleParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22445,6 +24442,9 @@ func (p TwitchScheduleParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22525,6 +24525,11 @@ type TwitchTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22543,6 +24548,9 @@ func (p TwitchTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22588,6 +24596,11 @@ type TwitchVideoParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22600,6 +24613,9 @@ func (p TwitchVideoParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22680,6 +24696,11 @@ type TwitchVideosParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22710,6 +24731,9 @@ func (p TwitchVideosParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22795,6 +24819,11 @@ type XCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22819,6 +24848,9 @@ func (p XCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22880,6 +24912,11 @@ type XCommunityParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22892,6 +24929,9 @@ func (p XCommunityParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -22956,6 +24996,11 @@ type XCommunityPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -22983,6 +25028,9 @@ func (p XCommunityPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23048,6 +25096,11 @@ type XEngagementParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23060,6 +25113,9 @@ func (p XEngagementParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23109,6 +25165,11 @@ type XFriendshipParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23122,6 +25183,9 @@ func (p XFriendshipParams) query() url.Values {
 	q.Set("target", p.Target)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23165,6 +25229,11 @@ type XListParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23177,6 +25246,9 @@ func (p XListParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23219,6 +25291,11 @@ type XListFollowersParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23237,6 +25314,9 @@ func (p XListFollowersParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23299,6 +25379,11 @@ type XPostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23311,6 +25396,9 @@ func (p XPostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23391,6 +25479,11 @@ type XPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23421,6 +25514,9 @@ func (p XPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23485,6 +25581,11 @@ type XProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23497,6 +25598,9 @@ func (p XProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23551,6 +25655,11 @@ type XProfileMentionsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23575,6 +25684,9 @@ func (p XProfileMentionsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23655,6 +25767,11 @@ type XSearchCommunitiesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23679,6 +25796,9 @@ func (p XSearchCommunitiesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23746,6 +25866,11 @@ type XSearchHashtagsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23767,6 +25892,9 @@ func (p XSearchHashtagsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23858,6 +25986,11 @@ type XSearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23888,6 +26021,9 @@ func (p XSearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -23967,6 +26103,11 @@ type XSearchProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -23991,6 +26132,9 @@ func (p XSearchProfilesParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24055,6 +26199,11 @@ type XSpaceParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24070,6 +26219,9 @@ func (p XSpaceParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24134,6 +26286,11 @@ type XTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24152,6 +26309,9 @@ func (p XTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24258,6 +26418,11 @@ type YouTubeCommentsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24285,6 +26450,9 @@ func (p YouTubeCommentsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24360,6 +26528,11 @@ type YouTubeEngagementParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24375,6 +26548,9 @@ func (p YouTubeEngagementParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24442,6 +26618,11 @@ type YouTubeHashtagPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24469,6 +26650,9 @@ func (p YouTubeHashtagPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24530,6 +26714,11 @@ type YouTubePostParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24542,6 +26731,9 @@ func (p YouTubePostParams) query() url.Values {
 	q.Set("url", p.URL)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24619,6 +26811,11 @@ type YouTubePostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24649,6 +26846,9 @@ func (p YouTubePostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24711,6 +26911,11 @@ type YouTubeProfileParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24723,6 +26928,9 @@ func (p YouTubeProfileParams) query() url.Values {
 	q.Set("handle", p.Handle)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24823,6 +27031,11 @@ type YouTubeSearchPostsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24859,6 +27072,9 @@ func (p YouTubeSearchPostsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -24921,6 +27137,11 @@ type YouTubeSearchProfilesParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -24939,6 +27160,9 @@ func (p YouTubeSearchProfilesParams) query() url.Values {
 	q.Set("query", p.Query)
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -25009,6 +27233,11 @@ type YouTubeSearchSuggestionsParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -25033,6 +27262,9 @@ func (p YouTubeSearchSuggestionsParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
@@ -25112,6 +27344,11 @@ type YouTubeTranscriptParams struct {
 	// Accept a cached response up to this many seconds old. Cache hits cost 0 credits. Omit to always fetch fresh.
 	// The Cache-Control: max-age=N request header is equivalent; max_age wins when both are sent. Minimum: 0.
 	MaxAge *int
+	// The most this request may be charged, in credits. A request that would cost more answers insufficient_credits
+	// with details.reason max_credits, free, before the work that would cost more (a speech-to-text transcription, a
+	// data partner's lookup, results filled in). Omit it to be charged the endpoint's price, up to its maximum.
+	// Minimum: 1.
+	MaxCredits *int
 	// Return only these fields of each item: comma-separated paths in the schema's notation
 	// (id,text,metrics.view_count,segments[].text; a parent path keeps the whole object). Unknown paths are
 	// rejected. Applied after the cache, so it changes neither the price nor cache hits; page and meta are always
@@ -25130,6 +27367,9 @@ func (p YouTubeTranscriptParams) query() url.Values {
 	}
 	if p.MaxAge != nil {
 		q.Set("max_age", strconv.Itoa(*p.MaxAge))
+	}
+	if p.MaxCredits != nil {
+		q.Set("max_credits", strconv.Itoa(*p.MaxCredits))
 	}
 	if p.Fields != nil {
 		q.Set("fields", *p.Fields)
