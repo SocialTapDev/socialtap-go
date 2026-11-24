@@ -5,7 +5,7 @@ package socialtap
 import "time"
 
 // Version is the SDK version: 1.<contract facts>.<generator revision> (sdk/README.md).
-const Version = "1.603.40"
+const Version = "1.604.40"
 
 // clientName is what this SDK sends as its User-Agent's product and its MCP clientInfo name (catalog clients).
 const clientName = "socialtap-go"
