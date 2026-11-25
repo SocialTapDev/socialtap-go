@@ -8184,6 +8184,19 @@ type ResponseBodyState struct {
 	ExpiresAt *string `json:"expires_at"`
 }
 
+type RequestLogError struct {
+	// The error's message, as answered (cut at 500 characters).
+	Message string `json:"message"`
+	// The input the error is about; null when none.
+	Param *string `json:"param"`
+	// true when sending the same request again may succeed.
+	Retryable bool `json:"retryable"`
+	// What to do about it.
+	Remediation string `json:"remediation"`
+	// The error code's documentation. Format: uri.
+	DocURL string `json:"doc_url"`
+}
+
 type RequestLogEntry struct {
 	// Always request. Known values: request.
 	Object string `json:"object"`
@@ -8217,6 +8230,8 @@ type RequestLogEntry struct {
 	ClientRequestID *string `json:"client_request_id"`
 	// Whether its answer's body was kept (GET /v1/requests/{id}/response returns it).
 	ResponseBody ResponseBodyState `json:"response_body"`
+	// Why it failed, as its answer said; null for a success, and for a failure logged before errors were kept.
+	Error *RequestLogError `json:"error"`
 }
 
 type RequestResponse struct {
